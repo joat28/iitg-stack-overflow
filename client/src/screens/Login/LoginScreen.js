@@ -1,12 +1,13 @@
-import React from 'react';
-import Card from '../../components/AuthCard/Card';
-
+import React from "react";
+import Card from "../../components/AuthCard/Card";
+import Navbar from "../../components/Navbar/Navbar";
 const LoginScreen = () => {
-    return (
-        <div className="w-full h-full flex">
-            <Card type="Log in"/>
-        </div>
-    );
+	return (
+		<React.Fragment>
+			<Navbar />
+			<Card type="Log in" />
+		</React.Fragment>
+	);
 };
 
 export default LoginScreen;
