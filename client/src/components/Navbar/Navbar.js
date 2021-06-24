@@ -1,9 +1,13 @@
 import React from "react";
 import Logo from "../../assets/svg/Logo";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 	return (
-		<div className="flex items-center justify-between py-1 px-7 shadow-sm bg-white">
+		<div
+			className="flex items-center justify-between py-1 px-7 shadow-md"
+			style={{ backgroundColor: "#fafafb" }}
+		>
 			<a href="/">
 				<div className="hover:gray-300">
 					<Logo />
@@ -21,13 +25,18 @@ const Navbar = () => {
 					placeholder="Search"
 				/>
 			</div>
-			<div className=" flex items-center justify-evenly">
-				<button className="p-2 m-1 rounded bg-blue-200 hover:bg-blue-300 h-10">
-					Log in
-				</button>
-				<button className="p-2 m-1 bg-blue-500 rounded text-white hover:bg-blue-600 h-10">
-					Sign up
-				</button>
+			<div className="flex items-center justify-evenly">
+				<Link to="/login">
+					<button
+						className="flex items-center p-2 m-1 h-10 rounded bg-blue-100 border-2 border-blue-300 hover:bg-blue-200 text-blue-600"					>
+						Log in
+					</button>
+				</Link>
+				<Link to="/register">
+					<button className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">
+						Sign up
+					</button>
+				</Link>
 			</div>
 		</div>
 	);
