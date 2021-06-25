@@ -12,7 +12,9 @@ const RegisterScreen = () => {
 			<div class="flex flex-row justify-center items-center h-screen">
 				<Intro />
 				<div className="flex flex-col justify-center items-center">
-					<Logo />
+					<a href="/">
+						<Logo />
+					</a>
 					<Card type="Sign up" />
 					<span>
 						Already have an account?

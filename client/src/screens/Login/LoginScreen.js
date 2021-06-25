@@ -9,7 +9,9 @@ const LoginScreen = () => {
 		<React.Fragment>
 			<Navbar />
 			<div class="flex flex-col justify-center items-center h-screen">
-				<Logo />
+			<a href="/">
+            <Logo />
+          </a>
 				<Card type="Log in" />
 				<span>
 					Don’t have an account?

@@ -1,0 +1,25 @@
+GET http://localhost:5000 HTTP/1.1
+
+###
+
+POST http://localhost:5000/register HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "john",
+    "email"     : "sometin@123.com",
+    "password"  : "something"
+}
+
+###
+POST http://localhost:5000/login HTTP/1.1
+content-type: application/json
+
+{ 
+    "email"     : "sometin@123.com",
+    "password"  : "something"
+}
+
+###
+POST http://localhost:5000/home HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvbWV0aW5AMTIzLmNvbSIsImlhdCI6MTYyNDYzNTEwNn0.rJHZNCkd9ScaDwUARK5Kd2AAk0X_FRvrIlILsv69JO0

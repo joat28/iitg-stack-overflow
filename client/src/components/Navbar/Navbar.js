@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
 	return (
 		<div
-			className="flex items-center justify-between py-1 px-7 shadow-md"
+			className="flex items-center justify-between w-screen py-1 px-7 shadow-md fixed"
 			style={{ backgroundColor: "#fafafb" }}
 		>
 			<a href="/">
@@ -27,8 +27,7 @@ const Navbar = () => {
 			</div>
 			<div className="flex items-center justify-evenly">
 				<Link to="/login">
-					<button
-						className="flex items-center p-2 m-1 h-10 rounded bg-blue-100 border-2 border-blue-300 hover:bg-blue-200 text-blue-600"					>
+					<button className="flex items-center p-2 m-1 h-10 rounded bg-blue-100 border-2 border-blue-300 hover:bg-blue-200 text-blue-600">
 						Log in
 					</button>
 				</Link>

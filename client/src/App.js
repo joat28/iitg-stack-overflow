@@ -6,18 +6,18 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import RegisterScreen from "./screens/Register/RegisterScreen";
 import LoginScreen from "./screens/Login/LoginScreen";
+import HomeScreen from "./screens/Home/HomeScreen";
 
 function App() {
 	return (
 		<div className="App">
+			
 			<BrowserRouter>
 				<Route path="/register" exact component={RegisterScreen} />
 				<Route path="/login" exact component={LoginScreen} />
+				<Route path="/" exact component={HomeScreen} />
 
-				{/* <Navbar />
-				<Card type="Log in" className="m-30 " />
-				<Intro />
-				Setup */}
+
 			</BrowserRouter>
 		</div>
 	);
