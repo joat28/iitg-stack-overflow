@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios'
 import { useLocation } from "react-router-dom";
 
 const Card = (props) => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [name, setName] = useState("");
+
+	function clickHandler(event) {
+		console.log(email, password, name);
+		if (props.type === "Log in") console.log("Log in");
+		else console.log("Sign Up");
+	}
+
+	const nameChangeHandler = (e) => {
+		setName(e.target.value);
+	};
+
+	const emailChangeHandler = (e) => {
+		setEmail(e.target.value);
+	};
+
+	const passwordChangeHandler = (e) => {
+		setPassword(e.target.value);
+	};
+
 	const location = useLocation();
-	console.log(location.pathname);
+	// console.log(location.pathname);
 	const well = {
 		boxShadow:
 			"0 10px 25px rgb(0,0,0,5%), 0 20px 48px rgb(0,0,0,5%), 0 1px 4px rgb(0,0,0,10%)",
@@ -25,8 +48,10 @@ const Card = (props) => {
 				<input
 					id="displayName"
 					type="text"
+					value={name}
 					required
 					className="p-2 m-2 mt-1 rounded border-2 focus:border-blue-300 outline-none"
+					onChange={nameChangeHandler}
 				/>
 			)}
 			<label
@@ -40,6 +65,7 @@ const Card = (props) => {
 				type="text"
 				required
 				className="p-2 m-2 mt-1 rounded border-2 focus:border-blue-300 outline-none"
+				onChange={emailChangeHandler}
 			/>
 			<label for="password" className="text-left ml-2 mt-4 font-medium">
 				Password
@@ -48,8 +74,13 @@ const Card = (props) => {
 				type="password"
 				required
 				className="p-2 m-2 mt-1 rounded border-2 focus:border-blue-300 outline-none"
+				onChange={passwordChangeHandler}
 			/>
-			<button className="p-2 m-1 bg-blue-500 rounded text-white hover:bg-blue-600 h-10 hover:bg-blue-600 mt-4">
+			<button
+				onClick={clickHandler}
+				type="submit"
+				className="p-2 m-1 bg-blue-500 rounded text-white hover:bg-blue-600 h-10 hover:bg-blue-600 mt-4"
+			>
 				{props.type}
 			</button>
 		</div>
