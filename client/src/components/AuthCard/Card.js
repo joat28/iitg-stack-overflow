@@ -1,20 +1,38 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { createUser, checkUser } from "../../api/index";
+import axios from "axios";
+import { useLocation, useHistory } from "react-router-dom";
+import { createUser, checkUser, clearToken } from "../../api/index";
 
 const Card = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
-  async function clickHandler(event) {
-    console.log(email, password, name);
+  const history = useHistory();
+  
+  function clickHandler(event) {
     if (props.type === "Log in") {
-      checkUser({ email, password }).then((res) => console.log(res));
-    } else {
-      createUser({ name, email, password }).then((res) => console.log(res));
+      checkUser({ email, password }).then((res) => {
+        if (res.data.error) {
+          console.log("goes inside the error block in login route");
+          alert(res.data.error);
+          return;
+        }
+        history.push("/");
+        return;
+      });
     }
-  }
+    else{
+      createUser({ name, email, password }).then((res) => {
+        if (res.data.error) {
+          alert(res.data.message);
+          return;
+        }
+        history.push('/login');
+        return;
+      });
+    }
+    
+  } 
   const nameChangeHandler = (e) => {
     setName(e.target.value);
   };
@@ -81,7 +99,7 @@ const Card = (props) => {
       <button
         onClick={clickHandler}
         type="submit"
-        className="p-2 m-1 bg-blue-500 rounded text-white hover:bg-blue-600 h-10 hover:bg-blue-600 mt-4"
+        className="p-2 m-1 bg-blue-500 rounded text-white h-10 hover:bg-blue-600 mt-4"
       >
         {props.type}
       </button>

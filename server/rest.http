@@ -2,12 +2,12 @@ GET http://localhost:5000 HTTP/1.1
 
 ###
 
-POST http://localhost:5000/register HTTP/1.1
+POST http://localhost:5000/api/register HTTP/1.1
 content-type: application/json
 
 {
     "name" : "john",
-    "email"     : "sometin@123.com",
+    "email"     : "somethin@123.com",
     "password"  : "something"
 }
 

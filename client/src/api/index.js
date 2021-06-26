@@ -4,7 +4,6 @@ const { BASE_API_URI } = require("../constants/index");
 
 const API = axios.create({
   baseURL: BASE_API_URI,
-
 });
 
 /*
@@ -13,16 +12,12 @@ LOGIN :   checkUser()
 */
 
 //Sign up
-
-
-export const createUser = (User) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-        }
-    }
-  return API.post("/register", User);
-};
+export const createUser = (User) => API.post("/register", User);
 
 //Login
 export const checkUser = (User) => API.post("/login", User);
+
+//Logout
+export const clearToken = () => API.delete("/logout");
+
+

@@ -15,7 +15,7 @@ function App() {
 			<BrowserRouter>
 				<Route path="/register" exact component={RegisterScreen} />
 				<Route path="/login" exact component={LoginScreen} />
-				<Route path="/" exact component={HomeScreen} />
+				<ProtectedRoute path="/" exact component={HomeScreen} />
 
 
 			</BrowserRouter>

@@ -2,9 +2,12 @@ import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 
 const HomeScreen = () => {
- 
+    const checkAuthenticated = () => {
+        
+    }
     return (
-        <React.Fragment> 
+
+            <React.Fragment> 
          			<Navbar />
                    <a href ="/login" >
                    <img
@@ -14,7 +17,6 @@ const HomeScreen = () => {
 				/>
                       </a> 
             		</React.Fragment>
-
     );
 };
 export default HomeScreen;
