@@ -1,4 +1,5 @@
 import React from "react";
+
 import Card from "../../components/AuthCard/Card";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
