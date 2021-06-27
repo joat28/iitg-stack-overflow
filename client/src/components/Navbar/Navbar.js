@@ -16,7 +16,7 @@ const Navbar = () => {
       style={{ backgroundColor: "#fafafb" }}
     >
       <a href="/">
-        <div className="hover:gray-300">
+        <div className="hover:gray-300 ml-24">
           <Logo />
         </div>
       </a>
@@ -43,14 +43,13 @@ const Navbar = () => {
             Sign up
           </button>
         </Link>
-        
-          <button
-            onClick={clickHandler}
-            className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10"
-          >
-            Log out
-          </button>
-        
+
+        <button
+          onClick={clickHandler}
+          className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10"
+        >
+          Log out
+        </button>
       </div>
     </div>
   );
