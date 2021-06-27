@@ -1,14 +1,12 @@
 import React from "react";
 import Card from "../../components/AuthCard/Card";
 import Intro from "../../components/AuthCard/Intro";
-import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/svg/Overflow";
 
 const RegisterScreen = () => {
   return (
     <React.Fragment>
-      <Navbar />
       <div class="flex flex-row justify-center items-center h-screen">
         <Intro />
         <div className="flex flex-col justify-center items-center">

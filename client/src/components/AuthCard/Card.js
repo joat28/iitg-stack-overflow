@@ -2,34 +2,44 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
 import { createUser, checkUser, clearToken } from "../../api/index";
+import { register, login }  from '../../redux/auth/auth.actions';
+import {useSelector, useDispatch} from 'react-redux';
 
 const Card = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  
+  const xyz = useSelector(state => {
+    return state.auth.isAuthenticated
+  })
   
   function clickHandler(event) {
     if (props.type === "Log in") {
-      checkUser({ email, password }).then((res) => {
-        if (res.data.error) {
-          console.log("goes inside the error block in login route");
-          alert(res.data.error);
-          return;
-        }
-        history.push("/");
-        return;
-      });
+      // checkUser({ email, password }).then((res) => {
+      //   if (res.data.error) {
+      //     console.log("goes inside the error block in login route");
+      //     alert(res.data.error);
+      //     return;
+      //   }
+      //   history.push("/");
+      //   return;
+      // });
     }
     else{
-      createUser({ name, email, password }).then((res) => {
-        if (res.data.error) {
-          alert(res.data.message);
-          return;
-        }
-        history.push('/login');
-        return;
-      });
+      dispatch(register({name,email,password}));
+      // createUser({ name, email, password }).then((res) => {
+      //   if (res.data.error) {
+      //     alert(res.data.message);
+      //     return;
+      //   }
+      //   history.push('/login');
+      //   return;
+      // });
+
     }
     
   } 
