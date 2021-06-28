@@ -5,7 +5,7 @@ import {
 	// REGISTER_FAIL,
 	LOGIN_SUCCESS,
 	// LOGIN_FAIL,
-	// LOGOUT,
+	LOGOUT,
 } from "./auth.types";
 import { createUser, checkUser } from "../../api/index";
 // import setAuthToken from './auth.utils';
@@ -32,11 +32,12 @@ import { createUser, checkUser } from "../../api/index";
 // Register User
 
 export const register =
-({ name, email, password }) =>
+	({ name, email, password }) =>
 	(dispatch) => {
 		const body = { name, email, password };
 		createUser(body)
 			.then((res) => {
+				localStorage.setItem('token', res.data.data.token);
 				res.data.status = true;
 				dispatch(setAlert(res.data));
 				dispatch({
@@ -56,32 +57,28 @@ export const login =
 	({ email, password }) =>
 	async (dispatch) => {
 		const body = { email, password };
-
 		checkUser(body)
 			.then((res) => {
+				localStorage.setItem('token', res.data.data.token);
 				dispatch({
 					type: LOGIN_SUCCESS,
 					payload: res.data.data,
 				});
-				alert(res.data.message);
+				res.data.status = true;
+				dispatch(setAlert(res.data));
 			})
 			.catch((error) => {
 				console.log(error.response);
-				alert(`${error.response.data.message}`);
+				error.response.data.status = false;
+				dispatch(setAlert(error.response.data));
 			});
-
-		// try
-		// const res = await axios.post('/api/auth', body, config);
-
-		// dispatch(setAlert(res.data.message, 'success'));
-
-		// dispatch(loadUser());
 	};
 
-// //LOGOUT
-// export const logout = () => (dispatch) => {
-//   dispatch(setAlert('User has logged out', 'success'));
-//   localStorage.removeItem('token');
-
-//   dispatch({type: LOGOUT});
-// };
+export const logout = () => (dispatch) => {
+	localStorage.removeItem('token');
+	dispatch(setAlert({
+		message: 'User logged out successfully',
+		status: true
+	}));
+	dispatch({type: LOGOUT});
+}

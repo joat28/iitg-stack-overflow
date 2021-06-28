@@ -4,7 +4,7 @@ const Globe = () => {
   return (
     <svg
       aria-hidden="true"
-      class="svg-icon iconGlobe inline-block"
+      className="svg-icon iconGlobe inline-block"
       width="18"
       height="18"
       viewBox="0 0 18 18"

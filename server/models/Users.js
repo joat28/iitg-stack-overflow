@@ -1,36 +1,36 @@
 const mongoose = require("mongoose");
-// const { isEmail } = require("validator");
+const { isEmail } = require("validator");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      unique: true,
-      required: [true, "Please enter a display name"],
-    },
-    email: {
-      type: String,
-      required: [true, "incorrect email"],
-      unique: true,
-      //   validate: [isEmail, "incorrect email"],
-    },
-    password: {
-      type: String,
-      required: [true, "incorrect password"],
-      minlength: [6, "incorrect password"],
-    },
-  },
-  {
-    timestamps: true,
-  }
+	{
+		name: {
+			type: String,
+			unique: true,
+			required: [true, "Please enter a username"],
+		},
+		email: {
+			type: String,
+			required: [true, "Please enter an email id"],
+			unique: true,
+			validate: [isEmail, "Please enter a valid email"],
+		},
+		password: {
+			type: String,
+			required: [true, "Password length must be atleast 6 characters"],
+			minlength: [6, "Password length must be atleast 6 characters"],
+		},
+	},
+	{
+		timestamps: true,
+	}
 );
 // userSchema.createIndexes();
 
 userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+	const salt = await bcrypt.genSalt();
+	this.password = await bcrypt.hash(this.password, salt);
+	next();
 });
 
 userSchema.methods.comparePasswords = function (userPassword, callback) {
@@ -38,7 +38,7 @@ userSchema.methods.comparePasswords = function (userPassword, callback) {
 		if (error) return callback(error);
 		return callback(null, isMatch);
 	});
-}
+};
 
 const User = mongoose.model("User", userSchema);
 

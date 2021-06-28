@@ -4,7 +4,7 @@ const Overflow = () => {
   return (
     <svg
       aria-hidden="true"
-      class="svg-icon iconLogoGlyphMd native"
+      className="svg-icon iconLogoGlyphMd native"
       width="50"
       height="64"
       viewBox="0 0 32 37"

@@ -2,7 +2,7 @@ import React from "react";
 
 const Upvotes = () => {
 	return (
-		<svg width="26" height="26" class="svg-icon mtn2">
+		<svg width="26" height="26" className="svg-icon mtn2">
 			<path
 				fill="#0095ff"
 				d="M12 .7a2 2 0 013 0l8.5 9.6a1 1 0 01-.7 1.7H4.2a1 1 0 01-.7-1.7L12 .7z"
