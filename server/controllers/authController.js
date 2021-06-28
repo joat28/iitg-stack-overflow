@@ -20,43 +20,72 @@ module.exports.signup = async (req, res) => {
 	const { name, email, password } = req.body;
 	try {
 		const user = await User.create({ name, email, password });
-		res.status(201).json({ message: "user saved", user: user._id });
-		console.log("user saved");
+		return res.status(200).json({ message: "user saved", data: user });
 	} catch (error) {
 		const errors = handleErrors(error);
-		res.status(400).json({ errors });
+		return res.status(400).json({
+			message: "Unable to create User",
+			error: error,
+		});
 	}
 };
 
 module.exports.login = async (req, res) => {
 	const { email, password } = req.body;
 	try {
+		//FIND USER
 		const user = await User.findOne({ email: email });
+		//USER FOUND
 		if (user) {
-			const isMatch = bcrypt.compare(password, user.password);
-			if (!isMatch) {
-				return res.status(401).json({
-					message: "Incorrect Password",
-				});
-			}
-			const payload = { email };
-			const token = jwt.sign(payload, "secret");
-			// req.header["Authorization"] = `Bearer ${token}`;
-			console.log("token", token);
-			return res.status(200).json({
-				message: "Successfully logged in",
-				isAuthenticated: true,
-				token,
+			user.comparePasswords(password, function (error, isMatch) {
+				//ERROR IN COMPARING
+				if (error) {
+					console.log("Error in comparing passwords");
+					return res.status(401).json({
+						error: "Error in comparing passwords",
+					});
+				}
+
+				// PASSWORD DID NOT MATCH
+				else if (!isMatch) {
+					console.log("passwords do not match");
+					return res.status(401).json({
+						error: "Invalid password",
+					});
+				} else {
+					// PASSWORD MATCHED
+					console.log("passwords matched!!");
+					//CREATE TOKEN
+					const payload = { email };
+					const token = jwt.sign(payload, "secret");
+					req.headers["authorization"] = `Bearer ${token}`;
+					console.log("token", token);
+					//RETURN TOKEN
+					return res.status(200).json({
+						message: "Successfully logged in",
+						isAuthenticated: true,
+						token,
+					});
+				}
 			});
 		}
-		return res.status(401).json({
-			message: "Invalid Email",
-		});
+		//USER NOT FOUND
+		else {
+			return res.status(401).json({
+				error: "Invalid email",
+			});
+		}
 	} catch (error) {
-		// const errors = handleErrors(error);
-		res.status(400).json({
-			message: "Unable to connect to DB",
-			error: error.message,
+		return res.status(400).json({
+			error: "Unable to connect to DB",
 		});
 	}
+};
+
+module.exports.logout = async (req, res) => {
+	req.headers["authorization"] = "";
+	return res.json({
+		message: "Logged Out!",
+		isAuthenticated: false,
+	});
 };

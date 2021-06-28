@@ -1,7 +1,7 @@
 import React from "react";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 
-const HomeScreen = () => {
+const TagsScreen = () => {
   return (
     <div className="bg-white">
       <div className=" flex flex-row">
@@ -10,4 +10,4 @@ const HomeScreen = () => {
     </div>
   );
 };
-export default HomeScreen;
+export default TagsScreen;

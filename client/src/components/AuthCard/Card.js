@@ -1,17 +1,35 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { register } from "../../redux/auth/auth.actions";
+import { useDispatch} from "react-redux";
 
 const Card = (props) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [name, setName] = useState("");
 
-	function clickHandler(event) {
-		console.log(email, password, name);
-		if (props.type === "Log in") console.log("Log in");
-		else console.log("Sign Up");
-	}
+	const dispatch = useDispatch();
 
+
+	// const xyz = useSelector(state => {
+	//   return state.auth.isAuthenticated
+	// })
+
+	function clickHandler(event) {
+		if (props.type === "Log in") {
+			// checkUser({ email, password }).then((res) => {
+			//   if (res.data.error) {
+			//     console.log("goes inside the error block in login route");
+			//     alert(res.data.error);
+			//     return;
+			//   }
+			//   history.push("/");
+			//   return;
+			// });
+		} else {
+			dispatch(register({ name, email, password }));			
+		}
+	}
 	const nameChangeHandler = (e) => {
 		setName(e.target.value);
 	};
@@ -78,7 +96,7 @@ const Card = (props) => {
 			<button
 				onClick={clickHandler}
 				type="submit"
-				className="p-2 m-1 bg-blue-500 rounded text-white hover:bg-blue-600 h-10 hover:bg-blue-600 mt-4"
+				className="p-2 m-1 bg-blue-500 rounded text-white h-10 hover:bg-blue-600 mt-4"
 			>
 				{props.type}
 			</button>
