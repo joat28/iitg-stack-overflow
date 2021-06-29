@@ -7,17 +7,17 @@ const commentSchema = new mongoose.Schema(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     question: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Question",
       default: null,
     },
     answer: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Answer",
       default: null,
     },

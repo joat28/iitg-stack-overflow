@@ -17,12 +17,12 @@ const answerSchema = new mongoose.Schema(
       },
     },
     author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
     comments: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
       },
     ],

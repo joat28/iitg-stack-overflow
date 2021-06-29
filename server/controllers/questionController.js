@@ -1,14 +1,24 @@
-const Question = require('../models/Questions');
+const Question = require('../models/Question');
 
 // ONE QUESTION
 
 module.exports.createOne = async (req, res) => {
     try {
         const payload = req.body;
-        const { title, body, answer, author, comments, tags } = payload;
-        
-    }catch(error) {
-        
+        const authorId = req.body._id;
+        const { title, body, tags } = payload;
+        const newQuestion = await Question.create({
+            title,
+            body,
+            tags,
+            author : authorId,
+        })
+        console.log('question created ' , newQuestion);
+    } catch (error) {
+        console.log("Failed to create question ", error);
+        return res.status(400).json({
+            message: "Failed to create question",
+        })
     }
 }
 module.exports.getOne = async (req, res) => {
@@ -32,20 +42,14 @@ module.exports.getOne = async (req, res) => {
         })
     }
 }
-// module.exports.updateOne = async (req, res) => {
-//     try{
-//         Question.retrieveOne
-//     }
-// }
-// module.exports.deleteOne = async (req, res) => {
-//     try{
-//         Question.retrieveOne
-//     }
-// }
+module.exports.updateOne = async (req, res) => {
+    
+}
+module.exports.deleteOne = async (req, res) => {
+    
+}
 
-// // ALL QUESTIONS
-// module.exports.getAll = async (req, res) => {
-//     try{
-//         Question.retrieveOne
-//     }
-// }
+// ALL QUESTIONS
+module.exports.getAll = async (req, res) => {
+    
+}
