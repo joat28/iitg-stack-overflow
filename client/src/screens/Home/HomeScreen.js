@@ -6,10 +6,8 @@ const HomeScreen = () => {
   return (
     <React.Fragment>
       <Alert />
-      <div className="bg-white">
-        <div className=" flex flex-row">
+      <div className="bg-white flex flex-row">
           <LeftSideBar />
-        </div>
       </div>
     </React.Fragment>
   );

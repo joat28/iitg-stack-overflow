@@ -2,7 +2,7 @@ import React from "react";
 
 const Question = () => {
 	return (
-		<svg width="26" height="26" className="svg-icon mtn2">
+		<svg width="46" height="46" className="svg-icon mtn2">
 			<path
 				fill="#0095ff"
 				opacity=".5"
