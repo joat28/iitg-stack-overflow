@@ -6,20 +6,31 @@ POST http://localhost:5000/api/register HTTP/1.1
 content-type: application/json
 
 {
-    "name" : "john",
-    "email"     : "somethin@123.com",
-    "password"  : "something"
+    "name" : "prabhat",
+    "email"     : "prabhat@gmail.com",
+    "password"  : "prabhat"
 }
 
 ###
-POST http://localhost:5000/login HTTP/1.1
+POST http://localhost:5000/api/login HTTP/1.1
 content-type: application/json
 
 { 
-    "email"     : "sometin@123.com",
-    "password"  : "something"
+    "email"     : "prabhat@gmail.com",
+    "password"  : "prabhat"
 }
 
 ###
 POST http://localhost:5000/home HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvbWV0aW5AMTIzLmNvbSIsImlhdCI6MTYyNDYzNTEwNn0.rJHZNCkd9ScaDwUARK5Kd2AAk0X_FRvrIlILsv69JO0
+
+###
+POST http://localhost:5000/api/question HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByYWJoYXRAZ21haWwuY29tIiwiaWF0IjoxNjI0OTkxMTAxfQ.orwgkW54fsiemyArrtgtRN5NWT27KxUkxQoLAqWVtAM
+
+{
+    "title": "How to center",
+    "description" : "send me the code to center a div using css",
+    "author" : "60db657dea567a1bec8d0239",
+    "tags" : ["css", "html", "web"],
+}

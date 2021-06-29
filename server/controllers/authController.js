@@ -47,7 +47,6 @@ module.exports.login = async (req, res) => {
             message: "Invalid email or password!",
           });
         }
-
         // PASSWORD DID NOT MATCH
         else if (!isMatch) {
           return res.status(401).json({
@@ -77,7 +76,7 @@ module.exports.login = async (req, res) => {
     }
   } catch (error) {
     return res.status(400).json({
-      message: "Please try again later!",
+      message: "Please try again later",
     });
   }
 };

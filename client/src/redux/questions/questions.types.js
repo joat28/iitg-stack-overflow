@@ -1,0 +1,2 @@
+export const SET_QUESTIONS = 'SET_QUESTIONS';
+// export const REMOVE_QUESTION = 'REMOVE_QUESTION';

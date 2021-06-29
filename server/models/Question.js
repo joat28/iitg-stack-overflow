@@ -6,19 +6,17 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    body: {
-      description: {
-        type: String,
-        required: true,
-      },
-      upvotes: {
-        type: Number,
-        default: 0,
-      },
-      downvotes: {
-        type: Number,
-        default: 0,
-      },
+    description: {
+      type: String,
+      required: true,
+    },
+    upvotes: {
+      type: Number,
+      default: 0,
+    },
+    downvotes: {
+      type: Number,
+      default: 0,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
