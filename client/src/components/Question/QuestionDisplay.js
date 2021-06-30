@@ -3,13 +3,25 @@ import { useSelector } from "react-redux";
 import QuestionItem from "../QuestionItem/QuestionItem";
 import Spinner from "../Spinner/Spinner";
 
-const QuestionDisplay = () => {
+const QuestionDisplay = (props) => {
   const loading = useSelector((state) => state.loading.loading);
   const questions = useSelector((state) => state.question.questions);
+
+  const tagsFromProps = props.tagsArray;
+  const newSetOfQuestions = new Set();
+
+  tagsFromProps.forEach((tag) => {
+    const append = questions.filter((question) => question.tags.includes(tag));
+    append.forEach((item) => newSetOfQuestions.add(item));
+  });
+
+  const renderQuestions =
+    newSetOfQuestions.size === 0 ? questions : [...newSetOfQuestions];
+  console.log(renderQuestions);
   return (
     <>
       {loading && <Spinner />}
-      {!loading && questions.length === 0 && (
+      {!loading && renderQuestions.length === 0 && (
         <p className="mt-16 w-screen">No questions to show.</p>
       )}
 
@@ -22,7 +34,7 @@ const QuestionDisplay = () => {
             </button>
           </div>
 
-          {questions.map((question) => (
+          {renderQuestions.map((question) => (
             <QuestionItem key={question._id} data={question} />
           ))}
         </div>

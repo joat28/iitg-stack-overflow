@@ -24,13 +24,13 @@ const Navbar = () => {
   // }
   return (
     <div
-      className="flex items-center justify-between w-screen py-1 px-7 shadow-md fixed border-t-4 border-yellow-500"
+      className="flex items-center z-10 justify-between w-screen py-1 px-7 shadow-md fixed border-t-4 border-yellow-500"
       style={{ backgroundColor: "#fafafb" }}
-  >
-    <a href="/">
+    >
+      <a href="/">
         <div className="hover:gray-300 ml-24">
-        <Logo />
-      </div>
+          <Logo />
+        </div>
       </a>
       <div className="flex items-center w-1/2 ">
         <img
@@ -42,9 +42,8 @@ const Navbar = () => {
           type="search"
           className="placeholder-gray-500 w-full h-10 border-2 border-gray-200 p-3 rounded focus:border-blue-300 outline-none"
           placeholder="Search"
-    
-       />
-    </div>
+        />
+      </div>
       <div className="flex items-center justify-evenly">
         {isAuthenticated ? (
           <>

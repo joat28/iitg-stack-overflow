@@ -2,16 +2,22 @@ import React from "react";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import Alert from "../../components/Alert/Alert";
 import QuestionDisplay from "../../components/Question/QuestionDisplay";
-import RightSideBar from '../../components/RightSideBar/RightSideBar'
+import RightSideBar from "../../components/RightSideBar/RightSideBar";
+import { useState } from "react";
 
 const HomeScreen = () => {
+  // let tagsArray = [];
+  const [tagsArray, setTagsArray] = useState([]);
+  const getTags = (tags) => {
+    setTagsArray(tags);
+  };
   return (
     <React.Fragment>
       <Alert />
-      <div className="bg-white flex flex-row">
-        <LeftSideBar />
-        <QuestionDisplay />
-        <RightSideBar />
+      <LeftSideBar />
+      <div className="bg-white flex flex-row h-screen pl-72">
+        <QuestionDisplay tagsArray={tagsArray} />
+        <RightSideBar getTags={getTags} />
       </div>
     </React.Fragment>
   );
