@@ -44,7 +44,7 @@ const Navbar = () => {
           placeholder="Search"
     
        />
-    </div>,
+    </div>
       <div className="flex items-center justify-evenly">
         {isAuthenticated ? (
           <>

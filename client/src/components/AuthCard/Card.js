@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { register, login } from "../../redux/auth/auth.actions";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
+import {setLoadingAction, stopLoadingAction} from '../../redux/loading/loading.actions';
 
 const Card = (props) => {
 	const [email, setEmail] = useState("");
@@ -43,9 +44,13 @@ const Card = (props) => {
 			return;
 		}
 		if (props.type === "Log in") {
+			dispatch(setLoadingAction());
 			dispatch(login({ email, password }));
+			dispatch(stopLoadingAction());
 		} else {
+			dispatch(setLoadingAction());
 			dispatch(register({ name, email, password }));
+			dispatch(stopLoadingAction())
 		}
 	}
 	const nameChangeHandler = (e) => {

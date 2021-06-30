@@ -4,11 +4,15 @@ import { Link, useHistory } from "react-router-dom";
 import Logo from "../../assets/svg/Overflow";
 import Alert from "../../components/Alert/Alert";
 import { useSelector } from "react-redux";
+import Spinner from "../../components/Spinner/Spinner";
+
 
 const LoginScreen = () => {
 
   const history = useHistory();
 	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const loading = useSelector(state => state.loading.loading)
+
 	if (isAuthenticated) {
 		history.push("/");
 	}
@@ -16,7 +20,8 @@ const LoginScreen = () => {
 	return (
 		<React.Fragment>
 			<Alert />
-			<div className="flex flex-col justify-center items-center h-screen">
+			{loading && <Spinner />}
+			{!loading && <div className="flex flex-col justify-center items-center h-screen">
 				<a href="/">
 					<Logo />
 				</a>
@@ -27,7 +32,7 @@ const LoginScreen = () => {
 						<span className="text-blue-500"> Sign up</span>
 					</Link>
 				</span>
-			</div>
+			</div>}
 		</React.Fragment>
 	);
 };

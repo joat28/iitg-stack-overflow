@@ -4,7 +4,7 @@ import Globe from "../../assets/svg/Globe";
 
 const LeftSideBar = () => {
   return (
-    <div className="w-72 h-screen border-gray-300 border-r text-right pl-32 pt-24">
+    <div className="w-72 h-screen border-gray-300 border-r text-right pl-32 pt-20">
       <div className="my-2">
         <NavLink
           exact

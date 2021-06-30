@@ -8,6 +8,7 @@ import {
   LOGOUT,
 } from "./auth.types";
 import { createUser, checkUser } from "../../api/index";
+
 // import setAuthToken from './auth.utils';
 
 // Load User
