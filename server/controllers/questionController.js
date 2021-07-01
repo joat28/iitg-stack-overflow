@@ -5,6 +5,7 @@ const Question = require("../models/Question");
 module.exports.createOne = async (req, res) => {
 	try {
 		const { title, description,tags , author } = req.body;
+		console.log(req.body)
 		const newQuestion = await Question.create({
 			title,
 			description,

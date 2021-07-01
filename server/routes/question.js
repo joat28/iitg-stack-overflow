@@ -6,7 +6,7 @@ const router = express.Router();
 
 //ONE QUESTION
 router.get("/:question_id", questionController.getOne);
-router.post("/", authCheck ,questionController.createOne);
+router.post("/ask", authCheck ,questionController.createOne);
 router.post("/:question_id", authCheck, questionController.updateOne);
 router.delete("/:question_id", authCheck, questionController.deleteOne);
 
