@@ -5,8 +5,8 @@ const authCheck = require("../middleware/authCheck");
 const router = express.Router();
 
 //ONE QUESTION
-router.get("/:question_id", questionController.getOne);
 router.post("/ask", authCheck ,questionController.createOne);
+router.get("/:question_id", questionController.getOne);
 router.post("/:question_id", authCheck, questionController.updateOne);
 router.delete("/:question_id", authCheck, questionController.deleteOne);
 

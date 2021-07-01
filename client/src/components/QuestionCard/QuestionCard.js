@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { createQuestion } from "../../api";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
+import Alert from "../Alert/Alert";
+import {useHistory} from 'react-router-dom';
 
 const QuestionCard = () => {
   const dispatch = useDispatch();;
@@ -10,7 +12,7 @@ const QuestionCard = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const user = useSelector((state) => state.auth.user);
-
+  const history = useHistory();
   const clickHandler = (event) => {
     event.preventDefault();
     const tagsArray = tags.split(" ");
@@ -18,7 +20,14 @@ const QuestionCard = () => {
     // console.log(newPost);
     createQuestion(newPost)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
+        dispatch(setAlert({
+          message: "Question Posted !",
+          status: true,
+        }));
+        // TODO: redirect to the particular question later  
+        history.push('/');
+      
       })
       .catch((error) =>
         dispatch(
@@ -42,6 +51,7 @@ const QuestionCard = () => {
 
   return (
     <div className="w-4/6 h-screen">
+      <Alert />
       <div className="bg-white w-full rounded shadow-md border border-gray-300">
         <form className="flex flex-col p-4">
           <label className="text-left ml-2 font-medium">Title</label>
@@ -83,7 +93,7 @@ const QuestionCard = () => {
               type="submit"
               onClick={clickHandler}
             >
-              Post{" "}
+              Post
             </button>
           </div>
         </form>

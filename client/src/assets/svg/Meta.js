@@ -3,9 +3,8 @@ import React from "react";
 const Meta = () => {
   return (
     <svg
-      className="mr-2"
       aria-hidden="true"
-      class="svg-icon iconLogoGlyphSm"
+      className="mr-2 svg-icon iconLogoGlyphSm"
       width="19"
       height="22"
       viewBox="0 0 19 22"

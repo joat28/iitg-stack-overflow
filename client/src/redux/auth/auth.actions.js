@@ -11,26 +11,25 @@ import { createUser, checkUser, loadUserCall } from "../../api/index";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.getItem("token")) {
-      loadUserCall.then(res => )      
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data.data,
+  if (localStorage.token) {
+    // console.log(localStorage.token)
+    loadUserCall()
+      .then((res) => {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data.data,
+        });
+      })
+      .catch((error) => {
+         console.log(error)
       });
-    } catch (error) {
-      dispatch({
-        type: AUTH_ERROR,
-      });
-    }
   }
-  return;
 };
 
 // Register User
 
-export const register =
-  ({ name, email, password }) =>
-  (dispatch) => {
+export const register = ({ name, email, password }) => {
+  return (dispatch) => {
     const body = { name, email, password };
     createUser(body)
       .then((res) => {
@@ -47,28 +46,27 @@ export const register =
         dispatch(setAlert(error.response.data));
       });
   };
-
+};
 // LOGIN USER
 
-export const login =
-  ({ email, password }) =>
-  async (dispatch) => {
-    const body = { email, password };
-    checkUser(body)
-      .then((res) => {
-        localStorage.setItem("token", res.data.data.token);
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: res.data.data,
-        });
-        res.data.status = true;
-        dispatch(setAlert(res.data));
-      })
-      .catch((error) => {
-        error.response.data.status = false;
-        dispatch(setAlert(error.response.data));
+export const login = ({ email, password }) => (dispatch) => {
+  const body = { email, password };
+  checkUser(body)
+    .then((res) => {
+      localStorage.setItem("token", res.data.data.token);
+      console.log(res.data.data)
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.data,
       });
-  };
+      res.data.status = true;
+      dispatch(setAlert(res.data));
+    })
+    .catch((error) => {
+      error.response.data.status = false;
+      dispatch(setAlert(error.response.data));
+    });
+};
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");

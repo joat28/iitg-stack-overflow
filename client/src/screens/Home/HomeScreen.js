@@ -15,7 +15,7 @@ const HomeScreen = () => {
     <React.Fragment>
       <Alert />
       <LeftSideBar />
-      <div className="bg-white flex flex-row h-screen pl-72">
+      <div className="bg-white flex flex-row pl-72">
         <QuestionDisplay tagsArray={tagsArray} />
         <RightSideBar getTags={getTags} />
       </div>

@@ -3,9 +3,8 @@ import React from "react";
 const TagSearch = () => {
   return (
     <svg
-      className="mx-auto my-4"
       aria-hidden="true"
-      class="fc-blue-400 d:fc-blue-700 svg-spot spotSearch "
+      className="mx-auto my-4 fc-blue-400 d:fc-blue-700 svg-spot spotSearch "
       width="48"
       height="48"
       viewBox="0 0 48 48"

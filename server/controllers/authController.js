@@ -81,7 +81,35 @@ module.exports.login = async (req, res) => {
   }
 };
 
-module.exports.logout = async (req, res) => {
+module.exports.loadUser = async (req, res) => {
+  //console.log("In authController.js ", req.user.email)
+  if (!req.user.email) {
+    //console.log("inside auth route, no user found")
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+  try {
+    const loadedUser = await User.findOne({ email: req.user.email });
+    if (!loadedUser) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+    //console.log("inside auth route, user found!!", req.user.email);
+    token = req.headers["authorization"].split(" ")[1];
+    return res.status(200).json({
+      message: "user found",
+      data: { isAuthenticated: true, user: loadedUser, token },
+    });
+  } catch (error) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+};
+
+module.exports.logout = (req, res) => {
   return res.json({
     message: "Logged Out!",
     isAuthenticated: false,
