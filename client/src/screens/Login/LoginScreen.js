@@ -11,15 +11,15 @@ const LoginScreen = () => {
 
   const history = useHistory();
 	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-	const loading = useSelector(state => state.loading.loading)
+	const loading = useSelector(state => state.loading.loading);
 
 	if (isAuthenticated) {
 		history.push("/");
 	}
 
-	return (
-		<React.Fragment>
-			<Alert />
+	return 
+		<Reactragment>
+			<Alt />
 			{loading && <Spinner />}
 			{!loading && <div className="flex flex-col justify-center items-center h-screen">
 				<a href="/">

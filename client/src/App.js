@@ -6,6 +6,7 @@ import RegisterScreen from "./screens/Register/RegisterScreen";
 import LoginScreen from "./screens/Login/LoginScreen";
 import HomeScreen from "./screens/Home/HomeScreen";
 import UsersScreen from "./screens/Users/UsersScreen";
+import QuestionScreen from "./screens/PostQuestion/PostQuestion";
 import { getQuestions } from "./api/index";
 import { getQuestionAction } from "./redux/questions/questions.actions";
 import { useDispatch } from "react-redux";
@@ -14,10 +15,11 @@ import {
   setLoadingAction,
   stopLoadingAction,
 } from "./redux/loading/loading.actions";
-// import {useSelector } from 'react-redux';
+import { loadUser } from "./redux/auth/auth.actions";
 
 const App = () => {
   const dispatch = useDispatch();
+  dispatch(loadUser());
   useEffect(() => {
     dispatch(setLoadingAction());
     getQuestions()
@@ -34,6 +36,7 @@ const App = () => {
         <Route path="/login" exact component={LoginScreen} />
         <Route path="/" exact component={HomeScreen} />
         <Route path="/questions" exact component={HomeScreen} />
+        <Route path="/question/ask" exact component={QuestionScreen} />
         <Route path="/tags" exact component={HomeScreen} />
         <Route path="/users" exact component={HomeScreen} />
         {/* <Route path="/questions" exact component={QuestionsScreen} /> */}

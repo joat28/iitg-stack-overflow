@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <div
       className="flex items-center z-10 justify-between w-screen py-1 px-7 shadow-md fixed border-t-4 border-yellow-500"
-      style={{ backgroundColor: "#fafafb" }}
+      style={{ backgroundColor: "#FAFAFB" }}
     >
       <a href="/">
         <div className="hover:gray-300 ml-24">

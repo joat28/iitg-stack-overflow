@@ -7,28 +7,24 @@ import {
   // LOGIN_FAIL,
   LOGOUT,
 } from "./auth.types";
-import { createUser, checkUser } from "../../api/index";
-
-// import setAuthToken from './auth.utils';
+import { createUser, checkUser, loadUserCall } from "../../api/index";
 
 // Load User
-// export const loadUser = () => async (dispatch) => {
-//   if (localStorage.token) {
-
-//   }
-//   try {
-//     const res = await axios.get('/api/auth');
-
-//     dispatch({
-//       type: USER_LOADED,
-//       payload: res.data.data,
-//     });vk
-//   } catch (err) {
-//     dispatch({
-//       type: AUTH_ERROR,
-//     });
-//   }
-// };
+export const loadUser = () => async (dispatch) => {
+  if (localStorage.getItem("token")) {
+      loadUserCall.then(res => )      
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    }
+  }
+  return;
+};
 
 // Register User
 

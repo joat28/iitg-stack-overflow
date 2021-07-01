@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import QuestionItem from "../QuestionItem/QuestionItem";
 import Spinner from "../Spinner/Spinner";
+import { NavLink } from "react-router-dom";
 
 const QuestionDisplay = (props) => {
   const loading = useSelector((state) => state.loading.loading);
@@ -29,9 +30,11 @@ const QuestionDisplay = (props) => {
         <div className="flex flex-col mt-16 w-screen">
           <div className="flex justify-between items-center py-4 px-8">
             <h1 className="text-2xl font-semibold ">Top Questions</h1>
+            <NavLink to="/question/ask">
             <button className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">
               Ask Question
             </button>
+            </NavLink>
           </div>
 
           {renderQuestions.map((question) => (
