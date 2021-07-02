@@ -4,8 +4,9 @@ const Question = require("../models/Question");
 
 module.exports.createOne = async (req, res) => {
 	try {
-		const { title, description,tags , author } = req.body;
-		console.log(req.body)
+		const { title, description, tags, author } = req.body;
+		
+		//console.log(req.body)
 		const newQuestion = await Question.create({
 			title,
 			description,
@@ -32,7 +33,7 @@ module.exports.getOne = async (req, res) => {
 				message: "No Question Found",
 			});
 		}
-		console.log("Question found ", foundQuestion);
+		// console.log("Question found ", foundQuestion);
 		return res.status(200).json({
 			message: "Question Found",
 			payload: foundQuestion,

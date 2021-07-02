@@ -15,7 +15,7 @@ const QuestionCard = () => {
   const history = useHistory();
   const clickHandler = (event) => {
     event.preventDefault();
-    const tagsArray = tags.split(" ");
+    const tagsArray = tags.split(" ").map(tag => tag.toLowerCase());
     const newPost = { title, description, tags: tagsArray, author: user._id };
     // console.log(newPost);
     createQuestion(newPost)
@@ -25,7 +25,7 @@ const QuestionCard = () => {
           message: "Question Posted !",
           status: true,
         }));
-        // TODO: redirect to the particular question later  
+        //TODO: redirect to the particular question later  
         history.push('/');
       
       })

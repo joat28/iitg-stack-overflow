@@ -10,10 +10,10 @@ import { useDispatch } from "react-redux";
 
 const ViewQuestionScreen = () => {
   const [post, setPost] = useState({});
-  const location = useLocation()
-  const dispatch = useDispatch()
-  const history = useHistory()
-  dispatch(setLoadingAction())
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  dispatch(setLoadingAction());
   useEffect(() => {
     getQuestion(location.pathname.split('/')[2])
       .then((res) => {
@@ -24,18 +24,20 @@ const ViewQuestionScreen = () => {
         history.push('/notfound')
         dispatch(stopLoadingAction())
       });
-  }, [dispatch]);
+  }, [dispatch,history]);
 
   return (
     <React.Fragment>
-      <div className="flex flex-row">
+      <div className="newClass"></div>
         <Alert />
         <LeftSideBar/>
-        <div className="bg-white flex flex-row pl-72 w-screen">
+        
+        <div className="bg-white flex flex-row pl-72 ">
           <ViewQuestion post={post} id={location.pathname.split("/")[2]} />
           <RightSideBar />
         </div>
-      </div>
+
+
     </React.Fragment>
   );
 };
