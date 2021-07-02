@@ -25,8 +25,8 @@ module.exports.createOne = async (req, res) => {
 module.exports.getOne = async (req, res) => {
 	try {
 		const foundQuestion = await Question.findOne({
-			id: req.params.question_id,
-		});
+			_id: req.params.question_id,
+		}).populate('author')
 		if (!foundQuestion) {
 			return res.status(404).json({
 				message: "No Question Found",
@@ -50,7 +50,7 @@ module.exports.deleteOne = async (req, res) => {};
 // ALL QUESTIONS
 module.exports.getAll = async (req, res) => {
     try {
-        const Questions = await Question.find({});
+        const Questions = await Question.find({}).populate('author');
         res.status(200).json({
             message: "Successfully fetched all the questions",
             data: Questions,

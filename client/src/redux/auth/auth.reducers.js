@@ -7,7 +7,6 @@ import {
 } from "./auth.types";
 
 const initialState = {
-  token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -16,9 +15,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.token);
       return {
-        ...state,
         isAuthenticated: true,
         loading: false,
         user: action.payload.user,
@@ -31,7 +28,6 @@ const reducer = (state = initialState, action) => {
       };
     case REGISTER_SUCCESS:
       return {
-        ...state,
         loading: false,
         user: action.payload.user,
         isAuthenticated: true,
@@ -44,7 +40,6 @@ const reducer = (state = initialState, action) => {
       };
     case LOGOUT:
       return {
-        token: null,
         isAuthenticated: false,
         loading: false,
         user: null,

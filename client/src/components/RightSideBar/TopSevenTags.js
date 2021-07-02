@@ -22,8 +22,7 @@ const TopSevenTags = () => {
   for (let i = 0; i < questionArray.length && i < 7; i++)
     topSevenTags.push(questionArray[i]);
 
-  console.log("Top seven tags is ", topSevenTags);
-  let key = 0;
+  // console.log("Top seven tags is ", topSevenTags);
 
   return (
     <div className="my-4 rounded border border-gray-300 shadow-md">
@@ -31,8 +30,8 @@ const TopSevenTags = () => {
         Top Tags
       </h1>
       <div className=" flex-wrap flex pl-1 ">
-        {topSevenTags.map((tag) => (
-          <div className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded ">{`${tag[0]} x ${tag[1]}`}</div>
+        {topSevenTags.map((tag, index) => (
+          <div key={`${index}`} className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded ">{`${tag[0]} x ${tag[1]}`}</div>
         ))}
       </div>
     </div>

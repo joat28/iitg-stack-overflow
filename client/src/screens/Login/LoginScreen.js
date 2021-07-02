@@ -17,9 +17,9 @@ const LoginScreen = () => {
 		history.push("/");
 	}
 
-	return 
-		<Reactragment>
-			<Alt />
+	return (
+		<React.Fragment>
+			<Alert />
 			{loading && <Spinner />}
 			{!loading && <div className="flex flex-col justify-center items-center h-screen">
 				<a href="/">

@@ -10,6 +10,7 @@ router.use("/question", question);
 router.post("/register", authController.signup);
 router.post("/login", authController.login);
 
+router.get('/auth', authCheck , authController.loadUser);
 router.get("/home", homeController.test);
 router.delete("/logout", authController.logout);
 

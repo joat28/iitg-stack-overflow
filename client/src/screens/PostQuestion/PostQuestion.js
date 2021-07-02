@@ -33,6 +33,7 @@ const PostQuestion = () => {
           <img
             src="https://cdn.sstatic.net/img/ask/background.svg?v=2e9a8205b368"
             className="w-1/2 mt-11 "
+            alt="robots"
           ></img>
         </div>
         <div className="flex justify-start">

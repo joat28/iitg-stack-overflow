@@ -3,9 +3,8 @@ import React from "react";
 const Pencil = () => {
   return (
     <svg
-      className="pr-2"
       aria-hidden="true"
-      class="va-text-top svg-icon iconPencilSm"
+      className="pr-2 va-text-top svg-icon iconPencilSm"
       width="25"
       height="25"
       viewBox="0 0 20 20"
