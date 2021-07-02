@@ -4,14 +4,30 @@ import DownArrow from "../../assets/svg/DownArrow";
 import Spinner from "../Spinner/Spinner";
 import { useSelector } from "react-redux";
 import Moment from "react-moment";
+import {setAlert} from '../../redux/alert/alert.actions';
+import {useDispatch} from 'react-redux';
+import {updateQuestion} from '../../api/index';
+
 // import { getQuestion } from "../../api/index";
 // import { setLoadingAction, stopLoadingAction } from "../../redux/loading/loading.actions";
 
 const ViewQuestion = (props) => {
+	const dispatch = useDispatch();
+
 	const { loading } = useSelector((state) => state.loading);
 	let postVotes = 0;
 	if (!loading) postVotes = props.post.upvotes - props.post.downvotes;
 	const [votes, setVotes] = useState(postVotes);
+	
+	let oldAns = [];
+	if(!loading) oldAns = props.post.answers;
+	const [ansArray, setAnsArray] = useState(oldAns);
+
+	const [ans, setAns] = useState('');
+	
+	const answerChangeHandler = (event) => {
+		setAns(event.target.value);
+	}
 
 	const onClickUpvotes = () => {
 		return setVotes((vote) => vote + 1);
@@ -19,6 +35,22 @@ const ViewQuestion = (props) => {
 	const onClickDownvotes = () => {
 		return setVotes((vote) => vote - 1);
 	};
+	
+	const answerSubmitHandler = () => {
+		props.post.answers.push(ans);
+		updateQuestion(props.post, props.id).then((res)=>{
+			dispatch(setAlert({message: 'Your answer has been added successfully', status: true}))
+		}).catch(error => {
+			dispatch(setAlert({message: error.message, status: false}))
+		})
+
+		setAnsArray((ansArray) => {
+			let newAnsArray = [];
+			ansArray.map((item) => {return newAnsArray.push(item)});
+			newAnsArray.push(ans);
+			return newAnsArray;
+		});
+	}
 
 	return (
 		<React.Fragment>
@@ -64,12 +96,14 @@ const ViewQuestion = (props) => {
 					</div>
 					<div className="text-left text-lg ml-5 mb-4">Your Answer</div>
 					<textarea
+						onChange={answerChangeHandler}
 						type="text"
 						className="border-2 border-gray-300 rounded mx-4 mb-30 h-40 px-3 py-2"
 					/>
                     <div className="px-3 flex flex-start">
-                    <button className=" p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">Post your Answer</button>
+                    	<button onClick={answerSubmitHandler} className=" p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">Post your Answer</button>
                     </div>
+					{ansArray.map(ans => <div> {ans}</div>)}
 				</div>
 			)}
 		</React.Fragment>

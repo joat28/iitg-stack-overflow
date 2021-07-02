@@ -45,7 +45,15 @@ module.exports.getOne = async (req, res) => {
 		});
 	}
 };
-module.exports.updateOne = async (req, res) => {};
+module.exports.updateOne = async (req, res) => {
+	console.log("req.body" ,req.body);
+	const id = req.body._id;
+	console.log(id)
+	const newQuestion = await Question.findOneAndReplace({_id : id }, req.body);
+	// console.log("newQuestion ", newQuestion);
+	res.end()
+};
+
 module.exports.deleteOne = async (req, res) => {};
 
 // ALL QUESTIONS
