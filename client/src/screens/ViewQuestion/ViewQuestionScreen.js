@@ -1,34 +1,40 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import Alert from "../../components/Alert/Alert";
-// import QuestionDisplay from "../../components/Question/QuestionDisplay";
+import { useHistory, useLocation } from "react-router-dom";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import ViewQuestion from "../../components/ViewQuestion/ViewQuestion"
 import { getQuestion } from "../../api/index";
+import { setLoadingAction, stopLoadingAction } from "../../redux/loading/loading.actions";
+import { useDispatch } from "react-redux";
 
-const ViewQuestionScreen = (props) => {
-  const [post,setPost] = useState('');
-  const location = useLocation();
+const ViewQuestionScreen = () => {
+  const [post, setPost] = useState({});
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const history = useHistory()
+  dispatch(setLoadingAction())
   useEffect(() => {
-    const id = location.pathname.split("/")[2];
-    console.log(id);
-    getQuestion(id)
+    getQuestion(location.pathname.split('/')[2])
       .then((res) => {
-        setPost(res.data.payload);
-        // return console.log(post);
+        setPost(res.data.payload)
+        dispatch(stopLoadingAction())
       })
       .catch((error) => {
-        return console.log(error);
+        history.push('/notfound')
+        dispatch(stopLoadingAction())
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <React.Fragment>
       <div className="flex flex-row">
         <Alert />
-        <LeftSideBar />
-        <div className="mt-96"> {post.title} </div> <RightSideBar />
+        <LeftSideBar/>
+        <div className="bg-white flex flex-row pl-72 w-screen">
+          <ViewQuestion post={post} id={location.pathname.split("/")[2]} />
+          <RightSideBar />
+        </div>
       </div>
     </React.Fragment>
   );

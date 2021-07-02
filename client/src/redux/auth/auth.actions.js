@@ -1,5 +1,7 @@
 // import axios from "axios";
 import { setAlert } from "../alert/alert.actions.js";
+import { getQuestionAction } from "../questions/questions.actions";
+import { stopLoadingAction } from "../loading/loading.actions.js";
 import {
   REGISTER_SUCCESS,
   // REGISTER_FAIL,
@@ -8,9 +10,10 @@ import {
   LOGOUT,
 } from "./auth.types";
 import { createUser, checkUser, loadUserCall } from "../../api/index";
+import { getQuestions } from "../../api/index";
 
 // Load User
-export const loadUser = () => async (dispatch) => {
+export const loadUser = () => (dispatch) => {
   if (localStorage.token) {
     // console.log(localStorage.token)
     loadUserCall()
@@ -20,9 +23,22 @@ export const loadUser = () => async (dispatch) => {
           payload: res.data.data,
         });
       })
+      .then(() => {
+        getQuestions()
+        .then((res) => dispatch(getQuestionAction(res.data.data)))
+        .then(() => dispatch(stopLoadingAction()));
+      })
       .catch((error) => {
          console.log(error)
+         getQuestions()
+        .then((res) => dispatch(getQuestionAction(res.data.data)))
+        .then(() => dispatch(stopLoadingAction()));
       });
+  }
+  else {
+    getQuestions()
+        .then((res) => dispatch(getQuestionAction(res.data.data)))
+        .then(() => dispatch(stopLoadingAction()));
   }
 };
 

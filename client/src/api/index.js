@@ -29,10 +29,11 @@ export const getQuestions = () => API.get("/question");
 
 // GET Single Question by ID
 export const getQuestion = (id) => {
-  // console.log("inside API file ", id) 
-  // console.log("inside API file ", ) 
   return API.get('/question/'+id)
 };
 
 //Create Question
 export const createQuestion = (Question) => API.post("/question/ask", Question);
+
+//Update one Question by Id
+export const updateQuestion = (Question, id) => API.put("/question/"+id, Question);

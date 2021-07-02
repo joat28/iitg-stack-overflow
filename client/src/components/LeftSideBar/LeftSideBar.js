@@ -2,9 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Globe from "../../assets/svg/Globe";
 
-const LeftSideBar = () => {
+const LeftSideBar = (props) => {
+  let styles = 'w-72 fixed border-gray-300 text-right pl-32 pt-20 '
+  if(props.styles)
+    styles = styles + props.styles ;
   return (
-    <div className="w-72 fixed border-gray-300  text-right pl-32 pt-20">
+    <div className={styles}>
       <div className="my-2">
         <NavLink
           exact

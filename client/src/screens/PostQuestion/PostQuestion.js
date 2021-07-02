@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
 import Navbar from "../../components/Navbar/Navbar";
 import RightSideBar from "../../components/QuestionCard/RightSideBar";
@@ -11,20 +11,24 @@ const PostQuestion = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const loading = useSelector((state) => state.loading.loading);
 
-  if (!isAuthenticated) {
-    dispatch(
-      setAlert({
-        message: "Please login to ask question",
-        status: false,
-      })
-    );
-    history.push("/login");
-  }
+  useEffect(() => {
+    if (!isAuthenticated && !loading) {
+      dispatch(
+        setAlert({
+          message: "Please login to ask question",
+          status: false,
+        })
+      );
+      history.push("/login");
+    }
+  })
+
   return (
     <>
-      <Navbar />
-      <Alert />
+      {!loading  && <Alert />}
+      {!loading && isAuthenticated &&
       <div className="pl-40">
         <div className="flex pt-4">
           <div className="pt-28 pb-12 text-2xl text-left mr-96">
@@ -38,9 +42,9 @@ const PostQuestion = () => {
         </div>
         <div className="flex justify-start">
           <QuestionCard />
-          <RightSideBar />
+          <RightSideBar/>
         </div>
-      </div>
+      </div>}
     </>
   );
 };
