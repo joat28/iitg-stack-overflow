@@ -41,5 +41,8 @@ export const updateQuestion = (Question, id) => API.put("/question/"+id, Questio
 //Update one Question by Id
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
-//Answer a Question
-export const answerQuestion = (Answer, id) => API.post('/answer/'+id, Answer);
+//Answer a Question: Answer & Question ID passed
+export const answerQuestion = (Answer, id) => API.post('/answer/' + id, Answer);
+
+//Get all the answers
+export const getAllAnswers = (questionId) => API.get('/question/answers', questionId);

@@ -4,6 +4,7 @@ const authCheck = require("../middleware/authCheck");
 
 const router = express.Router();
 
+
 //ONE QUESTION
 router.post("/ask", authCheck ,questionController.createOne);
 router.get("/:question_id", questionController.getOne);
