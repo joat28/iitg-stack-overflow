@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const { BASE_API_URI } = require("../constants/index");
 
-const API = axios.create({
+export const API = axios.create({
   baseURL: BASE_API_URI,
 });
 
@@ -41,8 +41,13 @@ export const updateQuestion = (Question, id) => API.put("/question/"+id, Questio
 //Update one Question by Id
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
-//Answer a Question: Answer & Question ID passed
+//Answer a Question and get all answers: Answer & Question ID passed
 export const answerQuestion = (Answer, id) => API.post('/answer/' + id, Answer);
 
-//Get all the answers
+//Get all the answers, if you did not submit answer
 export const getAllAnswers = (questionId) => API.get('/question/answers', questionId);
+
+// Answers
+
+
+// Comments

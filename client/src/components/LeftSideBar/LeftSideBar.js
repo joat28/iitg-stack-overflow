@@ -1,12 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Globe from "../../assets/svg/Globe";
+import { setLoadingAction } from "../../redux/loading/loading.actions";
+import {useDispatch} from 'react-redux';
 
 const LeftSideBar = (props) => {
+	const dispatch = useDispatch();
+	const clickHandler = () => {
+		dispatch(setLoadingAction());
+	}
+	
 	return (
 		<div className="w-72 fixed z-0 border-gray-300 border-r h-screen text-right pl-32 pt-20 ">
 			<div className="my-2">
 				<NavLink
+					onClick={clickHandler}
 					exact
 					to="/"
 					className="text-gray-500 flex pl-2 py-2 items-center text-sm"
@@ -23,6 +31,7 @@ const LeftSideBar = (props) => {
 				<div>
 					<NavLink
 						exact
+						onClick={clickHandler}
 						to="/questions"
 						className="text-sm text-gray-500 pl-2 pr-28 py-2 pt-2 items-center flex"
 						activeClassName="border-red-400 text-gray-800 border-r-4 bg-gray-100 font-bold"
@@ -36,6 +45,7 @@ const LeftSideBar = (props) => {
 
 				<NavLink
 					exact
+					onClick={clickHandler}
 					to="/tags"
 					className="text-sm text-gray-500 py-2 pl-6 flex"
 					activeClassName="border-red-400 text-gray-800 border-r-4 bg-gray-100 font-bold"
@@ -44,6 +54,7 @@ const LeftSideBar = (props) => {
 				</NavLink>
 
 				<NavLink
+					onClick={clickHandler}
 					exact
 					to="/users"
 					className="text-sm text-gray-500 pl-6 py-2 flex"

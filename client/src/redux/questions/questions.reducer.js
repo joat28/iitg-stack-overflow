@@ -1,22 +1,52 @@
-import { SET_QUESTIONS } from "./questions.types";
+import {
+	GET_QUESTIONS,
+	GET_QUESTION,
+	GET_TOP_QUESTIONS,
+	GET_TAG_QUESTIONS,
+	DELETE_QUESTION,
+	ADD_QUESTION,
+} from "./questions.types";
 
 const initialState = {
 	questions: [],
-	error: null,
+	question: {},
 };
 
 export const questionReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case SET_QUESTIONS:
+		case ADD_QUESTION:
 			return {
 				...state,
-				questions: [...action.payload]
+				question: action.payload
+			}
+		case GET_QUESTIONS:
+			return {
+				...state,
+				questions: [...action.payload],
 			};
-		// case REMOVE_QUESTION:
-		//     return {
-		//         ...state,
-		// 		questions: null,
-		// 	};
+		case GET_QUESTION:
+			return {
+				...state,
+				question: action.payload,
+			};
+		case GET_TOP_QUESTIONS:
+			return {
+				...state,
+				questions: [...action.payload],
+			};
+		case GET_TAG_QUESTIONS:
+			return {
+				...state,
+				questions: [...action.payload],
+			};
+		case DELETE_QUESTION:
+			return {
+				...state,
+				questions: state.questions.filter(
+					(question) => question.id !== action.payload
+				),
+				question: null,
+			};
 		default:
 			return state;
 	}

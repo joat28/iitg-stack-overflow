@@ -36,10 +36,9 @@ module.exports.getOne = async (req, res) => {
 				message: "No Question Found",
 			});
 		}
-		// console.log("Question found ", foundQuestion);
 		return res.status(200).json({
 			message: "Question Found",
-			payload: foundQuestion,
+			data: foundQuestion,
 		});
 	} catch (error) {
 		res.status(404).json({
@@ -80,10 +79,10 @@ module.exports.getAllAnswers = async (req, res) => {
 		const question = await Question.findById(id).populate([
 			{ path: "answers", populate: { path: "author" } },
 		]);
-    return res.status(200).json({
-      message: 'Fetched all answers',
-      payload: question.answers
-    })
+		return res.status(200).json({
+			message: "Fetched all answers",
+			payload: question.answers,
+		});
 	} catch (error) {
 		console.log(error);
 		return res.status(400);
