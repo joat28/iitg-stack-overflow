@@ -17,6 +17,7 @@ const ViewQuestionScreen = () => {
   useEffect(() => {
     getQuestion(location.pathname.split('/')[2])
       .then((res) => {
+        console.log(res.data.payload)
         setPost(res.data.payload)
         dispatch(stopLoadingAction())
       })

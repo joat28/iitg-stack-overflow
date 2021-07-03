@@ -37,3 +37,9 @@ export const createQuestion = (Question) => API.post("/question/ask", Question);
 
 //Update one Question by Id
 export const updateQuestion = (Question, id) => API.put("/question/"+id, Question);
+
+//Update one Question by Id
+// export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
+
+//Answer a Question
+export const answerQuestion = (Answer, id) => API.post('/answer/'+id, Answer);
