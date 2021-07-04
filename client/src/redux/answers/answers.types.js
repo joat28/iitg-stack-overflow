@@ -1,0 +1,4 @@
+export const GET_ANSWERS = 'GET_ANSWERS';
+export const ADD_ANSWER = 'ADD_ANSWER';
+export const DELETE_ANSWER = 'DELETE_ANSWER';
+export const SET_LOADING_ANSWERS = 'SET_LOADING_ANSWERS';

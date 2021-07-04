@@ -6,7 +6,7 @@ const router = express.Router();
 
 //ALL QUESTIONS
 router.get("/", questionController.getAll);
-
+router.get("/answers/:question_id", questionController.getAllAnswers);
 //ONE QUESTION
 router.post("/ask", authCheck, questionController.createOne);
 router.get("/:question_id", questionController.getOne);

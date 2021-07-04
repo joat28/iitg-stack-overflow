@@ -8,7 +8,7 @@ import UserProfileLogo from "../../assets/svg/temp";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const { loading } = useSelector((state) => state.loading);
+  const { loading } = useSelector((state) => state.auth.loading);
   const history = useHistory();
   const dispatch = useDispatch();
 

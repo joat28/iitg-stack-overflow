@@ -4,43 +4,38 @@ import Alert from "../../components/Alert/Alert";
 import { useHistory, useLocation } from "react-router-dom";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 // import ViewQuestion from "../../components/ViewQuestion/ViewQuestion"
-import { getQuestion } from "../../api/index";
-import { setLoadingAction, stopLoadingAction } from "../../redux/loading/loading.actions";
-import { useDispatch } from "react-redux";
-import {getQuestionAction} from "../../redux/questions/questions.actions"
+// import { getQuestion } from "../../api/index";
+// import { setLoadingAction, stopLoadingAction } from "../../redux/loading/loading.actions";
+import { useSelector, useDispatch } from "react-redux";
 import QuestionSection from './QuestionSection/QuestionSection';
+import AnswerSection from './AnswerSection/AnswerSection'
+import Spinner from '../../components/Spinner/Spinner';
+import {setLoadingQuestion} from "../../redux/questions/questions.actions";
+import {setLoadingAnswers} from "../../redux/answers/answers.actions";
 
 const ViewQuestionScreen = () => {
   // const [post, setPost] = useState({});
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  useEffect(() => {
-    dispatch(getQuestionAction(location.pathname.split('/')[2]))
-    // getQuestion(location.pathname.split('/')[2])
-    //   .then((res) => {
-    //     console.log(res.data.payload)
-    //     setPost(res.data.payload)
-    //     dispatch(stopLoadingAction())
-    //   })
-    //   .catch((error) => {
-    //     dispatch(stopLoadingAction())
-    //     history.push('/notfound')
-    //   });
-  }, [dispatch,history]);
+
+  dispatch(setLoadingQuestion());
+  dispatch(setLoadingAnswers());
 
   return (
     <React.Fragment>
       <div className="newClass"></div>
         <Alert />
-        <LeftSideBar/>
-        
-        <div className="bg-white flex flex-row pl-72 ">
+        <LeftSideBar/>  
+        {/* {(loadingAnswer || loadingQuestion) && <Spinner />}      */}
+         <div className="bg-white flex flex-row pl-72 ">
+           <div className="flex flex-col">
           <QuestionSection id={location.pathname.split("/")[2]} />
+          <AnswerSection question_id={location.pathname.split("/")[2]} />
+          </div>
           <RightSideBar />
         </div>
-
-
+        
     </React.Fragment>
   );
 };

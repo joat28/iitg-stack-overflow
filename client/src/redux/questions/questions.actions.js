@@ -4,6 +4,7 @@ import {
 	GET_TOP_QUESTIONS,
 	GET_TAG_QUESTIONS,
 	DELETE_QUESTION,
+	SET_LOADING_QUESTION,
 	ADD_QUESTION,
 } from "./questions.types";
 import axios from "axios";
@@ -19,7 +20,7 @@ export const getQuestionsAction = () => async (dispatch) => {
 			type: GET_QUESTIONS,
 			payload: res.data.data,
 		});
-		dispatch(stopLoadingAction());
+		// dispatch(stopLoadingAction());
 	} catch (err) {
 		dispatch(
 			setAlert({
@@ -27,7 +28,7 @@ export const getQuestionsAction = () => async (dispatch) => {
 				status: false,
 			})
     );
-    dispatch(stopLoadingAction());
+    // dispatch(stopLoadingAction());
 	}
 };
 
@@ -39,6 +40,7 @@ export const getQuestionAction = (id) => async (dispatch) => {
 			type: GET_QUESTION,
 			payload: res.data.data,
     });
+	// dispatch(stopLoadingAction());
 	} catch (err) {
 		dispatch(
 			setAlert({
@@ -46,8 +48,8 @@ export const getQuestionAction = (id) => async (dispatch) => {
 				status: false,
 			})
 		);
+		// dispatch(stopLoadingAction());
 	}
-  dispatch(stopLoadingAction());
 };
 
 export const getTopQuestions = () => async (dispatch) => {
@@ -82,3 +84,9 @@ export const getTagQuestions = (tagName) => async (dispatch) => {
 		);
 	}
 };
+
+export const setLoadingQuestion = () => async (dispatch) => {
+	dispatch({
+		type: SET_LOADING_QUESTION
+	})
+}

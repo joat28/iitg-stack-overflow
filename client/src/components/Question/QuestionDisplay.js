@@ -5,8 +5,7 @@ import Spinner from "../Spinner/Spinner";
 import { NavLink } from "react-router-dom";
 
 const QuestionDisplay = (props) => {
-  const loading = useSelector((state) => state.loading.loading);
-  const questions = useSelector((state) => state.question.questions);
+  const {loading,questions} = useSelector((state) => state.question);
 
   // const tagsFromProps = props.tagsArray;
   // const newSetOfQuestions = new Set();
@@ -27,7 +26,7 @@ const QuestionDisplay = (props) => {
       )}
 
       {!loading && (
-        <div className="flex flex-col mt-16 mb-10 w-screen">
+        <div className="flex flex-col mt-16 mb-10 w-screen border-l border-gray-300">
           <div className="flex justify-between items-center py-4 px-8">
             <h1 className="text-2xl font-semibold">Top Questions</h1>
             <NavLink to="/question/ask">

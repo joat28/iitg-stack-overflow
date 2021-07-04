@@ -20,6 +20,7 @@ export const loadUser = () => async (dispatch) => {
           type: LOGIN_SUCCESS,
           payload: res.data.data,
         });
+        dispatch(stopLoadingAction());
       })
     }
 };

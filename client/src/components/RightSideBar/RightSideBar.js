@@ -5,7 +5,7 @@ import WatchedTags from "./WatchedTags";
 import {useSelector} from 'react-redux'
 
 const RightSideBar = (props) => {
-  const loading = useSelector((state) => state.loading.loading);
+  const loading = useSelector((state) => state.question.loading);
   
   return (
     <>   

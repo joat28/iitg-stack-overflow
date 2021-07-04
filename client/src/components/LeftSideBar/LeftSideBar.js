@@ -11,7 +11,7 @@ const LeftSideBar = (props) => {
 	}
 	
 	return (
-		<div className="w-72 fixed z-0 border-gray-300 border-r h-screen text-right pl-32 pt-20 ">
+		<div className="w-72 fixed z-0 h-screen text-right pl-32 pt-20 ">
 			<div className="my-2">
 				<NavLink
 					onClick={clickHandler}

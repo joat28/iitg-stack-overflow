@@ -1,7 +1,7 @@
 import { SET_LOADING, STOP_LOADING } from "./loading.types";
 
 const initialState = {
-  loading: true,
+  loading: true
 };
 
 export const loadingReducer = (state = initialState, action) => {

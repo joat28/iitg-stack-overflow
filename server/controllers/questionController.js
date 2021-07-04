@@ -75,13 +75,14 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.getAllAnswers = async (req, res) => {
 	try {
-		const id = req.body.questionId;
+		// console.log('inside')
+		const id = req.params.question_id;
 		const question = await Question.findById(id).populate([
 			{ path: "answers", populate: { path: "author" } },
 		]);
 		return res.status(200).json({
 			message: "Fetched all answers",
-			payload: question.answers,
+			data: question.answers,
 		});
 	} catch (error) {
 		console.log(error);

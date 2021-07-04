@@ -50,7 +50,6 @@ const App = () => {
         <Route path="*" component={NotFoundScreen}></Route>
         </Switch>
         {/* <Route path="/questions" exact component={QuestionsScreen} /> */}
-        <Footer />
       </BrowserRouter>
     </div>
   );

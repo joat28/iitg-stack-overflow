@@ -11,7 +11,7 @@ const PostQuestion = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const loading = useSelector((state) => state.loading.loading);
+  const {loading} = useSelector((state) => state.loading);
 
   useEffect(() => {
     if (!isAuthenticated && !loading) {

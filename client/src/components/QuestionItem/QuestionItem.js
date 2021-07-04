@@ -6,7 +6,7 @@ import { setLoadingAction} from "../../redux/loading/loading.actions";
 
 const QuestionItem = (props) => {
 	const question = props.data;
-  const dispatch = useDispatch();
+  	const dispatch = useDispatch();
 	const clickHandler = (event) => {
     dispatch(setLoadingAction());
     dispatch(getQuestionAction(props.data._id));
