@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
 import Alert from "../Alert/Alert";
 import {useHistory} from 'react-router-dom';
+import { createQuestionAction } from "../../redux/questions/questions.actions";
 
 const QuestionCard = () => {
   const dispatch = useDispatch();;
@@ -13,31 +14,23 @@ const QuestionCard = () => {
   const [tags, setTags] = useState("");
   const user = useSelector((state) => state.auth.user);
   const history = useHistory();
+
   const clickHandler = (event) => {
     event.preventDefault();
-    const tagsArray = tags.split(" ").map(tag => tag.toLowerCase());
-    const newPost = { title, description, tags: tagsArray, author: user._id };
-    // console.log(newPost);
-    createQuestion(newPost)
-      .then((res) => {
-        //console.log(res);
-        dispatch(setAlert({
-          message: "Question Posted !",
-          status: true,
-        }));
-        //TODO: redirect to the particular question later  
-        history.push('/');
-      
-      })
-      .catch((error) =>
-        dispatch(
-          setAlert({
-            message: error.message,
-            status: false,
-          })
-        )
-      );
-  };
+    const tagsArray = tags.trim().split(" ").map(tag => tag.toLowerCase());
+    if (tags.trim() === "" || description.trim() === "" || title.trim() === "") {
+      dispatch(setAlert({
+        message: "All fields are required.",
+        status: false
+      }));
+      return;
+    }
+    else {
+      const newPost = { title, description, tags: tagsArray, author: user._id };
+      // console.log(newPost);
+      dispatch(createQuestionAction(newPost, history));
+    };
+  }
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -101,5 +94,6 @@ const QuestionCard = () => {
     </div>
   );
 };
+
 
 export default QuestionCard;

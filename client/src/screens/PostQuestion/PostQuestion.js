@@ -13,7 +13,6 @@ const PostQuestion = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loading = useSelector((state) => state.loading.loading);
 
-  useEffect(() => {
     if (!isAuthenticated && !loading) {
       dispatch(
         setAlert({
@@ -23,7 +22,6 @@ const PostQuestion = () => {
       );
       history.push("/login");
     }
-  })
 
   return (
     <>

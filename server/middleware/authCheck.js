@@ -9,7 +9,8 @@ module.exports = checkAuth = (req, res, next) => {
       isAuthenticated: false,
       message: "Header not present",
     });
-  } else {
+  } 
+  else {
     const token = authHeader.split(" ")[1];
     // console.log("Token logged in authCheck.js ", token)
     if (!token) {
@@ -18,7 +19,8 @@ module.exports = checkAuth = (req, res, next) => {
         isAuthenticated: false,
         message: "Token not given",
       });
-    } else {
+    }
+    else {
       jwt.verify(token, "secret", (error, user) => {
         if (error) {
           // console.log('Error in token, not valid!');

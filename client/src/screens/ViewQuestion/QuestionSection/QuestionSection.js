@@ -1,3 +1,79 @@
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getQuestionAction } from '../../../redux/questions/questions.actions';
+import { answerQuestion } from '../../../api';
+import { setAlert } from '../../../redux/alert/alert.actions';
+import { ADD_ANSWER, GET_ANSWERS } from '../../../redux/answers/answers.types';
+import {getAnswers} from "../../../redux/answers/answers.actions"
+import { useHistory } from 'react-router-dom';
+
+const QuestionSection = (props) => {
+    const {question,loading} = useSelector(state => state.question)
+    const {loadingAnswers} = useSelector(state => state.answer)
+	const {user} = useSelector(state => state.auth)
+
+	const history = useHistory()
+    const dispatch = useDispatch();    
+	const [ans, setAns] = useState("");
+
+    useEffect(() => {
+        dispatch(getQuestionAction(props.question_id));
+    },[dispatch])
+
+	const answerChangeHandler = (event) => {
+		setAns(event.target.value);
+    };
+    
+    const answerSubmitHandler = (event) => {
+		event.preventDefault();
+		answerQuestion({ ans, user }, question._id)
+			.then((res) => {
+				dispatch({
+				  type: ADD_ANSWER
+				})
+				dispatch(getAnswers(question._id));
+				dispatch(
+					setAlert({
+						message: "Your answer has been added successfully",
+						status: true,
+					})
+				);
+                setAns("");
+			})
+			.catch((error) => {
+				dispatch(setAlert({ message: "Please login to answer question", status: false }));
+				history.push('/login')
+            });
+            
+	};
+
+    return (
+        <>
+        {(!loading && !loadingAnswers && question) && <div className="mt-16">
+                <span>{question.title}</span>
+				<textarea
+						onChange={answerChangeHandler}
+						value={ans}
+						type="text"
+						className="border-2 border-gray-300 rounded mx-4 mb-30 h-40 px-3 py-2"
+					/>
+				<div className="px-3 flex flex-start">
+					<button
+						onClick={answerSubmitHandler}
+						className=" p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10"
+					>
+						Post your Answer
+					</button>
+				</div>
+        </div>}
+        </>
+    );
+};
+
+export default QuestionSection;
+
+/*
 import React, { useState, useEffect } from "react";
 import UpArrow from "../../assets/svg/UpArrow";
 import DownArrow from "../../assets/svg/DownArrow";
@@ -49,7 +125,6 @@ const ViewQuestion = (props) => {
 				setTimeout(() => {
 					dispatch(stopLoadingAction());
 				}, 2000);
-				setAns("")
 			})
 			.catch((error) => {
 				dispatch(setAlert({ message: error.message, status: false }));
@@ -86,7 +161,7 @@ const ViewQuestion = (props) => {
 									</span>
 								))}
 							</div>
-							{/* <div className="text-right pr-11"></div> */}
+							{/* <div className="text-right pr-11"></div> *//*}
 							<div className="text-right flex justify-end  text-xs  ">
 								<div className=" px-2 m-1 h-10 rounded bg-blue-100 border-blue-300 border ">
 									<span className="text-gray-500">asked </span>
@@ -122,21 +197,4 @@ const ViewQuestion = (props) => {
 		</React.Fragment>
 	);
 };
-
-/*
-answers: []
-author: {_id: "60db657dea567a1bec8d0239", name: "prabhat", email: "prabhat@gmail.com", password: "$2a$10$bI5wV/CrB6kaepm8F5yDI.qcfKi6diCn50c2CvNni/NKrKqoKsqcq", createdAt: "2021-06-29T18:25:01.186Z", …}
-comments: []
-createdAt: "2021-06-29T18:42:00.255Z"
-description: "how to implement login in stackoverflow"
-downvotes: 0
-tags: (3) ["css", "html", "web"]
-title: "testing the api"
-updatedAt: "2021-06-29T18:42:00.255Z"
-upvotes: 0
-__v: 0
-_id: "60db6978790e3a1e380c588c"
-__proto__: Object
 */
-
-export default ViewQuestion;

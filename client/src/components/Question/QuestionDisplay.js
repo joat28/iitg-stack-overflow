@@ -1,32 +1,36 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import QuestionItem from "../QuestionItem/QuestionItem";
 import Spinner from "../Spinner/Spinner";
 import { NavLink } from "react-router-dom";
+import { getQuestionsAction } from "../../redux/questions/questions.actions";
 
 const QuestionDisplay = (props) => {
-  const loading = useSelector((state) => state.loading.loading);
-  const questions = useSelector((state) => state.question.questions);
+  const {questions,loading} = useSelector((state) => state.question);
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(getQuestionsAction())
+  }, [dispatch])
+  // const tagsFromProps = props.tagsArray;
+  // const newSetOfQuestions = new Set();
 
-  const tagsFromProps = props.tagsArray;
-  const newSetOfQuestions = new Set();
+  // tagsFromProps.forEach((tag) => {
+  //   const append = questions.filter((question) => question.tags.includes(tag));
+  //   append.forEach((item) => newSetOfQuestions.add(item));
+  // });
 
-  tagsFromProps.forEach((tag) => {
-    const append = questions.filter((question) => question.tags.includes(tag));
-    append.forEach((item) => newSetOfQuestions.add(item));
-  });
-
-  const renderQuestions =
-    newSetOfQuestions.size === 0 ? questions : [...newSetOfQuestions];
+  // const renderQuestions =
+  //   newSetOfQuestions.size === 0 ? questions : [...newSetOfQuestions];
   // console.log(renderQuestions);
   return (
     <>
       {loading && <Spinner />}
-      {!loading && renderQuestions.length === 0 && (
+      {!loading && questions && questions.length === 0 && (
         <p className="mt-16 w-screen">No questions to show.</p>
       )}
 
-      {!loading && (
+      {(!loading && questions) && (
         <div className="flex flex-col mt-16 mb-10 w-screen">
           <div className="flex justify-between items-center py-4 px-8">
             <h1 className="text-2xl font-semibold">Top Questions</h1>
@@ -37,8 +41,8 @@ const QuestionDisplay = (props) => {
             </NavLink>
           </div>
 
-          {renderQuestions.map((question) => (
-            <QuestionItem key={question._id} data={question} />
+          {questions.length>0 && questions.map((question) => (
+            <QuestionItem key={question._id} data={question} loading={loading} />
           ))}
         </div>
       )}

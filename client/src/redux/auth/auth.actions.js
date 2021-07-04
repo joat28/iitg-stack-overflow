@@ -1,6 +1,6 @@
 // import axios from "axios";
 import { setAlert } from "../alert/alert.actions.js";
-import { getQuestionAction } from "../questions/questions.actions";
+import { getQuestionsAction } from "../questions/questions.actions";
 import { stopLoadingAction } from "../loading/loading.actions.js";
 import {
   REGISTER_SUCCESS,
@@ -22,23 +22,15 @@ export const loadUser = () => (dispatch) => {
           type: LOGIN_SUCCESS,
           payload: res.data.data,
         });
-      })
-      .then(() => {
-        getQuestions()
-        .then((res) => dispatch(getQuestionAction(res.data.data)))
-        .then(() => dispatch(stopLoadingAction()));
+        dispatch(stopLoadingAction());
       })
       .catch((error) => {
-         console.log(error)
-         getQuestions()
-        .then((res) => dispatch(getQuestionAction(res.data.data)))
-        .then(() => dispatch(stopLoadingAction()));
+         console.log(error);
+         dispatch(stopLoadingAction());
       });
   }
   else {
-    getQuestions()
-        .then((res) => dispatch(getQuestionAction(res.data.data)))
-        .then(() => dispatch(stopLoadingAction()));
+    dispatch(stopLoadingAction());
   }
 };
 

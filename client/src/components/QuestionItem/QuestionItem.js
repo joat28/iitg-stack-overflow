@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 
 const QuestionItem = (props) => {
   const question = props.data;
+  const loading = props.loading;
   return (
     <>
-      <div className="p-3 flex bg-white border-r border-t border-b border-gray-200 text-left">
+      {!loading && <div className="p-3 flex bg-white border-r border-t border-b border-gray-200 text-left">
         <div className="flex mr-2 items-center">
           <span className=" flex flex-col text-xs text-center py-2 px-5 text-gray-500">
             <span className="text-sm">
@@ -32,7 +33,7 @@ const QuestionItem = (props) => {
             <span className="text-right">{question.author.name}</span>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 };

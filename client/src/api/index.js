@@ -7,7 +7,7 @@ const API = axios.create({
 });
 
 API.defaults.headers.common = {
-  authorization: `Bearer ${localStorage.getItem("token")}`,
+  authorization: `Bearer ${localStorage.token}`,
 };
 
 //======== AUTH =========
@@ -42,7 +42,7 @@ export const updateQuestion = (Question, id) => API.put("/question/"+id, Questio
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
 //Answer a Question: Answer & Question ID passed
-export const answerQuestion = (Answer, id) => API.post('/answer/' + id, Answer);
+export const answerQuestion = (Answer, question_id) => API.post('/question/answers/' + question_id, Answer);
 
 //Get all the answers
-export const getAllAnswers = (questionId) => API.get('/question/answers', questionId);
+export const getAllAnswers = (questionId) => API.get('/question/answers/'+questionId);
