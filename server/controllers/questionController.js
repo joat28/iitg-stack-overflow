@@ -1,7 +1,9 @@
 const Question = require("../models/Question");
 const Answer = require("../models/Answer");
-// ONE QUESTION
 
+
+
+//CREATE ONE QUESTION 
 module.exports.createOne = async (req, res) => {
   try {
     const { title, description, tags, author } = req.body;
@@ -23,6 +25,8 @@ module.exports.createOne = async (req, res) => {
     });
   }
 };
+
+//GET ONE QUESTION BY ID
 module.exports.getOne = async (req, res) => {
   try {
     const foundQuestion = await Question.findOne({
@@ -48,16 +52,37 @@ module.exports.getOne = async (req, res) => {
     });
   }
 };
+
+//UPDATE ONE QUESTION BY ID
 module.exports.updateOne = async (req, res) => {
-  console.log("req.body", req.body);
-  const id = req.body._id;
-  console.log(id);
-  const newQuestion = await Question.findOneAndReplace({ _id: id }, req.body);
+  try {
+  const id = req.params.question_id;
+  const { title, description, tags} = req.body;
+  const tagsArray = tags.trim().split(' ');
+  const newQuestion = await Question.findOneAndUpdate({ _id: id }, { title, description, tags: tagsArray });
   // console.log("newQuestion ", newQuestion);
-  res.end();
+  return res.status(200).json({
+    message: "Question updated successfully",
+  })
+  } catch (error) {
+     return res.status(404).json({
+       message: "Unable to update question"
+      //  error: error.message
+      })
+  }
 };
 
-module.exports.deleteOne = async (req, res) => {};
+//DELETE ONE QUESTION BY ID
+// module.exports.deleteOne = async (req, res) => {
+//   const id = req.params.id;
+//   const searchedQuestion = await Question.findOne({ _id: id });
+  
+//   if(!searchedQuestion) {
+//     return res.status(404).json({
+//       message: "No question with the ID found!!",
+//     })
+//   }
+// };
 
 // ALL QUESTIONS
 module.exports.getAll = async (req, res) => {
@@ -73,6 +98,8 @@ module.exports.getAll = async (req, res) => {
     });
   }
 };
+
+//GET ALL THE ANSWERS FOR ONE QUESTION BY ID
 
 module.exports.getAllAnswers = async (req, res) => {
   try {
@@ -94,6 +121,7 @@ module.exports.getAllAnswers = async (req, res) => {
   }
 };
 
+//CREATE AN ANSWER, FOR A QUESTION
 module.exports.createAnswer = async (req, res) => {
   try {
     const question_id = req.params.question_id;

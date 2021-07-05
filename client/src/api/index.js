@@ -36,7 +36,9 @@ export const getQuestion = (id) => {
 export const createQuestion = (Question) => API.post("/question/ask", Question);
 
 //Update one Question by Id
-export const updateQuestion = (Question, id) => API.put("/question/"+id, Question);
+export const updateQuestion = (Question, id) => API.patch("/question/" + id, Question);
+
+export const deleteQuestion = (id) => API.delete("/question/" + id);
 
 //Update one Question by Id
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
@@ -46,3 +48,5 @@ export const answerQuestion = (Answer, question_id) => API.post('/question/answe
 
 //Get all the answers
 export const getAllAnswers = (questionId) => API.get('/question/answers/'+questionId);
+
+

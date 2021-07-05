@@ -1,7 +1,6 @@
-import { GET_QUESTIONS, CREATE_QUESTION, GET_QUESTION,GET_QUESTION_REQUEST } from "./questions.types";
-import { createQuestion } from "../../api/index";
+import { GET_QUESTIONS, CREATE_QUESTION, GET_QUESTION,GET_QUESTION_REQUEST, DELETE_QUESTION } from "./questions.types";
+import { createQuestion, deleteQuestion } from "../../api/index";
 import { setAlert } from "../alert/alert.actions";
-import { useHistory } from "react-router";
 import { getQuestions, getQuestion } from "../../api/index";
 
 // GET all questions
@@ -59,3 +58,21 @@ export const createQuestionAction = (question, history) => async (dispatch) => {
       );
 
 }
+
+export const removeQuestion = (id, history) => async (dispatch) => {
+  try {
+    const res = await deleteQuestion(id);
+
+    dispatch({
+      type: DELETE_QUESTION,
+    });
+    
+    dispatch(setAlert({
+      message: 'Question deleted successfully',
+      status: true
+    }));
+    history.push('/');
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+  }
+};

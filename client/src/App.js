@@ -44,6 +44,7 @@ const App = () => {
         <Route path="/" exact component={HomeScreen} />
         <Route path="/questions" exact component={HomeScreen} />
         <Route path="/question/ask" exact component={PostQuestionScreen} />
+        {/* <Route path="/question/edit/:id" exact component={PostQuestionScreen} /> */}
         <Route path="/question/:id" exact component={ViewQuestionScreen}/>
         <Route path="/tags" exact component={HomeScreen} />
         <Route path="/users" exact component={HomeScreen} />

@@ -6,8 +6,10 @@ import Alert from "../../components/Alert/Alert";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
+import { useLocation } from "react-router";
 
 const PostQuestion = () => {
+
   const history = useHistory();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);

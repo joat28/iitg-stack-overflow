@@ -11,12 +11,12 @@ const commentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    question: {
+    question_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Question",
       default: null,
     },
-    answer: {
+    answer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Answer",
       default: null,

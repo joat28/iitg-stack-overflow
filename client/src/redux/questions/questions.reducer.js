@@ -1,4 +1,4 @@
-import { GET_QUESTIONS,GET_QUESTION,CREATE_QUESTION,GET_QUESTION_REQUEST } from "./questions.types";
+import { GET_QUESTIONS,GET_QUESTION,CREATE_QUESTION,GET_QUESTION_REQUEST, DELETE_QUESTION} from "./questions.types";
 
 const initialState = {
 	questions: null,
@@ -31,6 +31,19 @@ export const questionReducer = (state = initialState, action) => {
 				question: action.payload,
 				loading: false,
 			};
+		// case DELETE_QUESTION_REQUEST:
+		// 	return {
+		// 		...state, 
+		// 		loading:true,
+		// 	}
+		case DELETE_QUESTION:{
+			return{
+				...state,
+				question: null,
+        		// questions: state.questions.filter((question) => question.id !== action.payload),
+        		loading: true,
+			}
+		}
 		default:
 			return state;
 	}

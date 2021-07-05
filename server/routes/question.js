@@ -11,8 +11,8 @@ router.post("/answers/:question_id", authCheck ,questionController.createAnswer)
 //ONE QUESTION
 router.post("/ask", authCheck, questionController.createOne);
 router.get("/:question_id", questionController.getOne);
-router.put("/:question_id", authCheck, questionController.updateOne);
-router.delete("/:question_id", authCheck, questionController.deleteOne);
+router.patch("/:question_id", authCheck, questionController.updateOne);
+// router.delete("/:question_id", authCheck, questionController.deleteOne);
 
 //ALL QUESTIONS
 router.get("/", questionController.getAll);
