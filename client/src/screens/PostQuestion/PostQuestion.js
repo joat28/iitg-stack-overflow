@@ -27,7 +27,7 @@ const PostQuestion = () => {
     <>
       {!loading  && <Alert />}
       {!loading && isAuthenticated &&
-      <div className="pl-40">
+      <div className="pl-40 min-h-screen">
         <div className="flex pt-4">
           <div className="pt-28 pb-12 text-2xl text-left mr-96">
             Ask a public question

@@ -4,7 +4,7 @@ import QuestionItem from "../QuestionItem/QuestionItem";
 import Spinner from "../Spinner/Spinner";
 import { NavLink } from "react-router-dom";
 import { getQuestionsAction } from "../../redux/questions/questions.actions";
-
+import Nothing from "../../assets/svg/Nothing";
 const QuestionDisplay = (props) => {
   const {questions,loading} = useSelector((state) => state.question);
   const dispatch = useDispatch()
@@ -26,10 +26,6 @@ const QuestionDisplay = (props) => {
   return (
     <>
       {loading && <Spinner />}
-      {!loading && questions && questions.length === 0 && (
-        <p className="mt-16 w-screen">No questions to show.</p>
-      )}
-
       {(!loading && questions) && (
         <div className="flex flex-col mt-16 mb-10 w-screen">
           <div className="flex justify-between items-center py-4 px-8">
@@ -40,7 +36,12 @@ const QuestionDisplay = (props) => {
             </button>
             </NavLink>
           </div>
-
+          {questions && questions.length === 0 && (
+            <>
+            <p className="mt-16 text-lg">No questions to show.</p>
+            <div><Nothing/></div>
+            </>
+          )}
           {questions.length>0 && questions.map((question) => (
             <QuestionItem key={question._id} data={question} loading={loading} />
           ))}

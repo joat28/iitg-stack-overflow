@@ -13,11 +13,13 @@ const HomeScreen = () => {
   };
   return (
     <React.Fragment>
+      <div className="min-h-screen bg-white">
       <Alert />
       <LeftSideBar />
       <div className="bg-white flex flex-row pl-72">
         <QuestionDisplay tagsArray={tagsArray} />
         <RightSideBar getTags={getTags} />
+      </div>
       </div>
     </React.Fragment>
   );

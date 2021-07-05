@@ -7,7 +7,7 @@ const Footer = () => {
     const loading = useSelector(state => state.loading.loading);
     //TODO: Report a Problem/Contact Us
     return (
-        <div className ={`absolute w-full bg-gray-800 text-gray-400 p-10 ${loading? "invisible":"visible" }`}>
+        <div className ={`absolute inset-x-0 w-full bg-gray-800 text-gray-400 p-10 ${loading? "invisible":"visible" }`}>
             <div className="flex flex-col text-lg">
             <span >IITG Stackoverflow</span>
             <span >Coding Club, IIT Guwahati</span>
