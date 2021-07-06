@@ -8,14 +8,17 @@ import { useHistory } from 'react-router-dom';
 import EditQuestion from "./EditQuestion"
 
 const QuestionSection = (props) => {
-    const {question,loading} = useSelector(state => state.question)
-    const {loadingAnswers} = useSelector(state => state.answer)
+
+	const {question,loading} = useSelector(state => state.question);
+	const loadingAnswers = useSelector(state => state.answer.loading);
+
+	const {user} = useSelector(state => state.auth);
 
 	const [clicked,setClicked] = useState(false);
 	const history = useHistory()
     const dispatch = useDispatch();    
     useEffect(() => {
-        dispatch(getQuestionAction(props.question_id));
+        dispatch(getQuestionAction(props.question_id, history));
 		window.scrollTo(0,0)
     },[dispatch])
 
@@ -64,8 +67,8 @@ const QuestionSection = (props) => {
 							</div>
 							<div className="pt-2">
 								{/*TODO: authenticate user first */}
-							<button onClick={editClickHandler}><span className="text-gray-400">edit</span></button>
-							<button onClick={deleteQuestionHandler}><span className="text-red-500 ml-2">delete</span></button>
+							{question.author._id === user._id && <button onClick={editClickHandler}><span className="text-gray-400">edit</span></button>}
+							{question.author._id === user._id && <button onClick={deleteQuestionHandler}><span className="text-red-500 ml-2">delete</span></button>}
 							</div>
 							{/* <div className="text-right pr-11"></div> */}
 							{<div className="text-right flex justify-end  text-xs  ">

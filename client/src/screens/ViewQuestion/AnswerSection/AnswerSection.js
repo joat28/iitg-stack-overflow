@@ -63,7 +63,7 @@ const AnswerSection = (props) => {
             {answers.length} Answers
           </div>
           {answers.map((answer) => (
-            <AnswerItem answer={answer} />
+            <AnswerItem answer={answer} user={user}/>
           ))}
           <textarea
             onChange={answerChangeHandler}

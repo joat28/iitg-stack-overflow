@@ -9,9 +9,10 @@ const EditQuestion = (props) => {
     const dispatch = useDispatch();
 
     const question = props.question;
+
     const [title, setTitle] = useState(question.title);
 	const [description, setDescription] = useState(question.description);
-    const [tags, setTags] = useState(question.tags.join(" "));
+    const [tags, setTags] = useState(question.tags.join(" "))
 	// const user = useSelector((state) => state.auth.user)
         
     const onChangeTitle = (event) => {
@@ -26,14 +27,13 @@ const EditQuestion = (props) => {
     const submitClickHandler = (event) => {
         event.preventDefault();
         if (tags.trim() === "" || description.trim() === "" || title.trim() === "") {
-            dispatch(setAlert({
+            return dispatch(setAlert({
               message: "All fields are required.",
               status: false
             }));
-            return;
           }
         updateQuestion({ title, description, tags }, question._id).then(res => {
-            console.log('Post edited!');
+            // console.log('Post edited!');
             dispatch(setAlert({
                 message: res.data.message,
                 status: true

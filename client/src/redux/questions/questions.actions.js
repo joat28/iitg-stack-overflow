@@ -16,7 +16,7 @@ export const getQuestionsAction = () => (dispatch) => {
 
 // Get single question by id
 
-export const getQuestionAction = (question_id) => (dispatch) => {
+export const getQuestionAction = (question_id, history) => (dispatch) => {
   // console.log(questions);
   dispatch({
     type: GET_QUESTION_REQUEST
@@ -26,7 +26,9 @@ export const getQuestionAction = (question_id) => (dispatch) => {
       type: GET_QUESTION,
       payload: res.data.data,
     });
-  }).catch()
+  }).catch((error) => {
+    history.push('/notfound')
+  })
 };
 
 // CREATE a single question
