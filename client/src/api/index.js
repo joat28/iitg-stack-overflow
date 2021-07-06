@@ -49,4 +49,7 @@ export const answerQuestion = (Answer, question_id) => API.post('/question/answe
 //Get all the answers
 export const getAllAnswers = (questionId) => API.get('/question/answers/'+questionId);
 
+//Update one answerby Id
+export const updateAnswer= (Answer, id) => API.patch("/answer/" + id, Answer);
+
 

@@ -11,7 +11,7 @@ import AnswerSection from "./AnswerSection/AnswerSection"
 import SideBarWidget from '../../components/RightSideBar/SideBarWidget'
 
 const ViewQuestionScreen = () => {
-  const [post, setPost] = useState({});
+  // const [post, setPost] = useState({});
   const location = useLocation();
   
   const loadingAnswers = useSelector(state => state.answer.loading)
@@ -31,7 +31,11 @@ const ViewQuestionScreen = () => {
   //       dispatch(stopLoadingAction())
   //     });
   // }, [dispatch,history]);
-
+  const [screen, setScreen] = useState(false);
+  const renderScreen = () => {
+    setScreen(true);
+    console.log('Called ')
+  }
   return (
     <React.Fragment>
         <Alert />
@@ -39,8 +43,8 @@ const ViewQuestionScreen = () => {
         
         <div className="bg-white flex flex-row pl-72 min-h-screen">
           <div className="flex flex-col w-3/4">
-            <QuestionSection question_id={location.pathname.split('/')[2]} />
-            <AnswerSection question_id = {location.pathname.split('/')[2]} />
+            <QuestionSection renderScreen={renderScreen} question_id={location.pathname.split('/')[2]} />
+            <AnswerSection renderScreen={renderScreen} question_id = {location.pathname.split('/')[2]} />
           </div>
           <div className="mt-16 mr-10 ml-10 w-1/4">
           {/* <div className="flex flex-col w-1/3 ml-10 mr-10 mt-16 "> */}

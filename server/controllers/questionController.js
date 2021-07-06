@@ -59,12 +59,21 @@ module.exports.updateOne = async (req, res) => {
   const id = req.params.question_id;
   const { title, description, tags} = req.body;
   const tagsArray = tags.trim().split(' ');
+  const question = await Question.findById(id);
+  // console.log(question.author._id)
+  // console.log(req.user._id)
+  if(question.author._id.toString()!== req.user._id.toString()) {
+    return res.status(401).json({
+      message: "You are not authorized to edit this question"
+    })
+  }
   const newQuestion = await Question.findOneAndUpdate({ _id: id }, { title, description, tags: tagsArray });
   // console.log("newQuestion ", newQuestion);
   return res.status(200).json({
     message: "Question updated successfully",
   })
   } catch (error) {
+    console.log('Inside in updateQuestion ',error);
      return res.status(404).json({
        message: "Unable to update question"
       //  error: error.message
@@ -109,6 +118,7 @@ module.exports.getAllAnswers = async (req, res) => {
     ]);
 
     // console.log('answers is ', question.answers)
+    if(!question) throw new Error('Question not found');
     return res.status(200).json({
       message: "Fetched all answers",
       data: question.answers,
