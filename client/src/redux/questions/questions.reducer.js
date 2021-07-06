@@ -1,4 +1,4 @@
-import { GET_QUESTIONS,GET_QUESTION,CREATE_QUESTION,GET_QUESTION_REQUEST, DELETE_QUESTION} from "./questions.types";
+import { GET_QUESTIONS,GET_QUESTION,CREATE_QUESTION,GET_QUESTION_REQUEST, DELETE_QUESTION, GET_QUESTION_BY_TAGS} from "./questions.types";
 
 const initialState = {
 	questions: null,
@@ -14,6 +14,7 @@ export const questionReducer = (state = initialState, action) => {
 				...state,
 				loading: true
 			}
+		case GET_QUESTION_BY_TAGS:
 		case GET_QUESTIONS:
 			return {
 				...state,

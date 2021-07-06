@@ -16,7 +16,7 @@ const QuestionItem = (props) => {
           </span>
 
           <span className="flex flex-col text-center py-2 px-5 text-xs text-gray-500">
-            <span className="text-sm">{question.answers.length}</span> answers
+            <span className="text-sm">{question.answers.length}</span> { question.answers.length===1?"answer":"answers"}
           </span>
         </div>
         <div className="flex flex-col justify-between w-full">

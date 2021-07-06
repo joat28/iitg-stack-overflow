@@ -27,16 +27,20 @@ export const clearToken = () => API.delete("/logout");
 //AllQuestions
 export const getQuestions = () => API.get("/question");
 
+// ALL Questions By tags
+export const getQuestionsTags = (Tags) => API.post("/question/tags", Tags);
+
 // GET Single Question by ID
 export const getQuestion = (id) => {
-  return API.get('/question/'+id)
+  return API.get("/question/" + id);
 };
 
 //Create Question
 export const createQuestion = (Question) => API.post("/question/ask", Question);
 
 //Update one Question by Id
-export const updateQuestion = (Question, id) => API.patch("/question/" + id, Question);
+export const updateQuestion = (Question, id) =>
+  API.patch("/question/" + id, Question);
 
 export const deleteQuestion = (id) => API.delete("/question/" + id);
 
@@ -44,12 +48,12 @@ export const deleteQuestion = (id) => API.delete("/question/" + id);
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
 //Answer a Question: Answer & Question ID passed
-export const answerQuestion = (Answer, question_id) => API.post('/question/answers/' + question_id, Answer);
+export const answerQuestion = (Answer, question_id) =>
+  API.post("/question/answers/" + question_id, Answer);
 
 //Get all the answers
-export const getAllAnswers = (questionId) => API.get('/question/answers/'+questionId);
+export const getAllAnswers = (questionId) =>
+  API.get("/question/answers/" + questionId);
 
 //Update one answerby Id
-export const updateAnswer= (Answer, id) => API.patch("/answer/" + id, Answer);
-
-
+export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);

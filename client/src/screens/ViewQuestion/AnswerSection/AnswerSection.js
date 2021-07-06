@@ -60,16 +60,21 @@ const AnswerSection = (props) => {
       {!loading && !loadingQuestion && answers && (
         <div className="pl-2">
           <div className=" text-left ml-4 mt-4 text-xl">
-            {answers.length} Answers
+            {answers.length}
+            {answers.length===1?  " Answer": " Answers"} 
           </div>
           {answers.map((answer) => (
             <AnswerItem answer={answer} user={user}/>
           ))}
+
+          <div className="text-left text-xl pl-8 p-4">
+            Your answer
+          </div>
           <textarea
             onChange={answerChangeHandler}
             value={ans}
             type="text"
-            className=" border-2 border-gray-300 rounded mr-4 mb-30 h-56 p-2 w-11/12 focus:border-blue-300 outline-none"
+            className="whitespace-pre-line border-2 border-gray-300 rounded mr-4 mb-30 h-56 p-2 w-11/12 focus:border-blue-300 outline-none"
           />
           <div className="px-3 flex flex-start">
             <button

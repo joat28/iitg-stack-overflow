@@ -1,9 +1,7 @@
 const Question = require("../models/Question");
 const Answer = require("../models/Answer");
 
-
-
-//CREATE ONE QUESTION 
+//CREATE ONE QUESTION
 module.exports.createOne = async (req, res) => {
   try {
     const { title, description, tags, author } = req.body;
@@ -56,28 +54,31 @@ module.exports.getOne = async (req, res) => {
 //UPDATE ONE QUESTION BY ID
 module.exports.updateOne = async (req, res) => {
   try {
-  const id = req.params.question_id;
-  const { title, description, tags} = req.body;
-  const tagsArray = tags.trim().split(' ');
-  const question = await Question.findById(id);
-  // console.log(question.author._id)
-  // console.log(req.user._id)
-  if(question.author._id.toString()!== req.user._id.toString()) {
-    return res.status(401).json({
-      message: "You are not authorized to edit this question"
-    })
-  }
-  const newQuestion = await Question.findOneAndUpdate({ _id: id }, { title, description, tags: tagsArray });
-  // console.log("newQuestion ", newQuestion);
-  return res.status(200).json({
-    message: "Question updated successfully",
-  })
+    const id = req.params.question_id;
+    const { title, description, tags } = req.body;
+    const tagsArray = tags.trim().split(" ");
+    const question = await Question.findById(id);
+    // console.log(question.author._id)
+    // console.log(req.user._id)
+    if (question.author._id.toString() !== req.user._id.toString()) {
+      return res.status(401).json({
+        message: "You are not authorized to edit this question",
+      });
+    }
+    const newQuestion = await Question.findOneAndUpdate(
+      { _id: id },
+      { title, description, tags: tagsArray }
+    );
+    // console.log("newQuestion ", newQuestion);
+    return res.status(200).json({
+      message: "Question updated successfully",
+    });
   } catch (error) {
-    console.log('Inside in updateQuestion ',error);
-     return res.status(404).json({
-       message: "Unable to update question"
+    console.log("Inside in updateQuestion ", error);
+    return res.status(404).json({
+      message: "Unable to update question",
       //  error: error.message
-      })
+    });
   }
 };
 
@@ -85,7 +86,7 @@ module.exports.updateOne = async (req, res) => {
 // module.exports.deleteOne = async (req, res) => {
 //   const id = req.params.id;
 //   const searchedQuestion = await Question.findOne({ _id: id });
-  
+
 //   if(!searchedQuestion) {
 //     return res.status(404).json({
 //       message: "No question with the ID found!!",
@@ -108,6 +109,36 @@ module.exports.getAll = async (req, res) => {
   }
 };
 
+//GET ALL QUESTIONS BY TAGS
+
+module.exports.getQuestionsTags = async (req, res) => {
+  try {
+    let tagsArray = req.body.tags
+      .trim()
+      .split(" ")
+      .map((tag) => tag.toLowerCase());
+    tagsArray = [...new Set(tagsArray)];
+
+    const questions = await Question.find({});
+    let questionsTags = questions.filter((question) => {
+      for (let i = 0; i < tagsArray.length; i++) {
+        if (question.tags.includes(tagsArray[i])) return true;
+      }
+      return false;
+    });
+
+    return res.status(200).json({
+      message: "Succesfully fetched questions with tags",
+      data: questionsTags,
+    });
+  } catch (error) {
+    console.log("error in tags ");
+    return res.status(404).json({
+      message: "Unable to fetch all questions",
+    });
+  }
+};
+
 //GET ALL THE ANSWERS FOR ONE QUESTION BY ID
 
 module.exports.getAllAnswers = async (req, res) => {
@@ -118,7 +149,7 @@ module.exports.getAllAnswers = async (req, res) => {
     ]);
 
     // console.log('answers is ', question.answers)
-    if(!question) throw new Error('Question not found');
+    if (!question) throw new Error("Question not found");
     return res.status(200).json({
       message: "Fetched all answers",
       data: question.answers,
@@ -140,7 +171,7 @@ module.exports.createAnswer = async (req, res) => {
       description: answer,
       author: user._id,
     });
-    console.log("New Answer is ", newAnswer);
+    // console.log("New Answer is ", newAnswer);
     let question = await Question.findById(question_id);
     question.answers.push(newAnswer._id);
     question.save();

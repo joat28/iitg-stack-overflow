@@ -1,11 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import TagSearch from "../../assets/svg/TagSearch";
+import { getQuestionsTags } from "../../api/index";
+import { getQuestionsByTags } from "../../redux/questions/questions.actions";
+import { useDispatch } from "react-redux";
 
 const WatchedTags = (props) => {
   const [tags, setTags] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
   const [watchClick, setWatchClick] = useState(false);
-
+  const dispatch = useDispatch();
   const watchClickHandler = () => {
     setWatchClick(true);
   };
@@ -13,8 +17,11 @@ const WatchedTags = (props) => {
     setTags(event.target.value);
   };
   const addClickHandler = () => {
-    const tagsArray = tags.split(" ");
-    props.getTags(tagsArray);
+    const newTags = tags.trim().split(" ");
+    setSelectedTags((selectedTags) => [
+      ...new Set(selectedTags.concat(newTags)),
+    ]);
+    dispatch(getQuestionsByTags(tags));
   };
 
   return (
@@ -24,6 +31,16 @@ const WatchedTags = (props) => {
       </div>
       {watchClick ? (
         <div className=" flex p-2 items-center text-center justify-evenly rounded ">
+          <div className="flex-wrap flex pl-1 ">
+            {selectedTags.map((tag, index) => (
+              <div
+                key={`${index}`}
+                className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded "
+              >
+                {tag}{" "}
+              </div>
+            ))}
+          </div>
           <input
             type="text"
             onChange={tagsChangeHandler}
@@ -56,3 +73,11 @@ const WatchedTags = (props) => {
 };
 
 export default WatchedTags;
+
+/*
+<div className=" flex-wrap flex pl-1 ">
+        {topSevenTags.map((tag, index) => (
+          <div key={`${index}`} className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded ">{`${tag[0]} x ${tag[1]}`}</div>
+        ))}
+      </div>
+*/
