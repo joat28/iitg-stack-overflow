@@ -1,9 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TagSearch from "../../assets/svg/TagSearch";
 import { getQuestionsTags } from "../../api/index";
 import { getQuestionsByTags } from "../../redux/questions/questions.actions";
 import { useDispatch } from "react-redux";
+import xButton from "../../assets/xButton.png";
+import { getQuestionsAction } from "../../redux/questions/questions.actions";
 
 const WatchedTags = (props) => {
   const [tags, setTags] = useState("");
@@ -16,13 +18,28 @@ const WatchedTags = (props) => {
   const tagsChangeHandler = (event) => {
     setTags(event.target.value);
   };
+
+  const removeTagHandler = (deletedTag) => {
+    setSelectedTags((selectedTags) => {
+      console.log("selected tags", selectedTags);
+      return [...selectedTags.filter((tag) => tag !== deletedTag)];
+
+      // ...new Set(selectedTags.concat(newTags)),
+    });
+  };
+
   const addClickHandler = () => {
     const newTags = tags.trim().split(" ");
     setSelectedTags((selectedTags) => [
       ...new Set(selectedTags.concat(newTags)),
     ]);
-    dispatch(getQuestionsByTags(tags));
+    setTags("");
   };
+
+  useEffect(() => {
+    console.log("in useeffect");
+    dispatch(getQuestionsByTags(selectedTags.join(" ")));
+  }, [selectedTags, dispatch]);
 
   return (
     <div className="mt-3 rounded-md shadow-md border border-gray-300">
@@ -30,20 +47,35 @@ const WatchedTags = (props) => {
         Watched Tags
       </div>
       {watchClick ? (
-        <div className=" flex p-2 items-center text-center justify-evenly rounded ">
+        <div className=" flex flex-col p-2 items-center text-center justify-evenly rounded ">
           <div className="flex-wrap flex pl-1 ">
             {selectedTags.map((tag, index) => (
-              <div
-                key={`${index}`}
-                className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded "
-              >
-                {tag}{" "}
-              </div>
+              <>
+                {tag !== "" && (
+                  <div
+                    key={`${index}`}
+                    className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded "
+                  >
+                    <div className="flex flex-row">
+                      {tag}
+                      <img
+                        onClick={() => {
+                          removeTagHandler(tag);
+                        }}
+                        className="h-4 w-4"
+                        src="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' aria-labelledby='title' aria-describedby='desc' role='img' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3EDelete Circle%3C/title%3E%3Cdesc%3EA color styled icon from Orion Icon Library.%3C/desc%3E%3Ccircle data-name='layer1' cx='32' cy='32' r='30' fill='%23f66'%3E%3C/circle%3E%3Cpath data-name='opacity' d='M36 58A30 30 0 0 1 12.882 8.881 30 30 0 1 0 55.118 51.12 29.882 29.882 0 0 1 36 58z' fill='%23000028' opacity='.15'%3E%3C/path%3E%3Ccircle data-name='stroke' cx='32.001' cy='32' r='30' transform='rotate(-45 32.001 32)' fill='none' stroke='%23f5f7fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3C/circle%3E%3Cpath data-name='stroke' fill='none' stroke='%23f5f7fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M42.999 21.001l-22 22m22 0L21 21'%3E%3C/path%3E%3C/svg%3E"
+                        alt="Delete Circle"
+                      />
+                    </div>
+                  </div>
+                )}
+              </>
             ))}
           </div>
           <input
             type="text"
             onChange={tagsChangeHandler}
+            value={tags}
             placeholder="input tags with spaces"
             className="placeholder-gray-500 w-full h-10 border-2 border-gray-200 text-sm p-3 rounded focus:border-blue-300 outline-none"
           />

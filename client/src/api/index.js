@@ -23,6 +23,9 @@ export const checkUser = (User) => API.post("/login", User);
 //Logout
 export const clearToken = () => API.delete("/logout");
 
+// TOP TAGS
+export const getTopTags = () => API.get("/question/topTags");
+
 //====== QUESTIONS ======;
 //AllQuestions
 export const getQuestions = () => API.get("/question");
@@ -57,3 +60,4 @@ export const getAllAnswers = (questionId) =>
 
 //Update one answerby Id
 export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);
+

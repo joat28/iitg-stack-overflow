@@ -8,8 +8,12 @@ const router = express.Router();
 //ALL QUESTIONS
 router.get("/", questionController.getAll);
 
+// TOP SEVEN TAGS
+router.get("/topTags", questionController.getTopTags);
+
 // ALL QUESTIONS BY TAGS
-router.post('/tags', questionController.getQuestionsTags)
+router.post("/tags", questionController.getQuestionsTags);
+
 
 // ALL Answers
 router.get("/answers/:question_id", questionController.getAllAnswers);

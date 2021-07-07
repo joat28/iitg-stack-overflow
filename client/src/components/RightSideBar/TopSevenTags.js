@@ -1,26 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { getTopTags } from "../../api";
 
 const TopSevenTags = () => {
   const mapOfQuestions = new Map();
-  const questions = useSelector((state) => state.question.questions);
+  const [topTags, setTopTags] = useState([]);
 
-  questions.map((question) => {
-    return question.tags.forEach((tag) => {
-      if (!mapOfQuestions.get(tag)) {
-        mapOfQuestions.set(tag, 1);
-      } else {
-        mapOfQuestions.set(tag, mapOfQuestions.get(tag) + 1);
-      }
-    });
-  });
-  const questionArray = [...mapOfQuestions];
-  questionArray.sort(function (a, b) {
-    return b[1] - a[1];
-  });
-  const topSevenTags = [];
-  for (let i = 0; i < questionArray.length && i < 7; i++)
-    topSevenTags.push(questionArray[i]);
+  useEffect(() => {
+    getTopTags().then(res => {
+      return setTopTags(res.data.data);
+    })
+    .catch(error => {
+      return console.log(error)
+    })
+  },[])
 
   // console.log("Top seven tags is ", topSevenTags);
 
@@ -30,7 +23,7 @@ const TopSevenTags = () => {
         Top Tags
       </h1>
       <div className=" flex-wrap flex pl-1 ">
-        {topSevenTags.map((tag, index) => (
+        {topTags && topTags.map((tag, index) => (
           <div key={`${index}`} className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded ">{`${tag[0]} x ${tag[1]}`}</div>
         ))}
       </div>

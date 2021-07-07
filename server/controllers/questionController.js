@@ -113,13 +113,16 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.getQuestionsTags = async (req, res) => {
   try {
-    let tagsArray = req.body.tags
-      .trim()
-      .split(" ")
-      .map((tag) => tag.toLowerCase());
+    const questions = await Question.find({});
+    if (req.body.tags === "")
+      return res.status(200).json({
+        message: "Succesfully fetched questions with tags",
+        data: questions,
+      });
+
+    let tagsArray = req.body.tags.split(" ").map((tag) => tag.toLowerCase());
     tagsArray = [...new Set(tagsArray)];
 
-    const questions = await Question.find({});
     let questionsTags = questions.filter((question) => {
       for (let i = 0; i < tagsArray.length; i++) {
         if (question.tags.includes(tagsArray[i])) return true;
@@ -135,6 +138,36 @@ module.exports.getQuestionsTags = async (req, res) => {
     console.log("error in tags ");
     return res.status(404).json({
       message: "Unable to fetch all questions",
+    });
+  }
+};
+
+// GET TOP TAGS
+module.exports.getTopTags = async (req, res) => {
+  try {
+    const mapOfQuestions = new Map();
+    const questions = await Question.find({});
+    questions.map((question) => {
+      return question.tags.forEach((tag) => {
+        if (!mapOfQuestions.get(tag)) {
+          mapOfQuestions.set(tag, 1);
+        } else {
+          mapOfQuestions.set(tag, mapOfQuestions.get(tag) + 1);
+        }
+      });
+    });
+    const tagsArray = [...mapOfQuestions];
+    tagsArray.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    const topTagsArray = tagsArray.slice(0,Math.min(7,tagsArray.length));
+    return res.status(200).json({
+      message: "Sent back top tags questions successfully",
+      data: topTagsArray,
+    });
+  } catch (error) {
+    return res.status(200).json({
+      message: "Could not obtain top tags",
     });
   }
 };
