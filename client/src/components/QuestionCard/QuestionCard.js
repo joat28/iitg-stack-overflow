@@ -3,14 +3,13 @@ import { createQuestion } from "../../api";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
 import Alert from "../Alert/Alert";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { createQuestionAction } from "../../redux/questions/questions.actions";
 import { useLocation } from "react-router";
 
 const QuestionCard = () => {
-
   const location = useLocation();
-  const url = location.pathname.split('/')[2];
+  const url = location.pathname.split("/")[2];
   // if(url === "ask")
   const dispatch = useDispatch();
 
@@ -22,20 +21,28 @@ const QuestionCard = () => {
 
   const clickHandler = (event) => {
     event.preventDefault();
-    const tagsArray = tags.trim().split(" ").map(tag => tag.toLowerCase());
-    if (tags.trim() === "" || description.trim() === "" || title.trim() === "") {
-      dispatch(setAlert({
-        message: "All fields are required.",
-        status: false
-      }));
+    const tagsArray = tags
+      .trim()
+      .split(" ")
+      .map((tag) => tag.toLowerCase());
+    if (
+      tags.trim() === "" ||
+      description.trim() === "" ||
+      title.trim() === ""
+    ) {
+      dispatch(
+        setAlert({
+          message: "All fields are required.",
+          status: false,
+        })
+      );
       return;
-    }
-    else {
+    } else {
       const newPost = { title, description, tags: tagsArray, author: user._id };
       // console.log(newPost);
       dispatch(createQuestionAction(newPost, history));
-    };
-  }
+    }
+  };
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -99,6 +106,5 @@ const QuestionCard = () => {
     </div>
   );
 };
-
 
 export default QuestionCard;

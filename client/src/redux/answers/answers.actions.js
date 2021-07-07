@@ -3,10 +3,10 @@ import { getAllAnswers } from "../../api/index";
 import { setAlert } from "../alert/alert.actions";
 
 export const getAnswers = (question_id) => async (dispatch) => {
-    dispatch({
-        type: GET_ANSWERS_REQUEST,
-      })
-    getAllAnswers(question_id)
+  dispatch({
+    type: GET_ANSWERS_REQUEST,
+  });
+  getAllAnswers(question_id)
     .then((res) =>
       dispatch({
         type: GET_ANSWERS,

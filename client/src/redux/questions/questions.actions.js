@@ -28,7 +28,7 @@ export const getQuestionsAction = () => (dispatch) => {
 
 // Get all questions by tags array
 export const getQuestionsByTags = (tags) => (dispatch) => {
-  console.log("tagsArray in actions is ", tags);
+  // console.log("tagsArray in actions is ", tags);
   const Tags = { tags };
   getQuestionsTags(Tags)
     .then((res) => {
@@ -44,22 +44,26 @@ export const getQuestionsByTags = (tags) => (dispatch) => {
 };
 // Get single question by id
 
-export const getQuestionAction = (question_id, history) => (dispatch) => {
-  // console.log(questions);
-  dispatch({
-    type: GET_QUESTION_REQUEST,
-  });
-  getQuestion(question_id)
-    .then((res) => {
-      dispatch({
-        type: GET_QUESTION,
-        payload: res.data.data,
-      });
-    })
-    .catch((error) => {
-      history.push("/notfound");
+export const getQuestionAction =
+  (question_id, history, changeVotes) => (dispatch) => {
+    // console.log(questions);
+    dispatch({
+      type: GET_QUESTION_REQUEST,
     });
-};
+    getQuestion(question_id)
+      .then((res) => {
+        dispatch({
+          type: GET_QUESTION,
+          payload: res.data.data,
+        });
+        changeVotes(
+          res.data.data.upvotes.length - res.data.data.downvotes.length
+        );
+      })
+      .catch((error) => {
+        history.push("/notfound");
+      });
+  };
 
 // CREATE a single question
 export const createQuestionAction = (question, history) => async (dispatch) => {

@@ -11,16 +11,13 @@ const commentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    question_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Question",
-      default: null,
+    refModel: {
+      type: String
     },
-    answer_id: {
+    refModelId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Answer",
-      default: null,
-    },
+      refPath: 'refModel'
+    }
   },
   {
     timestamps: true,

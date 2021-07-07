@@ -25,11 +25,10 @@ export const loadUser = () => (dispatch) => {
         dispatch(stopLoadingAction());
       })
       .catch((error) => {
-         console.log(error);
-         dispatch(stopLoadingAction());
+        console.log(error);
+        dispatch(stopLoadingAction());
       });
-  }
-  else {
+  } else {
     dispatch(stopLoadingAction());
   }
 };
@@ -57,24 +56,26 @@ export const register = ({ name, email, password }) => {
 };
 // LOGIN USER
 
-export const login = ({ email, password }) => (dispatch) => {
-  const body = { email, password };
-  checkUser(body)
-    .then((res) => {
-      localStorage.setItem("token", res.data.data.token);
-      console.log(res.data.data)
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data.data,
+export const login =
+  ({ email, password }) =>
+  (dispatch) => {
+    const body = { email, password };
+    checkUser(body)
+      .then((res) => {
+        localStorage.setItem("token", res.data.data.token);
+        console.log(res.data.data);
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data.data,
+        });
+        res.data.status = true;
+        dispatch(setAlert(res.data));
+      })
+      .catch((error) => {
+        error.response.data.status = false;
+        dispatch(setAlert(error.response.data));
       });
-      res.data.status = true;
-      dispatch(setAlert(res.data));
-    })
-    .catch((error) => {
-      error.response.data.status = false;
-      dispatch(setAlert(error.response.data));
-    });
-};
+  };
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");

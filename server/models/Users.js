@@ -20,6 +20,18 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password length must be atleast 6 characters"],
       minlength: [6, "Password length must be atleast 6 characters"],
     },
+    answers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Answer",
+      },
+    ],
+    questions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question",
+      },
+    ],
   },
   {
     timestamps: true,
