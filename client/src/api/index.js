@@ -30,8 +30,11 @@ export const getTopTags = () => API.get("/question/topTags");
 //AllQuestions
 export const getQuestions = () => API.get("/question");
 
+// Get top question
+export const getTopQuestions = () => API.get("/question/top");
+
 // ALL Questions By tags
-export const getQuestionsTags = (Tags) => API.post("/question/tags", Tags);
+export const getQuestionsTags = (Tags, pathname) => API.post("/question/tags"+pathname, Tags);
 
 // GET Single Question by ID
 export const getQuestion = (id) => {

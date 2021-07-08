@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getQuestionAction } from "../../../redux/questions/questions.actions";
 import moment from "moment";
-import {UpArrowInactive,UpArrowActive} from "../../../assets/svg/UpArrow";
-import {DownArrowInactive, DownArrowActive} from "../../../assets/svg/DownArrow";
+import { UpArrowInactive, UpArrowActive } from "../../../assets/svg/UpArrow";
+import {
+  DownArrowInactive,
+  DownArrowActive,
+} from "../../../assets/svg/DownArrow";
 import { useHistory } from "react-router-dom";
 import EditQuestion from "./EditQuestion";
 import { setAlert } from "../../../redux/alert/alert.actions";
@@ -30,22 +33,17 @@ const components = {
   },
 };
 
-
 const QuestionSection = (props) => {
   const { question, loading } = useSelector((state) => state.question);
   const loadingAnswers = useSelector((state) => state.answer.loading);
   const { user } = useSelector((state) => state.auth);
 
-  const [votes, setVotes] = useState(0);
-
   const [clicked, setClicked] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const changeVote = (initialVotes) => {
-    setVotes(initialVotes)
-  }
+  
   useEffect(() => {
-    dispatch(getQuestionAction(props.question_id, history, changeVote));
+    dispatch(getQuestionAction(props.question_id, history));
     // setVotes(question.upvotes.length - question.downvotes.length)
     window.scrollTo(0, 0);
   }, [dispatch]);
@@ -64,38 +62,36 @@ const QuestionSection = (props) => {
 
   //UPVOTES AND DOWNVOTES
   const voteHandler = (voteType) => {
-    // voteType = true => upvote       voteValue = 1 => push vote in backend
-    //  voteType = false => downvote    voteValue = 1 => remove vote in backend
+    // voteType = true => upvote
+    //  voteType = false => downvote
+    //TODO: MAKE THIS AN ACTION
     voteQAPI(question._id, voteType)
-      .then((res) =>{
+      .then((res) => {
         dispatch(
           setAlert({
             message: res.data.message,
             status: true,
           })
-        )
-        console.log(res.data.voteCount)
-        setVotes(res.data.voteCount)
-      }
-      )
-      .catch((error) =>{
-        if(error.response.status===401) {
+        );
+        dispatch(getQuestionAction(question._id, history,true));
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
           dispatch(
             setAlert({
-              message: 'Please login',
+              message: "Please login",
               status: false,
             })
-          )
+          );
+        } else {
+          dispatch(
+            setAlert({
+              message: "Please try again later",
+              status: false,
+            })
+          );
         }
-          else{
-            dispatch(
-              setAlert({
-                message: 'Please try again later',
-                status: false,
-            }))
-          }
-        }
-      );
+      });
   };
 
   return (
@@ -115,14 +111,13 @@ const QuestionSection = (props) => {
               </div>
               <div className="flex pl-4 pt-4">
                 <div className="flex flex-col items-center pt-3">
-
                   {user && question.upvotes.includes(user._id) ? (
                     <button
                       onClick={() => {
                         voteHandler(true);
                       }}
                     >
-                      <UpArrowActive/>
+                      <UpArrowActive />
                     </button>
                   ) : (
                     <button
@@ -130,12 +125,13 @@ const QuestionSection = (props) => {
                         voteHandler(true);
                       }}
                     >
-                      <UpArrowInactive/>
+                      <UpArrowInactive />
                     </button>
                   )}
 
-                  <span>{votes}</span>
-
+                  <span>
+                    {question.upvotes.length - question.downvotes.length}
+                  </span>
 
                   {user && question.downvotes.includes(user._id) ? (
                     <button
@@ -143,7 +139,7 @@ const QuestionSection = (props) => {
                         voteHandler(false);
                       }}
                     >
-                      <DownArrowActive/>
+                      <DownArrowActive />
                     </button>
                   ) : (
                     <button
@@ -151,11 +147,9 @@ const QuestionSection = (props) => {
                         voteHandler(false);
                       }}
                     >
-                      <DownArrowInactive/>
+                      <DownArrowInactive />
                     </button>
                   )}
-
-
                 </div>
                 <div className="flex flex-col justify-between w-full text-left pl-2 mb-5">
                   {!clicked && (
@@ -186,7 +180,7 @@ const QuestionSection = (props) => {
                       </button>
                     )}
                     {user && question.author._id === user._id && (
-                      <button onClick={deleteQuestionHandler}>
+                      <button>
                         <span className="text-red-500 ml-2">delete</span>
                       </button>
                     )}

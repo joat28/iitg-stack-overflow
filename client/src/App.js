@@ -12,6 +12,8 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import PostQuestionScreen from "./screens/PostQuestion/PostQuestion";
 import ViewQuestionScreen from "./screens/ViewQuestion/ViewQuestionScreen";
 import NotFoundScreen from "./screens/NotFoundScreen"
+import AllQuestionsScreen from "./screens/AllQuestions/AllQuestionsScreen";
+
 //HOOKS
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -42,7 +44,7 @@ const App = () => {
         <Route path="/register" exact component={RegisterScreen} />
         <Route path="/login" exact component={LoginScreen} />
         <Route path="/" exact component={HomeScreen} />
-        <Route path="/questions" exact component={HomeScreen} />
+        <Route path="/questions" exact component={AllQuestionsScreen} />
         <Route path="/question/ask" exact component={PostQuestionScreen} />
         {/* <Route path="/question/edit/:id" exact component={PostQuestionScreen} /> */}
         <Route path="/question/:id" exact component={ViewQuestionScreen}/>

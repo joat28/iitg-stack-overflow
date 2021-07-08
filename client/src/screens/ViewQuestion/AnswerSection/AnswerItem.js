@@ -9,6 +9,9 @@ import { EditAnswer } from "./EditAnswer";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
 import { voteAnsAPI } from "../../../api";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../../redux/alert/alert.actions";
+import { getAnswers } from "../../../redux/answers/answers.actions";
 
 // import ReactMarkdown from "react-markdown";
 
@@ -35,9 +38,10 @@ const components = {
 ////////////
 
 const AnswerItem = (props) => {
+  const dispatch = useDispatch();
   const user = props.user;
   const answer = props.answer;
-  const [votes, setVotes] = useState(0);
+  
   //   let verified = answer && user && user._id === answer.author._id ? true : false;
 
   const [clicked, setClicked] = useState(false);
@@ -66,8 +70,9 @@ const AnswerItem = (props) => {
             status: true,
           })
         );
-        console.log(res.data.voteCount);
-        setVotes(res.data.voteCount);
+        // console.log(res.data.voteCount);
+        dispatch(getAnswers(props.question_id))
+        
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -93,43 +98,43 @@ const AnswerItem = (props) => {
       {!clicked && (
         <div className="flex pl-4 pt-4">
           <div className="flex flex-col items-center pt-2 ">
-              {user && answer.upvotes.includes(user._id) ? (
-                <button
-                  onClick={() => {
-                    voteHandler(true);
-                  }}
-                >
-                  <UpArrowActive />
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    voteHandler(true);
-                  }}
-                >
-                  <UpArrowInactive />
-                </button>
-              )}
+            {user && answer.upvotes.includes(user._id) ? (
+              <button
+                onClick={() => {
+                  voteHandler(true);
+                }}
+              >
+                <UpArrowActive />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  voteHandler(true);
+                }}
+              >
+                <UpArrowInactive />
+              </button>
+            )}
 
-              <span>{votes}</span>
+            <span>{answer.upvotes.length - answer.downvotes.length}</span>
 
-              {user && answer.downvotes.includes(user._id) ? (
-                <button
-                  onClick={() => {
-                    voteHandler(false);
-                  }}
-                >
-                  <DownArrowActive />
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    voteHandler(false);
-                  }}
-                >
-                  <DownArrowInactive />
-                </button>
-              )}
+            {user && answer.downvotes.includes(user._id) ? (
+              <button
+                onClick={() => {
+                  voteHandler(false);
+                }}
+              >
+                <DownArrowActive />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  voteHandler(false);
+                }}
+              >
+                <DownArrowInactive />
+              </button>
+            )}
           </div>
           <div className="flex flex-col justify-between w-full text-left pl-2 mb-2">
             <div id="answer-desc" className="pb-14 whitespace-pre-line">

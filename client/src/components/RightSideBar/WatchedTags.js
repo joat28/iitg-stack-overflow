@@ -4,14 +4,14 @@ import TagSearch from "../../assets/svg/TagSearch";
 import { getQuestionsTags } from "../../api/index";
 import { getQuestionsByTags } from "../../redux/questions/questions.actions";
 import { useDispatch } from "react-redux";
-import xButton from "../../assets/xButton.png";
 import { getQuestionsAction } from "../../redux/questions/questions.actions";
-
+import { useLocation } from "react-router";
 const WatchedTags = (props) => {
   const [tags, setTags] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [watchClick, setWatchClick] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
   const watchClickHandler = () => {
     setWatchClick(true);
   };
@@ -37,8 +37,7 @@ const WatchedTags = (props) => {
   };
 
   useEffect(() => {
-    // console.log("in useeffect");
-    dispatch(getQuestionsByTags(selectedTags.join(" ")));
+    dispatch(getQuestionsByTags(selectedTags.join(" "),location.pathname));
   }, [selectedTags, dispatch]);
 
   return (
