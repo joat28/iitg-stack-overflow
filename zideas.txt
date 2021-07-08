@@ -1,0 +1,14 @@
+Question & Answer schema: make upvotes & downvotes an array of user IDs
+1)current vote is for question or answer = boolean
+2)already upvoted/downvoted = bool variable
+3)whether it is upvote or downvote = bool variable
+User Schema: store two arrays of ids of various questions and answers posted by current user
+
+Delete a question:
+1) find all answers related to the ques
+    a) find all comments connected to a particular answer & delete from comment collection
+    b) delete all answers connected
+2) find all comments connected to a particular question & delete
+3) remove questionId from user collection
+4) delete the question
+ 

@@ -12,19 +12,24 @@ router.get("/", questionController.getAll);
 router.get("/topTags", questionController.getTopTags);
 
 // ALL QUESTIONS BY TAGS
-router.post("/tags", questionController.getQuestionsTags);
+router.post("/tags/:pathname", questionController.getQuestionsTags);
 
+// TOP QUESTIONS
+router.get("/top", questionController.getTopQuestions )
 
 // ALL Answers
 router.get("/answers/:question_id", questionController.getAllAnswers);
+
+// POST AN ANSWER
 router.post(
   "/answers/:question_id",
   authCheck,
+  populateUser,
   questionController.createAnswer
 );
 
 //ONE QUESTION
-router.post("/ask", authCheck, questionController.createOne);
+router.post("/ask", authCheck, populateUser, questionController.createOne);
 router.get("/:question_id", questionController.getOne);
 router.patch(
   "/:question_id",
@@ -32,5 +37,8 @@ router.patch(
   questionController.updateOne
 );
 // router.delete("/:question_id", authCheck, questionController.deleteOne);
+
+// VOTES
+router.patch('/vote/:question_id', authCheck, populateUser, questionController.vote)
 
 module.exports = router;

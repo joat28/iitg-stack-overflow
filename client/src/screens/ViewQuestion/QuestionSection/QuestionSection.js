@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getQuestionAction } from "../../../redux/questions/questions.actions";
 import moment from "moment";
-import UpArrow from "../../../assets/svg/UpArrow";
-import DownArrow from "../../../assets/svg/DownArrow";
+import { UpArrowInactive, UpArrowActive } from "../../../assets/svg/UpArrow";
+import {
+  DownArrowInactive,
+  DownArrowActive,
+} from "../../../assets/svg/DownArrow";
 import { useHistory } from "react-router-dom";
 import EditQuestion from "./EditQuestion";
+import { setAlert } from "../../../redux/alert/alert.actions";
+import { voteQAPI } from "../../../api";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
@@ -28,19 +33,18 @@ const components = {
   },
 };
 
-////////////
-
 const QuestionSection = (props) => {
   const { question, loading } = useSelector((state) => state.question);
   const loadingAnswers = useSelector((state) => state.answer.loading);
-
   const { user } = useSelector((state) => state.auth);
 
   const [clicked, setClicked] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getQuestionAction(props.question_id, history));
+    // setVotes(question.upvotes.length - question.downvotes.length)
     window.scrollTo(0, 0);
   }, [dispatch]);
 
@@ -48,13 +52,47 @@ const QuestionSection = (props) => {
     setClicked(false);
   };
 
-  const deleteQuestionHandler = (event) => {};
+  const deleteAnswerHandler = (event) => {};
   const editClickHandler = (event) => {
     event.preventDefault();
     window.scrollTo(0, 0);
     setClicked(true);
   };
   // const tagsTextArea = <input value={question.tags}/>
+
+  //UPVOTES AND DOWNVOTES
+  const voteHandler = (voteType) => {
+    // voteType = true => upvote
+    //  voteType = false => downvote
+    //TODO: MAKE THIS AN ACTION
+    voteQAPI(question._id, voteType)
+      .then((res) => {
+        dispatch(
+          setAlert({
+            message: res.data.message,
+            status: true,
+          })
+        );
+        dispatch(getQuestionAction(question._id, history,true));
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          dispatch(
+            setAlert({
+              message: "Please login",
+              status: false,
+            })
+          );
+        } else {
+          dispatch(
+            setAlert({
+              message: "Please try again later",
+              status: false,
+            })
+          );
+        }
+      });
+  };
 
   return (
     <>
@@ -73,14 +111,53 @@ const QuestionSection = (props) => {
               </div>
               <div className="flex pl-4 pt-4">
                 <div className="flex flex-col items-center pt-3">
-                  <UpArrow />
-                  <span>0</span>
-                  <DownArrow />
+                  {user && question.upvotes.includes(user._id) ? (
+                    <button
+                      onClick={() => {
+                        voteHandler(true);
+                      }}
+                    >
+                      <UpArrowActive />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        voteHandler(true);
+                      }}
+                    >
+                      <UpArrowInactive />
+                    </button>
+                  )}
+
+                  <span>
+                    {question.upvotes.length - question.downvotes.length}
+                  </span>
+
+                  {user && question.downvotes.includes(user._id) ? (
+                    <button
+                      onClick={() => {
+                        voteHandler(false);
+                      }}
+                    >
+                      <DownArrowActive />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        voteHandler(false);
+                      }}
+                    >
+                      <DownArrowInactive />
+                    </button>
+                  )}
                 </div>
                 <div className="flex flex-col justify-between w-full text-left pl-2 mb-5">
                   {!clicked && (
                     <div className="pb-20 whitespace-pre-line">
-						<ReactMarkdown components={components} children={question.description} />
+                      <ReactMarkdown
+                        components={components}
+                        children={question.description}
+                      />
                     </div>
                   )}
                   {clicked && (
@@ -103,7 +180,7 @@ const QuestionSection = (props) => {
                       </button>
                     )}
                     {user && question.author._id === user._id && (
-                      <button onClick={deleteQuestionHandler}>
+                      <button>
                         <span className="text-red-500 ml-2">delete</span>
                       </button>
                     )}
@@ -133,5 +210,4 @@ const QuestionSection = (props) => {
   );
 };
 
-export default QuestionSection; 
-
+export default QuestionSection;

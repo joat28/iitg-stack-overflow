@@ -27,12 +27,12 @@ const Navbar = () => {
     <div
       className="flex items-center z-10 justify-between w-screen py-1 px-7 shadow-md fixed border-t-4 border-yellow-500"
       style={{ backgroundColor: "#FAFAFB" }}
-    >      
-        <div className="hover:gray-300 ml-24">
-          <NavLink to='/'>
+    >
+      <div className="hover:gray-300 ml-24">
+        <NavLink to="/">
           <Logo />
-          </NavLink>
-        </div>
+        </NavLink>
+      </div>
       <div className="flex items-center w-1/2 ">
         <img
           src="https://image.flaticon.com/icons/png/512/622/622669.png"
@@ -45,7 +45,11 @@ const Navbar = () => {
           placeholder="Search"
         />
       </div>
-      <div className={`flex items-center justify-evenly ${loading? "invisible":"visible" }`}>
+      <div
+        className={`flex items-center justify-evenly ${
+          loading ? "invisible" : "visible"
+        }`}
+      >
         {isAuthenticated ? (
           <>
             <UserProfileLogo />
@@ -58,19 +62,19 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-            <>
-              <NavLink to="/login">
-                <button className="flex items-center p-2 m-1 h-10 rounded bg-blue-100 border-2 border-blue-300 hover:bg-blue-200 text-blue-600">
-                  Log in
+          <>
+            <NavLink to="/login">
+              <button className="flex items-center p-2 m-1 h-10 rounded bg-blue-100 border-2 border-blue-300 hover:bg-blue-200 text-blue-600">
+                Log in
               </button>
-              </NavLink>
-              <NavLink to="/register">
-                <button className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">
-                  Sign up
+            </NavLink>
+            <NavLink to="/register">
+              <button className="flex items-center p-2 m-1 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600 h-10">
+                Sign up
               </button>
-              </NavLink>
-            </>
-          )}
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );

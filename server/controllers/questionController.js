@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Answer = require("../models/Answer");
+const User = require("../models/Users");
 
 //CREATE ONE QUESTION
 module.exports.createOne = async (req, res) => {
@@ -13,6 +14,10 @@ module.exports.createOne = async (req, res) => {
       author,
       tags,
     });
+    let user = await User.findById(req.user._id);
+    user.questions.push(req.user._id)
+    user.save()
+
     return res.status(200).json({
       message: "Question created! ",
       newQuestion,
@@ -74,7 +79,7 @@ module.exports.updateOne = async (req, res) => {
       message: "Question updated successfully",
     });
   } catch (error) {
-    console.log("Inside in updateQuestion ", error);
+    // console.log("Inside in updateQuestion ", error);
     return res.status(404).json({
       message: "Unable to update question",
       //  error: error.message
@@ -109,11 +114,34 @@ module.exports.getAll = async (req, res) => {
   }
 };
 
+// TOP QUESTIONS
+module.exports.getTopQuestions = async (req, res) => {
+  try {
+    // console.log('inside getTopQuestions')
+    const Questions = await Question.find({}).populate("author");
+    Questions.sort(function(q1,q2) {
+      const votes1 = q1.upvotes.length-q1.downvotes.length
+      const votes2 = q2.upvotes.length-q2.downvotes.length
+      return votes2-votes1
+    })
+    // console.log("questions", Questions)
+    
+    res.status(200).json({
+      message: "Successfully fetched all the questions",
+      data: Questions,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "Error in fetching questions!",
+    });
+  }
+};
+
 //GET ALL QUESTIONS BY TAGS
 
 module.exports.getQuestionsTags = async (req, res) => {
   try {
-    const questions = await Question.find({});
+    const questions = await Question.find({}).populate("author");
     if (req.body.tags === "")
       return res.status(200).json({
         message: "Succesfully fetched questions with tags",
@@ -129,20 +157,36 @@ module.exports.getQuestionsTags = async (req, res) => {
       }
       return false;
     });
+    const path = req.params.pathname;
+    switch(path) {
+      case "":
+        console.log('in homescreen')
+        return questionsTags.sort(function(q1,q2) {
+          const votes1 = q1.upvotes.length-q1.downvotes.length
+          const votes2 = q2.upvotes.length-q2.downvotes.length
+          return votes2-votes1
+        })
+      case "questions":
+        console.log('inside /questions')
+        return questionsTags.reverse()
+      default:
+        console.log('in default')
+        return
 
+    }
     return res.status(200).json({
       message: "Succesfully fetched questions with tags",
       data: questionsTags,
     });
   } catch (error) {
-    console.log("error in tags ");
+    // console.log("error in tags ");
     return res.status(404).json({
       message: "Unable to fetch all questions",
     });
   }
 };
 
-// GET TOP TAGS
+// GET TOP TAGSq
 module.exports.getTopTags = async (req, res) => {
   try {
     const mapOfQuestions = new Map();
@@ -160,7 +204,7 @@ module.exports.getTopTags = async (req, res) => {
     tagsArray.sort(function (a, b) {
       return b[1] - a[1];
     });
-    const topTagsArray = tagsArray.slice(0,Math.min(7,tagsArray.length));
+    const topTagsArray = tagsArray.slice(0, Math.min(7, tagsArray.length));
     return res.status(200).json({
       message: "Sent back top tags questions successfully",
       data: topTagsArray,
@@ -188,7 +232,7 @@ module.exports.getAllAnswers = async (req, res) => {
       data: question.answers,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({
       message: "unable to get all answer from backend",
     });
@@ -199,12 +243,16 @@ module.exports.getAllAnswers = async (req, res) => {
 module.exports.createAnswer = async (req, res) => {
   try {
     const question_id = req.params.question_id;
-    const { ans: answer, user } = req.body;
+    const { ans: answer} = req.body;
     const newAnswer = await Answer.create({
       description: answer,
-      author: user._id,
+      author: req.user._id,
     });
     // console.log("New Answer is ", newAnswer);
+    let user = await User.findById(req.user._id);
+    user.answers.push(newAnswer._id);
+    user.save()
+
     let question = await Question.findById(question_id);
     question.answers.push(newAnswer._id);
     question.save();
@@ -219,9 +267,68 @@ module.exports.createAnswer = async (req, res) => {
       message: "Answer has been posted successfully",
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({
       message: "Unable to post your answer",
+    });
+  }
+};
+
+//VOTE FEATURE
+
+module.exports.vote = async (req, res) => {
+  try {
+    const { voteType } = req.body;
+    const question_id = req.params.question_id;
+    let inUpvotes = false,
+      inDownvotes = false;
+    const foundQuestion = await Question.findById(question_id);
+    inUpvotes = foundQuestion.upvotes.includes(req.user._id);
+    inDownvotes = foundQuestion.downvotes.includes(req.user._id);
+    let newQuestion;
+    let message,
+      voteCount = foundQuestion.upvotes.length - foundQuestion.downvotes.length;
+    if (voteType && inUpvotes) {
+      newQuestion = await Question.findByIdAndUpdate(question_id, {
+        upvotes: foundQuestion.upvotes.filter(
+          (user_id) => user_id.toString() !== req.user._id.toString()
+        ),
+      });
+      message = "Your upvote has been removed";
+      voteCount -= 1;
+    } else if (voteType && !inUpvotes && !inDownvotes) {
+      newQuestion = await Question.findByIdAndUpdate(question_id, {
+        upvotes: [...foundQuestion.upvotes, req.user._id],
+      });
+      message = "Your upvote has been added";
+      voteCount += 1;
+    } else if (!voteType && inDownvotes) {
+      newQuestion = await Question.findByIdAndUpdate(question_id, {
+        downvotes: foundQuestion.downvotes.filter(
+          (user_id) => user_id.toString() !== req.user._id.toString()
+        ),
+      });
+      message = "Your downvote has been removed";
+      voteCount += 1;
+    } else if (!voteType && !inDownvotes && !inUpvotes) {
+      newQuestion = await Question.findByIdAndUpdate(question_id, {
+        downvotes: [...foundQuestion.downvotes, req.user._id],
+      });
+      message = "Your downvote has been added";
+      voteCount -= 1;
+    } else {
+      message = "First remove your previous vote";
+    }
+    // console.log('new question is ',newQuestion);
+    res.status(200).json({
+      message,
+      voteCount,
+    });
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({
+      message: error.message,
+      voteCount,
     });
   }
 };

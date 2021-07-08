@@ -14,7 +14,7 @@ module.exports = checkAuth = (req, res, next) => {
     const token = authHeader.split(" ")[1];
     // console.log("Token logged in authCheck.js ", token)
     if (!token) {
-      // console.log("No token present");
+      console.log("No token present");
       return res.status(401).json({
         isAuthenticated: false,
         message: "Token not given",

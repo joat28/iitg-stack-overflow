@@ -30,8 +30,11 @@ export const getTopTags = () => API.get("/question/topTags");
 //AllQuestions
 export const getQuestions = () => API.get("/question");
 
+// Get top question
+export const getTopQuestions = () => API.get("/question/top");
+
 // ALL Questions By tags
-export const getQuestionsTags = (Tags) => API.post("/question/tags", Tags);
+export const getQuestionsTags = (Tags, pathname) => API.post("/question/tags"+pathname, Tags);
 
 // GET Single Question by ID
 export const getQuestion = (id) => {
@@ -61,3 +64,10 @@ export const getAllAnswers = (questionId) =>
 //Update one answerby Id
 export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);
 
+//Vote on a Question
+export const voteQAPI = (question_id, voteType) =>
+  API.patch("/question/vote/" + question_id, { voteType });
+
+//Vote on an answer
+export const voteAnsAPI = (answer_id, voteType) =>
+  API.patch("/answer/vote/" + answer_id, { voteType });

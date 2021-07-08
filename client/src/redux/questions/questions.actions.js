@@ -8,7 +8,7 @@ import {
 } from "./questions.types";
 import { createQuestion, deleteQuestion } from "../../api/index";
 import { setAlert } from "../alert/alert.actions";
-import { getQuestions, getQuestion, getQuestionsTags } from "../../api/index";
+import { getQuestions, getQuestion, getQuestionsTags, getTopQuestions } from "../../api/index";
 
 // GET all questions
 export const getQuestionsAction = () => (dispatch) => {
@@ -26,11 +26,27 @@ export const getQuestionsAction = () => (dispatch) => {
     .catch();
 };
 
+// GET TOP questions
+export const getTopQuestionsAction = () => (dispatch) => {
+  // console.log(questions);
+  dispatch({
+    type: GET_QUESTION_REQUEST,
+  });
+  getTopQuestions()
+    .then((res) => {
+      dispatch({
+        type: GET_QUESTIONS,
+        payload: res.data.data,
+      });
+    })
+    .catch();
+};
+
 // Get all questions by tags array
-export const getQuestionsByTags = (tags) => (dispatch) => {
-  console.log("tagsArray in actions is ", tags);
+export const getQuestionsByTags = (tags, pathname) => (dispatch) => {
+  // console.log("tagsArray in actions is ", tags);
   const Tags = { tags };
-  getQuestionsTags(Tags)
+  getQuestionsTags(Tags,pathname)
     .then((res) => {
       console.log("response in getQuestions ", res);
       dispatch({
@@ -44,22 +60,25 @@ export const getQuestionsByTags = (tags) => (dispatch) => {
 };
 // Get single question by id
 
-export const getQuestionAction = (question_id, history) => (dispatch) => {
-  // console.log(questions);
-  dispatch({
-    type: GET_QUESTION_REQUEST,
-  });
-  getQuestion(question_id)
-    .then((res) => {
-      dispatch({
-        type: GET_QUESTION,
-        payload: res.data.data,
-      });
-    })
-    .catch((error) => {
-      history.push("/notfound");
+export const getQuestionAction =
+  (question_id, history, voteChange) => (dispatch) => {
+    // console.log(questions);
+    if(!voteChange) {
+    dispatch({
+      type: GET_QUESTION_REQUEST,
     });
-};
+  }
+    getQuestion(question_id)
+      .then((res) => {
+        dispatch({
+          type: GET_QUESTION,
+          payload: res.data.data,
+        });
+      })
+      .catch((error) => {
+        history.push("/notfound");
+      });
+  };
 
 // CREATE a single question
 export const createQuestionAction = (question, history) => async (dispatch) => {

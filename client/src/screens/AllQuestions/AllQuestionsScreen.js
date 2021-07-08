@@ -5,7 +5,7 @@ import QuestionDisplay from "../../components/Question/QuestionDisplay";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import { useState } from "react";
 
-const HomeScreen = () => {
+const AllQuestionsScreen = () => {
   // let tagsArray = [];
   const [tagsArray, setTagsArray] = useState([]);
   const getTags = (tags) => {
@@ -14,14 +14,14 @@ const HomeScreen = () => {
   return (
     <React.Fragment>
       <div className="min-h-screen bg-white">
-      <Alert />
-      <LeftSideBar />
-      <div className="bg-white flex flex-row pl-72">
-        <QuestionDisplay tagsArray={tagsArray}  title="Top Questions"/>
-        <RightSideBar getTags={getTags} />
-      </div>
+        <Alert />
+        <LeftSideBar />
+        <div className="bg-white flex flex-row pl-72">
+          <QuestionDisplay tagsArray={tagsArray} title="All Questions" />
+          <RightSideBar getTags={getTags} />
+        </div>
       </div>
     </React.Fragment>
   );
 };
-export default HomeScreen;
+export default AllQuestionsScreen;

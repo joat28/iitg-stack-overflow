@@ -1,10 +1,17 @@
 import { useState } from "react";
-import UpArrow from "../../../assets/svg/UpArrow";
-import DownArrow from "../../../assets/svg/DownArrow";
+import { UpArrowInactive, UpArrowActive } from "../../../assets/svg/UpArrow";
+import {
+  DownArrowInactive,
+  DownArrowActive,
+} from "../../../assets/svg/DownArrow";
 import moment from "moment";
 import { EditAnswer } from "./EditAnswer";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
+import { voteAnsAPI } from "../../../api";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../../redux/alert/alert.actions";
+import { getAnswers } from "../../../redux/answers/answers.actions";
 
 // import ReactMarkdown from "react-markdown";
 
@@ -14,9 +21,9 @@ const components = {
   code({ node, inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || "");
     return !inline && match ? (
-		<SyntaxHighlighter
-			wrapLongLines="true"
-			wrapLines="true"
+      <SyntaxHighlighter
+        wrapLongLines="true"
+        wrapLines="true"
         language={match[1]}
         PreTag="div"
         children={String(children).replace(/\n$/, "")}
@@ -31,9 +38,10 @@ const components = {
 ////////////
 
 const AnswerItem = (props) => {
+  const dispatch = useDispatch();
   const user = props.user;
   const answer = props.answer;
-
+  
   //   let verified = answer && user && user._id === answer.author._id ? true : false;
 
   const [clicked, setClicked] = useState(false);
@@ -51,18 +59,89 @@ const AnswerItem = (props) => {
     setClicked(true);
   };
 
+  const voteHandler = (voteType) => {
+    // voteType = true => upvote       voteValue = 1 => push vote in backend
+    //  voteType = false => downvote    voteValue = 1 => remove vote in backend
+    voteAnsAPI(answer._id, voteType)
+      .then((res) => {
+        dispatch(
+          setAlert({
+            message: res.data.message,
+            status: true,
+          })
+        );
+        // console.log(res.data.voteCount);
+        dispatch(getAnswers(props.question_id))
+        
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          dispatch(
+            setAlert({
+              message: "Please login",
+              status: false,
+            })
+          );
+        } else {
+          dispatch(
+            setAlert({
+              message: "Please try again later",
+              status: false,
+            })
+          );
+        }
+      });
+  };
+
   return (
     <div className="mt-2 flex flex-col w-full mb-6 border-b border-gray-300">
       {!clicked && (
         <div className="flex pl-4 pt-4">
           <div className="flex flex-col items-center pt-2 ">
-            <UpArrow />
-            <span>0</span>
-            <DownArrow />
+            {user && answer.upvotes.includes(user._id) ? (
+              <button
+                onClick={() => {
+                  voteHandler(true);
+                }}
+              >
+                <UpArrowActive />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  voteHandler(true);
+                }}
+              >
+                <UpArrowInactive />
+              </button>
+            )}
+
+            <span>{answer.upvotes.length - answer.downvotes.length}</span>
+
+            {user && answer.downvotes.includes(user._id) ? (
+              <button
+                onClick={() => {
+                  voteHandler(false);
+                }}
+              >
+                <DownArrowActive />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  voteHandler(false);
+                }}
+              >
+                <DownArrowInactive />
+              </button>
+            )}
           </div>
           <div className="flex flex-col justify-between w-full text-left pl-2 mb-2">
             <div id="answer-desc" className="pb-14 whitespace-pre-line">
-              <ReactMarkdown components={components} children={answer.description} />
+              <ReactMarkdown
+                components={components}
+                children={answer.description}
+              />
             </div>
             {/* <div className="text-right pr-11"></div> */}
 
