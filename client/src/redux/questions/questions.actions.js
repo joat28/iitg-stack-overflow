@@ -44,8 +44,13 @@ export const getTopQuestionsAction = () => (dispatch) => {
 
 // Get all questions by tags array
 export const getQuestionsByTags = (tags, pathname) => (dispatch) => {
-  // console.log("tagsArray in actions is ", tags);
+  // dispatch({
+  //   type: GET_QUESTION_REQUEST  
+  // })
+  console.log("tagsArray in actions is ", tags);
   const Tags = { tags };
+  if(pathname==="/") pathname = "top"
+  else if(pathname==="/questions") pathname = "all"
   getQuestionsTags(Tags,pathname)
     .then((res) => {
       console.log("response in getQuestions ", res);
@@ -55,6 +60,7 @@ export const getQuestionsByTags = (tags, pathname) => (dispatch) => {
       });
     })
     .catch((error) => {
+      console.log('error here')
       return console.log(error);
     });
 };

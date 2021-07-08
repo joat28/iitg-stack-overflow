@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import TagSearch from "../../assets/svg/TagSearch";
-import { getQuestionsTags } from "../../api/index";
 import { getQuestionsByTags } from "../../redux/questions/questions.actions";
 import { useDispatch } from "react-redux";
 import { getQuestionsAction } from "../../redux/questions/questions.actions";
