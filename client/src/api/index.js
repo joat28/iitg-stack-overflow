@@ -59,6 +59,10 @@ export const updateQuestion = (Question, id) =>
 
 export const deleteQuestion = (id) => API.delete("/question/" + id);
 
+//Vote on a Question
+export const voteQAPI = (question_id, voteType) =>
+  API.patch("/question/vote/" + question_id, { voteType });
+
 //Update one Question by Id
 // export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
@@ -73,10 +77,8 @@ export const getAllAnswers = (questionId) =>
 //Update one answerby Id
 export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);
 
-//Vote on a Question
-export const voteQAPI = (question_id, voteType) =>
-  API.patch("/question/vote/" + question_id, { voteType });
-
 //Vote on an answer
 export const voteAnsAPI = (answer_id, voteType) =>
   API.patch("/answer/vote/" + answer_id, { voteType });
+
+export const deleteAnswer = (answer_id) => API.delete("/answer/"+ answer_id)

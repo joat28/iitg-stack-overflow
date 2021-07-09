@@ -1,4 +1,4 @@
-import { GET_ANSWERS, ADD_ANSWER, GET_ANSWERS_REQUEST } from "./answers.types";
+import { GET_ANSWERS, ADD_ANSWER, GET_ANSWERS_REQUEST, DELETE_ANSWER } from "./answers.types";
 
 const initialState = {
   answers: [],
@@ -22,12 +22,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
       };
-    //   case DELETE_ANSWER:
-    //     return {
-    //       ...state,
-    //       answers: state.answers.filter((answer) => answer.id !== action.payload),
-    //       loading: false,
-    //     };
+      case DELETE_ANSWER:
+        return {
+          answers: [...action.payload],
+          loading: false,
+        };
 
     default:
       return state;

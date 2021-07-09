@@ -41,4 +41,6 @@ router.patch(
 // VOTES
 router.patch('/vote/:question_id', authCheck, populateUser, questionController.vote)
 
+router.delete('/:question_id', authCheck, populateUser, questionController.deleteQuestion)
+
 module.exports = router;

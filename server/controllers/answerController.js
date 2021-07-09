@@ -91,7 +91,7 @@ module.exports.vote = async (req, res) => {
 	}
 };
 
-module.exports.deleteAnswer =async (req, res) => {
+module.exports.deleteAnswer = async (req, res) => {
 	try {
 		// SEND ONLY THE ID OF THE ANSWER
 	const answer_id = req.params.answer_id;
@@ -121,7 +121,7 @@ module.exports.deleteAnswer =async (req, res) => {
     // await Question.findByIdAndUpdate(answer.question, {
     //   $pull: {answers: {id:answer_id.toString()}}
     // })
-    Question.findById(answer.question, (error, data) => {
+    let question = await Question.findById(answer.question, (error, data) => {
       if(error) {
         return res.status(400).json({
           message: "Some error in finding Question"
@@ -135,14 +135,21 @@ module.exports.deleteAnswer =async (req, res) => {
       data.answers = [...data.answers.filter(ans => ans._id.toString() !== answer_id.toString())];
       data.save();
     //   console.log(data);
-      
-    });
-    // console.log('user is updated check user', newUpdatedUser);
+	})
+
+	// console.log(question)
+	const newQuestion = await Question.findById(answer.question).populate({ path: "answers", populate: { path: "author" } })
+    // }).populate({ path: "answers", populate: { path: "author" } });
+	// console.log("new Question's answers ", newQuestion.answers)
     return res.status(200).json({
-      message: "Deleted successfully"
+      message: "Deleted successfully",
+	  data: newQuestion.answers
     })
-		// const foundAnswer = Answer.find;
+		// const foundAnrswer = Answer.find;
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
+		res.status(500).json({
+			message: "Unable to delete answer"
+		})
 	}
 };

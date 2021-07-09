@@ -11,7 +11,7 @@ import ReactMarkdown from "react-markdown";
 import { voteAnsAPI } from "../../../api";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../../redux/alert/alert.actions";
-import { getAnswers } from "../../../redux/answers/answers.actions";
+import { deleteAnswerAction, getAnswers } from "../../../redux/answers/answers.actions";
 
 // import ReactMarkdown from "react-markdown";
 
@@ -50,7 +50,9 @@ const AnswerItem = (props) => {
     setClicked(false);
   };
 
-  const deleteAnswerHandler = (event) => {};
+  const deleteAnswerHandler = (event) => {
+    dispatch(deleteAnswerAction(answer._id));
+  };
   const editClickHandler = (event) => {
     event.preventDefault();
     var element = document.getElementById("answer-desc");

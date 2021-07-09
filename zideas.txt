@@ -6,9 +6,7 @@ User Schema: store two arrays of ids of various questions and answers posted by 
 
 Delete a question:
 1) find all answers related to the ques
-    a) find all comments connected to a particular answer & delete from comment collection
-    b) delete all answers connected
-2) find all comments connected to a particular question & delete
-3) remove questionId from user collection
-4) delete the question
+    a) delete all answers connected (don't check authorization)
+2) remove questionId from user collection
+3) delete the question
  
