@@ -12,7 +12,7 @@ router.get("/", questionController.getAll);
 router.get("/topTags", questionController.getTopTags);
 
 // ALL QUESTIONS BY TAGS
-router.post("/tags/:pathname", questionController.getQuestionsTags);
+router.post(`/tags/:pathname`, questionController.getQuestionsTags);
 
 // TOP QUESTIONS
 router.get("/top", questionController.getTopQuestions )

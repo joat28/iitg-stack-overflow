@@ -14,15 +14,18 @@ module.exports.createOne = async (req, res) => {
       author,
       tags,
     });
-    let user = await User.findById(req.user._id);
-    user.questions.push(req.user._id)
-    user.save()
+    // console.log("req.user is ",req.user)
+    let user = await User.findByIdAndUpdate(req.user._id, {$push: {questions: newQuestion._id}});
+    // console.log("user ", user)
+    // user.questions.push(req.user._id)
+    // user.save()
 
     return res.status(200).json({
       message: "Question created! ",
       newQuestion,
     });
   } catch (error) {
+    // console.log('error in creating ', error)
     return res.status(400).json({
       message: "Failed to create question",
     });
@@ -141,37 +144,41 @@ module.exports.getTopQuestions = async (req, res) => {
 
 module.exports.getQuestionsTags = async (req, res) => {
   try {
-    const questions = await Question.find({}).populate("author");
-    if (req.body.tags === "")
-      return res.status(200).json({
-        message: "Succesfully fetched questions with tags",
-        data: questions,
-      });
-
+    let questionsTags = await Question.find({}).populate("author");
+    // if (req.body.tags === "")
+    //   return res.status(200).json({
+    //     message: "Succesfully fetched questions with tags",
+    //     data: questions,
+    //   });
     let tagsArray = req.body.tags.split(" ").map((tag) => tag.toLowerCase());
     tagsArray = [...new Set(tagsArray)];
-
-    let questionsTags = questions.filter((question) => {
-      for (let i = 0; i < tagsArray.length; i++) {
-        if (question.tags.includes(tagsArray[i])) return true;
-      }
-      return false;
-    });
+    // console.log('tagsArray is ',tagsArray)
+    if (tagsArray[0]!=='')
+    {
+      // console.log("inside filter");
+      questionsTags = questionsTags.filter((question) => {
+        for (let i = 0; i < tagsArray.length; i++) {
+          if (question.tags.includes(tagsArray[i])) return true;
+        }
+        return false;
+      });
+    }
     const path = req.params.pathname;
+    // console.log(path);
+    // console.log(questionsTags)
     switch(path) {
-      case "":
-        console.log('in homescreen')
-        return questionsTags.sort(function(q1,q2) {
+      case "top":
+        // console.log('in homescreen')
+        questionsTags.sort(function(q1,q2) {
           const votes1 = q1.upvotes.length-q1.downvotes.length
           const votes2 = q2.upvotes.length-q2.downvotes.length
           return votes2-votes1
         })
-      case "questions":
-        console.log('inside /questions')
-        return questionsTags.reverse()
-      default:
-        console.log('in default')
-        return
+        break;
+      case "all":
+        // console.log('inside /questions')
+        questionsTags.reverse()
+        break;
 
     }
     return res.status(200).json({
@@ -247,16 +254,11 @@ module.exports.createAnswer = async (req, res) => {
     const newAnswer = await Answer.create({
       description: answer,
       author: req.user._id,
+      question: question_id
     });
     // console.log("New Answer is ", newAnswer);
-    let user = await User.findById(req.user._id);
-    user.answers.push(newAnswer._id);
-    user.save()
-
-    let question = await Question.findById(question_id);
-    question.answers.push(newAnswer._id);
-    question.save();
-
+    let user = await User.findByIdAndUpdate(req.user._id, {$push: {answers: newAnswer._id}});
+    let question = await Question.findByIdAndUpdate(question_id, {$push: {answers: newAnswer._id}});
     let populatedQuestion = await Question.findById(question_id).populate([
       { path: "answers", populate: { path: "author" } },
     ]);

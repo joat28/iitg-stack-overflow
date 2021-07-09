@@ -6,9 +6,15 @@ const API = axios.create({
   baseURL: BASE_API_URI,
 });
 
-API.defaults.headers.common = {
-  authorization: `Bearer ${localStorage.token}`,
-};
+// API.defaults.headers.common = {
+//   authorization: `Bearer ${localStorage.token}`,
+// };
+
+
+API.interceptors.request.use(function (config) {
+	config.headers.authorization = `Bearer ${localStorage.token}`
+	return config;
+});
 
 //======== AUTH =========
 //Sign up
@@ -34,7 +40,10 @@ export const getQuestions = () => API.get("/question");
 export const getTopQuestions = () => API.get("/question/top");
 
 // ALL Questions By tags
-export const getQuestionsTags = (Tags, pathname) => API.post("/question/tags"+pathname, Tags);
+export const getQuestionsTags = (Tags, pathname) => {
+  // console.log("Tags in API" ,Tags, "pathname", pathname)
+  return API.post(`/question/tags/`+ pathname, Tags);
+}
 
 // GET Single Question by ID
 export const getQuestion = (id) => {
