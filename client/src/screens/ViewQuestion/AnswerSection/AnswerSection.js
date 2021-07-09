@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../../components/Spinner/Spinner";
 import { answerQuestion } from "../../../api";
 import { setAlert } from "../../../redux/alert/alert.actions";
-import { ADD_ANSWER, GET_ANSWERS, GET_ANSWERS_REQUEST } from "../../../redux/answers/answers.types";
+import { GET_ANSWERS_REQUEST } from "../../../redux/answers/answers.types";
 import { getAnswers } from "../../../redux/answers/answers.actions";
 import { useHistory } from "react-router-dom";
-import UpArrow from "../../../assets/svg/UpArrow";
-import DownArrow from "../../../assets/svg/DownArrow";
 import AnswerItem from "./AnswerItem";
 
 const AnswerSection = (props) => {
@@ -21,7 +19,7 @@ const AnswerSection = (props) => {
 
   useEffect(() => {
     dispatch(getAnswers(props.question_id));
-  }, [dispatch]);
+  }, [dispatch, props.question_id]);
 
   const answerChangeHandler = (event) => {
     setAns(event.target.value);
@@ -29,6 +27,8 @@ const AnswerSection = (props) => {
 
   const answerSubmitHandler = (event) => {
     event.preventDefault();
+    
+    //TODO: make this an action creator
     answerQuestion({ ans, user }, props.question_id)
       .then((res) => {
         dispatch({
@@ -63,8 +63,8 @@ const AnswerSection = (props) => {
             {answers.length}
             {answers.length===1?  " Answer": " Answers"} 
           </div>
-          {answers.map((answer) => (
-            <AnswerItem answer={answer} user={user} question_id={props.question_id}/>
+          {answers.map((answer, index) => (
+            <AnswerItem key={index} answer={answer} user={user} question_id={props.question_id}/>
           ))}
 
           <div className="text-left text-xl pl-8 p-4">

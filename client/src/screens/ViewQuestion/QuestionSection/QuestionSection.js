@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getQuestionAction } from "../../../redux/questions/questions.actions";
+import { getQuestionAction, questionDeleteAction } from "../../../redux/questions/questions.actions";
 import moment from "moment";
 import { UpArrowInactive, UpArrowActive } from "../../../assets/svg/UpArrow";
 import {
@@ -46,13 +46,12 @@ const QuestionSection = (props) => {
     dispatch(getQuestionAction(props.question_id, history));
     // setVotes(question.upvotes.length - question.downvotes.length)
     window.scrollTo(0, 0);
-  }, [dispatch]);
+  }, [dispatch, props.question_id, history]);
 
   const discardHandler = (event) => {
     setClicked(false);
   };
-
-  const deleteAnswerHandler = (event) => {};
+  
   const editClickHandler = (event) => {
     event.preventDefault();
     window.scrollTo(0, 0);
@@ -93,6 +92,10 @@ const QuestionSection = (props) => {
         }
       });
   };
+
+  const questionDeleteHandler = () =>{
+    dispatch(questionDeleteAction(props.question_id, history));
+  }
 
   return (
     <>
@@ -166,8 +169,8 @@ const QuestionSection = (props) => {
                     </textarea>
                   )}
                   <div className="text-left ">
-                    {question.tags.map((tag) => (
-                      <span className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded">
+                    {question.tags.map((tag, index) => (
+                      <span key={index} className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded">
                         {tag}
                       </span>
                     ))}
@@ -180,7 +183,7 @@ const QuestionSection = (props) => {
                       </button>
                     )}
                     {user && question.author._id === user._id && (
-                      <button>
+                      <button onClick={questionDeleteHandler}>
                         <span className="text-red-500 ml-2">delete</span>
                       </button>
                     )}

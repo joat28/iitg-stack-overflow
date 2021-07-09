@@ -16,6 +16,10 @@ API.interceptors.request.use(function (config) {
 	return config;
 });
 
+//=======USERS===========
+export const getAllUsers = () => API.get('/user');
+
+export const getUser = (user_id) => API.get('/user/'+user_id)
 //======== AUTH =========
 //Sign up
 export const createUser = (User) => API.post("/register", User);

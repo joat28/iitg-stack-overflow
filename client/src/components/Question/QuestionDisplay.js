@@ -17,7 +17,7 @@ const QuestionDisplay = (props) => {
       dispatch(getTopQuestionsAction());
     else
       dispatch(getQuestionsAction());
-  }, [dispatch]);
+  }, [dispatch, location.pathname]);
 
   return (
     <>

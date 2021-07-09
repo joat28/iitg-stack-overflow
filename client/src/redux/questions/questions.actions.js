@@ -8,7 +8,12 @@ import {
 } from "./questions.types";
 import { createQuestion, deleteQuestion } from "../../api/index";
 import { setAlert } from "../alert/alert.actions";
-import { getQuestions, getQuestion, getQuestionsTags, getTopQuestions } from "../../api/index";
+import {
+  getQuestions,
+  getQuestion,
+  getQuestionsTags,
+  getTopQuestions,
+} from "../../api/index";
 
 // GET all questions
 export const getQuestionsAction = () => (dispatch) => {
@@ -44,23 +49,20 @@ export const getTopQuestionsAction = () => (dispatch) => {
 
 // Get all questions by tags array
 export const getQuestionsByTags = (tags, pathname) => (dispatch) => {
-  // dispatch({
-  //   type: GET_QUESTION_REQUEST  
-  // })
-  console.log("tagsArray in actions is ", tags);
+  // console.log("tagsArray in actions is ", tags);
   const Tags = { tags };
-  if(pathname==="/") pathname = "top"
-  else if(pathname==="/questions") pathname = "all"
-  getQuestionsTags(Tags,pathname)
+  if (pathname === "/") pathname = "top";
+  else if (pathname === "/questions") pathname = "all";
+  getQuestionsTags(Tags, pathname)
     .then((res) => {
-      console.log("response in getQuestions ", res);
+      // console.log("response in getQuestions ", res);
       dispatch({
         type: GET_QUESTION_BY_TAGS,
         payload: res.data.data,
       });
     })
     .catch((error) => {
-      console.log('error here')
+      console.log("error here");
       return console.log(error);
     });
 };
@@ -69,11 +71,11 @@ export const getQuestionsByTags = (tags, pathname) => (dispatch) => {
 export const getQuestionAction =
   (question_id, history, voteChange) => (dispatch) => {
     // console.log(questions);
-    if(!voteChange) {
-    dispatch({
-      type: GET_QUESTION_REQUEST,
-    });
-  }
+    if (!voteChange) {
+      dispatch({
+        type: GET_QUESTION_REQUEST,
+      });
+    }
     getQuestion(question_id)
       .then((res) => {
         dispatch({
@@ -117,22 +119,22 @@ export const createQuestionAction = (question, history) => async (dispatch) => {
     );
 };
 
-export const removeQuestion = (id, history) => async (dispatch) => {
-  try {
-    const res = await deleteQuestion(id);
-
-    dispatch({
-      type: DELETE_QUESTION,
+export const questionDeleteAction = (id, history) => async (dispatch) => {
+  deleteQuestion(id)
+    .then((res) => {
+      dispatch({
+        type: DELETE_QUESTION,
+      });
+      dispatch(
+        setAlert({
+          message: "Question deleted!",
+          status: true,
+        })
+      );
+    })
+    .catch((error) => {
+      console.log(error);
+      return;
     });
-
-    dispatch(
-      setAlert({
-        message: "Question deleted successfully",
-        status: true,
-      })
-    );
-    history.push("/");
-  } catch (err) {
-    dispatch(setAlert(err.response.data.message, "danger"));
-  }
+  history.push("/");
 };

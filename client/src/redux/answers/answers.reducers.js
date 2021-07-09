@@ -5,7 +5,7 @@ const initialState = {
   loading: true,
 };
 
-export default function (state = initialState, action) {
+export const answerReducer =(state = initialState, action) => {
   switch (action.type) {
     case GET_ANSWERS_REQUEST:
       return {

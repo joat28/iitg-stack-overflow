@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
-import Navbar from "../../components/Navbar/Navbar";
 import RightSideBar from "../../components/QuestionCard/RightSideBar";
 import Alert from "../../components/Alert/Alert";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
-import { useLocation } from "react-router";
 
 const PostQuestion = () => {
 

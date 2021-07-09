@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { setAlert } from "../../../redux/alert/alert.actions";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { updateAnswer } from "../../../api/index";
 
 export const EditAnswer = (props) => {
   const answer = props.answer;
   const [description, setDescription] = useState(answer.description);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const onChangeBody = (event) => {

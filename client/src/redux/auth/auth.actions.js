@@ -1,6 +1,5 @@
 // import axios from "axios";
 import { setAlert } from "../alert/alert.actions.js";
-import { getQuestionsAction } from "../questions/questions.actions";
 import { stopLoadingAction } from "../loading/loading.actions.js";
 import {
   REGISTER_SUCCESS,
@@ -10,7 +9,6 @@ import {
   LOGOUT,
 } from "./auth.types";
 import { createUser, checkUser, loadUserCall } from "../../api/index";
-import { getQuestions } from "../../api/index";
 
 // Load User
 export const loadUser = () => (dispatch) => {

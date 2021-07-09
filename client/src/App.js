@@ -13,6 +13,8 @@ import PostQuestionScreen from "./screens/PostQuestion/PostQuestion";
 import ViewQuestionScreen from "./screens/ViewQuestion/ViewQuestionScreen";
 import NotFoundScreen from "./screens/NotFoundScreen"
 import AllQuestionsScreen from "./screens/AllQuestions/AllQuestionsScreen";
+import UsersScreen from "./screens/Users/UsersScreen";
+import UserProfileScreen from "./screens/UserProfile/UserProfileScreen"
 
 //HOOKS
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -48,8 +50,8 @@ const App = () => {
         <Route path="/question/ask" exact component={PostQuestionScreen} />
         {/* <Route path="/question/edit/:id" exact component={PostQuestionScreen} /> */}
         <Route path="/question/:id" exact component={ViewQuestionScreen}/>
-        <Route path="/tags" exact component={HomeScreen} />
-        <Route path="/users" exact component={HomeScreen} />
+        <Route path="/users" exact component={UsersScreen} />
+        <Route path="/users/:user_id" exact component={UserProfileScreen} />
         <Route path="*" component={NotFoundScreen}></Route>
         </Switch>
         {/* <Route path="/questions" exact component={QuestionsScreen} /> */}

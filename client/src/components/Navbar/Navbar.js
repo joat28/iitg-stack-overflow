@@ -1,10 +1,8 @@
 import React from "react";
 import Logo from "../../assets/svg/Logo";
-import { NavLink, useHistory } from "react-router-dom";
-// import { clearToken } from "../../api/index";
+import { NavLink, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/auth/auth.actions";
-import UserProfileLogo from "../../assets/svg/temp";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -52,8 +50,8 @@ const Navbar = () => {
       >
         {isAuthenticated ? (
           <>
-            <UserProfileLogo />
-            <span> {user.name}</span>
+            <Link to={`/users/${user._id}`}><img className="w-8 h-8 border border-gray-300" alt = "img" src={`https://avatars.dicebear.com/api/jdenticon/${user.name}.svg`}></img></Link>
+            <Link to={`/users/${user._id}`}><span className="p-1"> {user.name}</span></Link>
             <button
               onClick={logoutHandler}
               className="flex items-center p-2 m-1 ml-6 h-10 bg-blue-500 border-2 border-blue-700 rounded text-white hover:bg-blue-600"

@@ -33,16 +33,6 @@ const LeftSideBar = (props) => {
             </div>
           </NavLink>
         </div>
-
-        <NavLink
-          exact
-          to="/tags"
-          className="text-sm text-gray-500 py-2 pl-6 flex"
-          activeClassName="border-red-400 text-gray-800 border-r-4 bg-gray-100 font-bold"
-        >
-          Tags
-        </NavLink>
-
         <NavLink
           exact
           to="/users"

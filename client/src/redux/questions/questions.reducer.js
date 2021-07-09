@@ -48,8 +48,7 @@ export const questionReducer = (state = initialState, action) => {
       return {
         ...state,
         question: null,
-        // questions: state.questions.filter((question) => question.id !== action.payload),
-        loading: true,
+        loading: false,
       };
     }
     default:

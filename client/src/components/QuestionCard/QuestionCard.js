@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import { createQuestion } from "../../api";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
 import Alert from "../Alert/Alert";
 import { useHistory } from "react-router-dom";
 import { createQuestionAction } from "../../redux/questions/questions.actions";
-import { useLocation } from "react-router";
 
 const QuestionCard = () => {
-  const location = useLocation();
-  const url = location.pathname.split("/")[2];
-  // if(url === "ask")
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");

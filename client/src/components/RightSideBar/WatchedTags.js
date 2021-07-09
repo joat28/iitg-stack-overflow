@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import TagSearch from "../../assets/svg/TagSearch";
 import { getQuestionsByTags } from "../../redux/questions/questions.actions";
 import { useDispatch } from "react-redux";
-import { getQuestionsAction } from "../../redux/questions/questions.actions";
 import { useLocation } from "react-router";
 const WatchedTags = (props) => {
   const [tags, setTags] = useState("");
@@ -20,10 +19,7 @@ const WatchedTags = (props) => {
 
   const removeTagHandler = (deletedTag) => {
     setSelectedTags((selectedTags) => {
-      // console.log("selected tags", selectedTags);
       return [...selectedTags.filter((tag) => tag !== deletedTag)];
-
-      // ...new Set(selectedTags.concat(newTags)),
     });
   };
 
@@ -37,7 +33,7 @@ const WatchedTags = (props) => {
 
   useEffect(() => {
     dispatch(getQuestionsByTags(selectedTags.join(" "),location.pathname));
-  }, [selectedTags, dispatch]);
+  }, [selectedTags, dispatch, location.pathname]);
 
   return (
     <div className="mt-3 rounded-md shadow-md border border-gray-300">
@@ -51,7 +47,7 @@ const WatchedTags = (props) => {
               <>
                 {tag !== "" && (
                   <div
-                    key={`${index}`}
+                    key={index}
                     className="m-1 text-xs px-0.5 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded "
                   >
                     <div className="flex flex-row justify-between ">
@@ -105,11 +101,3 @@ const WatchedTags = (props) => {
 };
 
 export default WatchedTags;
-
-/*
-<div className=" flex-wrap flex pl-1 ">
-        {topSevenTags.map((tag, index) => (
-          <div key={`${index}`} className="m-1 text-xs px-2 py-0.5 bg-blue-100 border-2 border-blue-100 hover:bg-blue-200 text-blue-600 my-1.5  rounded ">{`${tag[0]} x ${tag[1]}`}</div>
-        ))}
-      </div>
-*/

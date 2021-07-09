@@ -66,10 +66,9 @@ module.exports.updateOne = async (req, res) => {
   try {
     const id = req.params.question_id;
     const { title, description, tags } = req.body;
-    const tagsArray = tags.trim().split(" ");
+    let tagsArray = tags.trim().split(" ");
+    tagsArray = [...new Set(tagsArray)];
     const question = await Question.findById(id);
-    // console.log(question.author._id)
-    // console.log(req.user._id)
     if (question.author._id.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         message: "You are not authorized to edit this question",
@@ -328,7 +327,6 @@ module.exports.vote = async (req, res) => {
 };
 
 //DELETE QUESTION
-
 module.exports.deleteQuestion = async (req, res) => {
   try {
     const question_id = req.params.question_id;
@@ -352,7 +350,14 @@ module.exports.deleteQuestion = async (req, res) => {
 
     await Answer.deleteMany({ _id: { $in: delQuestion.answers } });
     await Question.findByIdAndDelete(question_id);
-
+    const user = await User.findById(req.user._id);
+    user.questions = [
+      ...user.questions.filter(
+        (delQId) => delQId.toString() !== question_id.toString()
+      ),
+    ];
+    await user.save();
+    
     return res.status(200).json({
       message: "Deleted question successfully",
     });
@@ -363,72 +368,3 @@ module.exports.deleteQuestion = async (req, res) => {
     });
   }
 };
-
-// module.exports.deleteAnswer = async (req, res) => {
-//   try {
-//     // SEND ONLY THE ID OF THE ANSWER
-//     const answer_id = req.params.answer_id;
-//     const hasAnswered = req.user.answers.includes(answer_id);
-//     if (!hasAnswered) {
-//       return res.status(401).json({
-//         message: "Unauthorized",
-//       });
-//     }
-//     const answer = await Answer.findByIdAndDelete(answer_id);
-//     // console.log("answer", answer)
-//     if (!answer) {
-//       return res.status(404).json({
-//         message: "No answer found by that id/ Unauthorized",
-//       });
-//     }
-//     const newUpdatedUser = await User.findByIdAndUpdate(req.user._id, {
-//       answers: [
-//         ...req.user.answers.filter(
-//           (ans) => ans._id.toString() !== answer_id.toString()
-//         ),
-//       ],
-//     });
-//     // console.log(answer.question);
-
-//     // TODO: Find how to use pull method of updating
-//     // await Question.findByIdAndUpdate(answer.question, {
-//     //   $pull: {answers: {id:answer_id.toString()}}
-//     // })
-//     let question = await Question.findById(answer.question, (error, data) => {
-//       if (error) {
-//         return res.status(400).json({
-//           message: "Some error in finding Question",
-//         });
-//       } else if (!data) {
-//         return res.status(404).json({
-//           message: "No Question found",
-//         });
-//       }
-//       data.answers = [
-//         ...data.answers.filter(
-//           (ans) => ans._id.toString() !== answer_id.toString()
-//         ),
-//       ];
-//       data.save();
-//       //   console.log(data);
-//     });
-
-//     // console.log(question)
-//     const newQuestion = await Question.findById(answer.question).populate({
-//       path: "answers",
-//       populate: { path: "author" },
-//     });
-//     // }).populate({ path: "answers", populate: { path: "author" } });
-//     // console.log("new Question's answers ", newQuestion.answers)
-//     return res.status(200).json({
-//       message: "Deleted successfully",
-//       data: newQuestion.answers,
-//     });
-//     // const foundAnrswer = Answer.find;
-//   } catch (error) {
-//     // console.log(error);
-//     res.status(500).json({
-//       message: "Unable to delete answer",
-//     });
-//   }
-// };

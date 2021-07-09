@@ -1,4 +1,4 @@
-import { GET_ANSWERS, ADD_ANSWER, GET_ANSWERS_REQUEST, DELETE_ANSWER } from "./answers.types";
+import { GET_ANSWERS, /*ADD_ANSWER,*/ GET_ANSWERS_REQUEST, DELETE_ANSWER } from "./answers.types";
 import { getAllAnswers, deleteAnswer } from "../../api/index";
 import { setAlert } from "../alert/alert.actions";
 
