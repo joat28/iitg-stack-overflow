@@ -23,15 +23,46 @@ const QuestionItem = (props) => {
               {question.answers.length === 1 ? "answer" : "answers"}
             </span>
           </div>
-          <div className="flex flex-col justify-between w-full">
+          <div className="flex flex-col justify-left w-full">
             <div className="text-md semibold" style={{ color: "#0077CC" }}>
               <NavLink
                 to={`/question/${question._id}`}
                 className="hover:text-blue-400"
               >
                 {/*"overflow-ellipsis overflow-hidden inline-block max-h-12"*/}
-                <span>{question.title}</span>
+                <span>{question.title.length > 110 ? (
+                <span>
+                  {question.title.substring(
+                    0,
+                    Math.min(question.title.length, 110)
+                  )}...
+                </span>
+              ) : (
+                <span>
+                  {question.title.substring(
+                    0,
+                    Math.min(question.title.length, 110)
+                  )}
+                </span>
+              )}</span>
               </NavLink>
+            </div>
+            <div className="py-2 text-sm">
+              {question.description.length > 400 ? (
+                <span>
+                  {question.description.substring(
+                    0,
+                    Math.min(question.description.length, 400)
+                  )}...
+                </span>
+              ) : (
+                <span>
+                  {question.description.substring(
+                    0,
+                    Math.min(question.description.length, 400)
+                  )}
+                </span>
+              )}
             </div>
             <div className="flex justify-between">
               <div>

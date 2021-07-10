@@ -2,24 +2,33 @@ import React, { useEffect, useState } from "react";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import { getAllUsers } from "../../api/index";
 import UserCard from "../../components/UserCard/UserCard";
+import { useDispatch } from "react-redux";
+import {setAlert} from "../../redux/alert/alert.actions"
 
 const UsersScreen = () => {
   const [users, setUsers] = useState([]);
   const [visibleUsers, setVisibleUsers] = useState([]);
-  // const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
 
   const onChangeHandler = (event) => {
     // setSearch(event.target.value);
-    setVisibleUsers([...users.filter(user=>user.name.includes(event.target.value))]);
-  }
+    setVisibleUsers([
+      ...users.filter((user) => user.name.includes(event.target.value)),
+    ]);
+  };
   useEffect(() => {
     getAllUsers()
       .then((res) => {
         setUsers(res.data.data);
-        setVisibleUsers(res.data.data)
+        setVisibleUsers(res.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        dispatch(
+          setAlert({
+            message: "An error occurred!",
+            status: false,
+          })
+        );
       });
   }, []);
 
@@ -28,7 +37,7 @@ const UsersScreen = () => {
       <div className="flex flex-row">
         <LeftSideBar />
         <div className="mt-24 pl-72 text-left w-screen">
-            <div className="text-3xl pl-5 mb-10"> Users </div>
+          <div className="text-3xl pl-5 mb-10"> Users </div>
           <div className="items-center">
             <input
               type="search"
@@ -40,7 +49,9 @@ const UsersScreen = () => {
           <div className="flex flex-row justify-left flex-wrap">
             {users &&
               users.length > 0 &&
-              visibleUsers.map((user, index) => <UserCard key={index} user={user} />)}
+              visibleUsers.map((user, index) => (
+                <UserCard key={index} user={user} />
+              ))}
           </div>
         </div>
       </div>
