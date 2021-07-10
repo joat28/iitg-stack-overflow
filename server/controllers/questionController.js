@@ -6,28 +6,21 @@ const User = require("../models/Users");
 module.exports.createOne = async (req, res) => {
   try {
     const { title, description, tags, author } = req.body;
-
-    //console.log(req.body)
     const newQuestion = await Question.create({
       title,
       description,
       author,
       tags,
     });
-    // console.log("req.user is ",req.user)
-    let user = await User.findByIdAndUpdate(req.user._id, {
+    await User.findByIdAndUpdate(req.user._id, {
       $push: { questions: newQuestion._id },
     });
-    // console.log("user ", user)
-    // user.questions.push(req.user._id)
-    // user.save()
 
     return res.status(200).json({
       message: "Question created! ",
       newQuestion,
     });
   } catch (error) {
-    // console.log('error in creating ', error)
     return res.status(400).json({
       message: "Failed to create question",
     });
@@ -48,7 +41,7 @@ module.exports.getOne = async (req, res) => {
         message: "No Question Found",
       });
     }
-    // console.log("Question found ", foundQuestion);
+    
     return res.status(200).json({
       message: "Question Found",
       data: foundQuestion,
@@ -78,15 +71,14 @@ module.exports.updateOne = async (req, res) => {
       { _id: id },
       { title, description, tags: tagsArray }
     );
-    // console.log("newQuestion ", newQuestion);
+    
     return res.status(200).json({
       message: "Question updated successfully",
     });
   } catch (error) {
-    // console.log("Inside in updateQuestion ", error);
+    
     return res.status(404).json({
       message: "Unable to update question",
-      //  error: error.message
     });
   }
 };
@@ -109,15 +101,12 @@ module.exports.getAll = async (req, res) => {
 // TOP QUESTIONS
 module.exports.getTopQuestions = async (req, res) => {
   try {
-    // console.log('inside getTopQuestions')
     const Questions = await Question.find({}).populate("author");
     Questions.sort(function (q1, q2) {
       const votes1 = q1.upvotes.length - q1.downvotes.length;
       const votes2 = q2.upvotes.length - q2.downvotes.length;
       return votes2 - votes1;
     });
-    // console.log("questions", Questions)
-
     res.status(200).json({
       message: "Successfully fetched all the questions",
       data: Questions,
@@ -134,16 +123,12 @@ module.exports.getTopQuestions = async (req, res) => {
 module.exports.getQuestionsTags = async (req, res) => {
   try {
     let questionsTags = await Question.find({}).populate("author");
-    // if (req.body.tags === "")
-    //   return res.status(200).json({
-    //     message: "Succesfully fetched questions with tags",
-    //     data: questions,
-    //   });
+
     let tagsArray = req.body.tags.split(" ").map((tag) => tag.toLowerCase());
     tagsArray = [...new Set(tagsArray)];
-    // console.log('tagsArray is ',tagsArray)
+
     if (tagsArray[0] !== "") {
-      // console.log("inside filter");
+
       questionsTags = questionsTags.filter((question) => {
         for (let i = 0; i < tagsArray.length; i++) {
           if (question.tags.includes(tagsArray[i])) return true;
@@ -152,11 +137,10 @@ module.exports.getQuestionsTags = async (req, res) => {
       });
     }
     const path = req.params.pathname;
-    // console.log(path);
-    // console.log(questionsTags)
+    
     switch (path) {
       case "top":
-        // console.log('in homescreen')
+        
         questionsTags.sort(function (q1, q2) {
           const votes1 = q1.upvotes.length - q1.downvotes.length;
           const votes2 = q2.upvotes.length - q2.downvotes.length;
@@ -164,7 +148,7 @@ module.exports.getQuestionsTags = async (req, res) => {
         });
         break;
       case "all":
-        // console.log('inside /questions')
+        
         questionsTags.reverse();
         break;
     }
@@ -173,14 +157,14 @@ module.exports.getQuestionsTags = async (req, res) => {
       data: questionsTags,
     });
   } catch (error) {
-    // console.log("error in tags ");
+    
     return res.status(404).json({
       message: "Unable to fetch all questions",
     });
   }
 };
 
-// GET TOP TAGSq
+// GET TOP TAGS
 module.exports.getTopTags = async (req, res) => {
   try {
     const mapOfQuestions = new Map();
@@ -226,7 +210,6 @@ module.exports.getAllAnswers = async (req, res) => {
       data: question.answers,
     });
   } catch (error) {
-    // console.log(error);
     return res.status(400).json({
       message: "unable to get all answer from backend",
     });
@@ -243,7 +226,6 @@ module.exports.createAnswer = async (req, res) => {
       author: req.user._id,
       question: question_id,
     });
-    // console.log("New Answer is ", newAnswer);
     let user = await User.findByIdAndUpdate(req.user._id, {
       $push: { answers: newAnswer._id },
     });
@@ -254,13 +236,11 @@ module.exports.createAnswer = async (req, res) => {
       { path: "answers", populate: { path: "author" } },
     ]);
 
-    // console.log("question in createAnswer", question);
     return res.status(200).json({
       payload: populatedQuestion.answers,
       message: "Answer has been posted successfully",
     });
   } catch (error) {
-    // console.log(error);
     return res.status(400).json({
       message: "Unable to post your answer",
     });
@@ -312,13 +292,11 @@ module.exports.vote = async (req, res) => {
     } else {
       message = "First remove your previous vote";
     }
-    // console.log('new question is ',newQuestion);
     res.status(200).json({
       message,
       voteCount,
     });
   } catch (error) {
-    // console.log(error);
     res.status(500).json({
       message: error.message,
       voteCount,
