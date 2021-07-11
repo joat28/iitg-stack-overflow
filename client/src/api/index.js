@@ -87,4 +87,4 @@ export const voteAnsAPI = (answer_id, voteType) =>
 export const deleteAnswer = (answer_id) => API.delete("/answer/"+ answer_id);
 
 //UPDATE USER NAME
-export const updateUserAPI = (name, id) => API.patch("/user/"+ id, name);
+export const updateUserAPI = ({name, password, newPassword, confirmPassword, id}) => API.patch("/user/"+ id, {name, password, newPassword, confirmPassword});

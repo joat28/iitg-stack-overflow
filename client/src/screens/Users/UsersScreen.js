@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {setAlert} from "../../redux/alert/alert.actions"
 
 const UsersScreen = () => {
+  window.scrollTo(0,0);
   const [users, setUsers] = useState([]);
   const [visibleUsers, setVisibleUsers] = useState([]);
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const UsersScreen = () => {
           })
         );
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="bg-white min-h-screen">

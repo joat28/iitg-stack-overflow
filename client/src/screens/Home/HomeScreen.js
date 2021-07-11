@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const HomeScreen = () => {
   // let tagsArray = [];
+  window.scrollTo(0,0);
   const [tagsArray, setTagsArray] = useState([]);
   const getTags = (tags) => {
     setTagsArray(tags);
