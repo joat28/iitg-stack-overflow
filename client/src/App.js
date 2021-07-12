@@ -24,6 +24,7 @@ import { useEffect } from "react";
 
 //FUNCTIONS | ACTIONS | 
 import { loadUser } from "./redux/auth/auth.actions";
+import TeamScreen from "./screens/TeamScreen/TeamScreen";
 // import { getQuestions } from "./api/index";
 // import { getQuestionAction } from "./redux/questions/questions.actions";
 // import {
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/users" exact component={UsersScreen} />
         <Route path="/users/:user_id" exact component={UserProfileScreen} />
         <Route path="/search/:search_id" exact component={SearchBarScreen} />
+        <Route path="/team" exact component={TeamScreen} />
         <Route path="*" component={NotFoundScreen}></Route>
         </Switch>
         <Footer />

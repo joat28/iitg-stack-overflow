@@ -8,8 +8,8 @@ import Spinner from "../../components/Spinner/Spinner";
 
 
 const LoginScreen = () => {
-
-  const history = useHistory();
+	window.scrollTo(0, 0);
+  	const history = useHistory();
 	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 	const loading = useSelector(state => state.loading.loading);
 

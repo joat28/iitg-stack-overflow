@@ -5,6 +5,7 @@ import SearchResults from "./SearchResults";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar"
 
 const SearchBarScreen = () => {
+  window.scrollTo(0, 0);
   const location = useLocation();
   const url = location.pathname.split("/")[2];
   // console.log(url);

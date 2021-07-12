@@ -42,7 +42,6 @@ module.exports.getUser = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Internal Server Error",
     });
@@ -52,30 +51,32 @@ module.exports.getUser = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
   try {
     const { name, password, newPassword, confirmPassword } = req.body;
-    
+
     const user = req.user;
     const id = user._id;
+    if (name === "") {
+      return res.status(409).json({
+        message: "Name cannot be empty!",
+      });
+    }
 
     user.comparePasswords(password, async function (error, isMatch) {
       //ERROR IN COMPARING
       if (error) {
         return res.status(400).json({
-          message: "Invalid password! (error)",
+          message: "Invalid password!",
         });
       }
       // PASSWORD DID NOT MATCH
       else if (!isMatch) {
         return res.status(401).json({
-          message: "Invalid password! (no match)",
+          message: "Invalid password!",
         });
-      }
-      else {
+      } else {
         //PASSWORDS MATCHED
-        if(name || name===user.name)
-        {
+        if (name && name !== user.name) {
           const existingName = await User.findOne({ name });
-          if(existingName)
-          {
+          if (existingName) {
             return res.status(409).json({
               message: "User Name already exists.",
             });
@@ -83,32 +84,32 @@ module.exports.updateUser = async (req, res) => {
         }
 
         // USERNAME IS CORRECT
-        const newUser = await User.findById(id)
-        if(newPassword!== confirmPassword)
+        const newUser = await User.findById(id);
+        if (newPassword !== confirmPassword)
           return res.status(409).json({
-            message: "confirm password doesn't match"
-          })
+            message: "confirm password doesn't match",
+          });
         if (name) {
           newUser.name = name;
         }
-        if (newPassword && newPassword.length > 5 && newPassword === confirmPassword) {
+        if (
+          newPassword &&
+          newPassword.length > 5 &&
+          newPassword === confirmPassword
+        ) {
           newUser.password = newPassword;
         }
-        if(newPassword==="") await User.findByIdAndUpdate(id,{name});
+        if (newPassword === "") await User.findByIdAndUpdate(id, { name });
         else await newUser.save();
         return res.status(200).json({
           message: "User updated successfully",
-          newUser: newUser
+          data: newUser,
         });
       }
-		});
-
-    
-
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Unable to update User",
-      
     });
   }
 };

@@ -30,6 +30,7 @@ module.exports.createOne = async (req, res) => {
 //GET ONE QUESTION BY ID
 module.exports.getOne = async (req, res) => {
   try {
+
     const foundQuestion = await Question.findOne({
       _id: req.params.question_id,
     }).populate([
@@ -203,7 +204,6 @@ module.exports.getAllAnswers = async (req, res) => {
       { path: "answers", populate: { path: "author" } },
     ]);
 
-    // console.log('answers is ', question.answers)
     if (!question) throw new Error("Question not found");
     return res.status(200).json({
       message: "Fetched all answers",
@@ -340,7 +340,6 @@ module.exports.deleteQuestion = async (req, res) => {
       message: "Deleted question successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       mesage: "Internal Server Error",
     });

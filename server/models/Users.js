@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
 userSchema.plugin(uniqueValidator);
 
 userSchema.pre("save", async function (next) {
-	console.log("inside changing password");
+	// console.log("inside changing password");
 	const salt = await bcrypt.genSalt();
 	this.password = await bcrypt.hash(this.password, salt);
 	next();

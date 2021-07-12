@@ -1,7 +1,7 @@
 import React from "react";
 import Pencil from "../../assets/svg/Pencil";
 import Npm from "../../assets/svg/Npm";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const SideBarWidget = () => {
   return (
@@ -12,13 +12,17 @@ const SideBarWidget = () => {
       <div className="h-24 flex flex-col pl-1 pr-1 md-3 justify-evenly">
         <div className="flex">
           <Pencil />
-          <a href ="https://github.com/joat28/iitg-stack-overflow" className="text-sm inline-block text-left">
+          <a
+            target="_blank"
+            href="https://github.com/joat28/iitg-stack-overflow"
+            className="text-sm inline-block text-left font-semibold"
+          >
             Source Code
           </a>
         </div>
         <div className="flex">
           <Pencil />
-          <Link to ="/" className="text-sm inline-block text-left">
+          <Link to="/team" className="text-sm inline-block text-left font-semibold">
             The Team behind the scenes
           </Link>
         </div>
@@ -27,12 +31,20 @@ const SideBarWidget = () => {
       <div className="h-11 pl-4 text-gray-600 text-sm font-semibold bg-yellow-100 border border-yellow-200 flex items-center">
         Markdown
       </div>
-      <div className="flex pt-2 flex-col items-center justify-center ">
-        <div className="ml-4 flex ">
-          <Npm />
-          <a href ="https://www.npmjs.com/package/react-markdown" className="text-sm inline-block text-left">
-            Using Markdown in React
-          </a>
+      <div className="flex pt-2 flex-col items-center mt-3  ">
+        <div className=" flex items-center">
+          <div className="w-10 flex items-center ">
+            <Npm />
+          </div>
+          <div>
+            <a
+              target="_blank"
+              href="https://www.npmjs.com/package/react-markdown"
+              className="text-sm inline-block text-left font-semibold"
+            >
+              Using Markdown in React
+            </a>
+          </div>
         </div>
       </div>
     </div>

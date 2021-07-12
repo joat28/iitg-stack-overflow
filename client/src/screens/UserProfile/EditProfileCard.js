@@ -5,6 +5,7 @@ import Alert from "../../components/Alert/Alert";
 import { updateUserAPI } from "../../api/index";
 
 const EditProfileCard = (props) => {
+	const editClickHandler = props.editClickHandler;
 	const dispatch = useDispatch();
 	const user = props.user;
 	const [name, setName] = useState(user.name);
@@ -68,18 +69,25 @@ const EditProfileCard = (props) => {
 		})
 			.then((res) => {
 				console.log("updated succesfully");
-				return dispatch(
+				dispatch(
 					setAlert({
 						message: "User updated",
 						status: true,
 					})
 				);
+				dispatch({
+					type: "LOGIN_SUCCESS",
+					payload: {
+						user: res.data.data
+					}
+				})
+				return editClickHandler();
 			})
 			.catch((error) => {
 				console.log(error.response)
 				dispatch(
 					setAlert({
-						message: "Error in updating user!",
+						message: error.response.data.message,
 						status: false,
 					})
 				);
