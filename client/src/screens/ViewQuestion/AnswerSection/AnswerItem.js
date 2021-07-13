@@ -52,7 +52,9 @@ const AnswerItem = (props) => {
   };
 
   const deleteAnswerHandler = (event) => {
-    dispatch(deleteAnswerAction(answer._id));
+    const value = window.confirm('Delete Answer?');
+    if(value) dispatch(deleteAnswerAction(answer._id));
+    return;
   };
   const editClickHandler = (event) => {
     event.preventDefault();

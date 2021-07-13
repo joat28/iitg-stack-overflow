@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import SearchItem from "./SearchItem";
 import Spinner from "../../components/Spinner/Spinner";
 import { NavLink } from "react-router-dom";
 import Nothing from "../../assets/svg/Nothing";
-import { useLocation } from "react-router";
 
 const SearchResults = (props) => {
     const url = props.url;
@@ -12,15 +11,14 @@ const SearchResults = (props) => {
     const { questions } = useSelector((state) => state.question);
     const [visibleQues, setVisibleQues] = useState([]);
     const[localLoading, setLocalLoading] = useState(true);
-//   const dispatch = useDispatch();
-//   const location = useLocation()
+
 
   useEffect(() => {
     window.scrollTo(0,0);
     setLocalLoading(false);
     if(questions && questions.length > 0)
-        setVisibleQues([...questions.filter(question=>(question.title.includes(url) || question.description.includes(url)))]);
-  }, [url]);
+        setVisibleQues([...questions.filter(question=>(question.title.toLowerCase().includes(url) || question.description.toLowerCase().includes(url)))]);
+  }, [url, questions]);
 
   return (
     <>

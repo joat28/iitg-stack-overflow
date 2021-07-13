@@ -21,7 +21,7 @@ module.exports = checkAuth = (req, res, next) => {
       });
     }
     else {
-      jwt.verify(token, "secret", (error, user) => {
+      jwt.verify(token, process.env.JWT_SECRET_TOKEN , (error, user) => {
         if (error) {
           console.log('Error in token, not valid!');
           return res.status(401).json({

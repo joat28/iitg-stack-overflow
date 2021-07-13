@@ -1,7 +1,6 @@
 import React from "react";
 import LinkedIn from "../../assets/svg/LinkedIn";
 import Github from "../../assets/svg/Github";
-import Background from "../../assets/svg/Background";
 
 const TeamScreen = () => {
   return (
@@ -17,12 +16,12 @@ const TeamScreen = () => {
       <div className="flex h-2/5 justify-center text-5xl pt-6 mb-2 italic text-white">
         OUR TEAM
       </div>
-      <div className="h-2/5 text-left px-5 text-xl pt-6 italic text-white">
+      <div className="h-2/5 flex px-5 text-xl pt-6 italic text-white justify-center">
       We are a talented team of developers with skillsets in various domains of technology. 
       </div>
       <div className="flex flex-row px-5 mt-16 justify-around">
         <div className="w-1/4 h-2/5  rounded-md border-8 border-white bg-white hover:scale-110 transform duration-500 ease-in-out">
-          <img src="https://i.ibb.co/XJWFdzD/FB-IMG-1626115440284.jpg"></img>
+          <img src="https://i.ibb.co/XJWFdzD/FB-IMG-1626115440284.jpg" alt="Tanmay Shreshth"></img>
           <div className="flex content-around w-full justify-center my-1.5">
             <a
               className="mr-2"
@@ -38,7 +37,7 @@ const TeamScreen = () => {
         </div>
 
         <div className="w-1/4 h-2/5 rounded-md border-8 border-white bg-white hover:scale-110 transform duration-500 ease-in-out">
-          <img src="https://i.ibb.co/W697x9x/20210713-004249.jpg"></img>
+          <img src="https://i.ibb.co/W697x9x/20210713-004249.jpg" alt="Shashank Raj"></img>
           <div className="flex content-around w-full justify-center my-1.5 ">
             <a className="mr-2" href="https://www.linkedin.com/in/srj1105">
               <LinkedIn />
@@ -50,7 +49,7 @@ const TeamScreen = () => {
           <span className="font-semibold">Shashank Raj</span>
         </div>
         <div className="w-1/4 h-2/5  rounded-md border-8 border-white bg-white hover:scale-110 transform duration-500 ease-in-out">
-          <img src="https://i.ibb.co/bPXsXc2/Whats-App-Image-2021-07-13-at-01-09-57.jpg"></img>
+          <img src="https://i.ibb.co/bPXsXc2/Whats-App-Image-2021-07-13-at-01-09-57.jpg" alt="Kautilya Pandey"></img>
           <div className="flex content-around w-full justify-center place-items-center my-1.5">
             <a
               className="mr-2"
@@ -67,7 +66,7 @@ const TeamScreen = () => {
       </div>
       <div className="flex flex-row h-1/2 justify-center py-0 pl-20  mt-16 mb-8 ">
         <div className="w-1/4 h-2/5 mr-40 rounded-md border-8 border-white bg-white hover:scale-110 transform duration-500 ease-in-out">
-          <img src="https://i.ibb.co/hL2gswz/Whats-App-Image-2021-07-13-at-00-27-26.jpg"></img>
+          <img src="https://i.ibb.co/hL2gswz/Whats-App-Image-2021-07-13-at-00-27-26.jpg" alt = "Shantanu Pathak"></img>
           <div className="flex content-around w-full justify-center my-1.5">
             <a
               className="mr-2"
@@ -82,7 +81,7 @@ const TeamScreen = () => {
           <span className="font-semibold">Shantanu Pathak</span>
         </div>
         <div className="w-1/4 h-2/5 ml-2 rounded-md border-8 border-white bg-white hover:scale-110 transform duration-500 ease-in-out">
-          <img src="https://i.ibb.co/txFZ6mJ/Whats-App-Image-2021-07-13-at-00-37-13.jpg"></img>
+          <img src="https://i.ibb.co/txFZ6mJ/Whats-App-Image-2021-07-13-at-00-37-13.jpg" alt ="Prabhat Rao"></img>
           <div className="flex content-around w-full justify-center my-1.5 ">
             <a className="mr-2" href="https://www.linkedin.com/in/prabhat-rao/">
               <LinkedIn />

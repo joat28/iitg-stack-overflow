@@ -76,15 +76,15 @@ export const answerQuestion = (Answer, question_id) =>
 export const getAllAnswers = (questionId) =>
   API.get("/question/answers/" + questionId);
 
-//Update one answerby Id
+//Update one answer by Id
 export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);
 
 //Vote on an answer
 export const voteAnsAPI = (answer_id, voteType) =>
   API.patch("/answer/vote/" + answer_id, { voteType });
 
-//DELETE an Answer 
+//Delete an Answer 
 export const deleteAnswer = (answer_id) => API.delete("/answer/"+ answer_id);
 
-//UPDATE USER NAME
+//Update User
 export const updateUserAPI = ({name, password, newPassword, confirmPassword, id}) => API.patch("/user/"+ id, {name, password, newPassword, confirmPassword});

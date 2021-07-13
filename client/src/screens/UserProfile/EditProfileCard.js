@@ -115,6 +115,7 @@ const EditProfileCard = (props) => {
 					Password
 				</label>
 				<input
+					placeholder="Required"
 					type="password"
 					required
 					className="p-2 rounded border-2 focus:border-blue-300 outline-none"
@@ -126,6 +127,7 @@ const EditProfileCard = (props) => {
 					New Password
 				</label>
 				<input
+					placeholder="Keep blank for no change"
 					type="password"
 					className="p-2 rounded border-2 focus:border-blue-300 outline-none"
 					onChange={newPasswordChangeHandler}
@@ -136,7 +138,8 @@ const EditProfileCard = (props) => {
 					Confirm New Password
 				</label>
 				<input
-					type="text"
+					placeholder="Keep blank for no change"
+					type="password"
 					className="p-2 rounded border-2 focus:border-blue-300 outline-none"
 					onChange={confirmPasswordChangeHandler}
 				/>
