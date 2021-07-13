@@ -13,6 +13,9 @@ app.use(cors({
 app.use(express.json());
 app.use("/api", route);
 
+app.get('/', (req, res) => {
+	res.send('Welcome to IITG Stakoverflow API');
+})
 app.listen(process.env.PORT, () => {
 	console.log("Server running ... ");
 });
