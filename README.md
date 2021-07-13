@@ -1,5 +1,11 @@
 # IITG stackoverflow
 
+![IITG-StackOverflow](https://socialify.git.ci/joat28/iitg-stack-overflow/image?description=1&descriptionEditable=IITG%20Stackoverflow&font=Source%20Code%20Pro&forks=1&issues=1&language=1&owner=1&pattern=Charlie%20Brown&pulls=1&stargazers=1&theme=Dark)
+
+## Description
+We want to connect the people who have knowledge to the people who need it.  
+As a team of 5 developers, we built this Q&A portal to help other developers gain and share insights into a problem.
+
 
 ## Tech Stack [MERN]
 #### Front-end
@@ -76,6 +82,31 @@ To run this project, you will need to add the following environment variables to
 * `PATCH /question/:question_id`
 * `PATCH /question/vote/:question_id`
 * `DELETE /question/:question_id`
+
+
+
+## Screenshots
+
+#### Register
+![Register-Screen](./images/Signup.png)
+#### Login
+![Login-Screen](./images/Login.png)
+#### Home
+![Home-Screen](./images/Home.png)
+#### Ask
+![Ask-Screen](./images/Ask.png)
+#### Question
+![Question-Screen](./images/Question.png)
+#### Answer
+![Answer-Screen](./images/Answer.png)
+#### Search
+![Search-Screen](./images/Search.png)
+#### Users
+![Users-Screen](./images/Users.png)
+#### Profile
+![Profile-Screen](./images/Profile.png)
+#### NotFound
+![NotFound-Screen](./images/NotFound.png)
 
 ## Acknowledgements
 

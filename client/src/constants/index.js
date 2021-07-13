@@ -1,1 +1,1 @@
-export const BASE_API_URI = "http://localhost:5000/api";
+export const BASE_API_URI = "https://iitg-stackoverflow.herokuapp.com/api";

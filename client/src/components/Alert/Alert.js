@@ -7,7 +7,7 @@ const Alert = () => {
   return (
     <div
       className={`${alert.visible ? "fixed" : "hidden"}	bg-${
-        alert.status ? "green-500" : "red-500"
+        alert.status ? "blue-500" : "red-500"
       } w-1/4 z-100 top-16 py-5 text-white font-semibold rounded inset-x-0 m-auto `}
     >
       {alert.message}
