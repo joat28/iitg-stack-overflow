@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Logo from "../../assets/svg/Logo";
 import { NavLink, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,17 +10,33 @@ const Navbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [search, setSearch] = useState("");
+
   function logoutHandler() {
     dispatch(logout());
     history.push("/login");
     return;
   }
-  // function clickHandler() {
-  //   dispatch()
-  // 	clearToken().then((res) => console.log(res));
-  // 	history.push("/login");
-  // 	return;
-  // }
+  const pressHandler = (event) => {
+    if(event.key === "Enter")
+    {
+      if(search !== "")
+      {
+        // console.log("API call");
+        history.push(`/search/${search}`)
+      }
+      else
+      {
+        history.push("/");
+      }
+      console.log("Enter key pressed!")
+    }
+  }
+
+   const onChangeHandler = (event) => {
+    setSearch(event.target.value);
+  }
+  
   return (
     <div
       className="flex items-center z-10 justify-between w-screen py-1 px-7 shadow-md fixed border-t-4 border-yellow-500"
@@ -41,7 +57,10 @@ const Navbar = () => {
           type="search"
           className="placeholder-gray-500 w-full h-10 border-2 border-gray-200 p-3 rounded focus:border-blue-300 outline-none"
           placeholder="Search"
+          onChange={onChangeHandler}
+          onKeyUp={pressHandler}
         />
+
       </div>
       <div
         className={`flex items-center justify-evenly ${

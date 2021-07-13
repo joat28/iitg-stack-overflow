@@ -5,13 +5,7 @@ const jwt = require("jsonwebtoken");
 module.exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    // const user = await User.findOne({ email });
-    // if (user) throw "Email already exists";
-    // user = await User.findOne({ name });
-    // if (user) throw "Name already exists";
-
-    // user = new User({ name, email, password });
-    // user.save((error) => {throw error});
+   
     user = await User.create({ name, email, password });
     const payload = { email };
     const token = jwt.sign(payload, "secret");
@@ -82,9 +76,9 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.loadUser = async (req, res) => {
-  //console.log("In authController.js ", req.user.email)
+  
   if (!req.user.email) {
-    //console.log("inside auth route, no user found")
+    
     return res.status(401).json({
       message: "Unauthorized",
     });
@@ -96,7 +90,7 @@ module.exports.loadUser = async (req, res) => {
         message: "Unauthorized",
       });
     }
-    //console.log("inside auth route, user found!!", req.user.email);
+    
     token = req.headers["authorization"].split(" ")[1];
     return res.status(200).json({
       message: "user found",

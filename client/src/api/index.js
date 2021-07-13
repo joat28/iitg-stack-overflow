@@ -67,8 +67,6 @@ export const deleteQuestion = (id) => API.delete("/question/" + id);
 export const voteQAPI = (question_id, voteType) =>
   API.patch("/question/vote/" + question_id, { voteType });
 
-//Update one Question by Id
-// export const updateAnswer = (Answer, id) => API.put("/question/"+id, Question);
 
 //Answer a Question: Answer & Question ID passed
 export const answerQuestion = (Answer, question_id) =>
@@ -85,4 +83,8 @@ export const updateAnswer = (Answer, id) => API.patch("/answer/" + id, Answer);
 export const voteAnsAPI = (answer_id, voteType) =>
   API.patch("/answer/vote/" + answer_id, { voteType });
 
-export const deleteAnswer = (answer_id) => API.delete("/answer/"+ answer_id)
+//DELETE an Answer 
+export const deleteAnswer = (answer_id) => API.delete("/answer/"+ answer_id);
+
+//UPDATE USER NAME
+export const updateUserAPI = ({name, password, newPassword, confirmPassword, id}) => API.patch("/user/"+ id, {name, password, newPassword, confirmPassword});

@@ -5,6 +5,7 @@ import {
   DownArrowActive,
 } from "../../../assets/svg/DownArrow";
 import moment from "moment";
+import {Link} from "react-router-dom"
 import { EditAnswer } from "./EditAnswer";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
@@ -160,12 +161,26 @@ const AnswerItem = (props) => {
                   </button>
                 )}
               </div>
-              <div className=" px-2 m-1 h-10 rounded bg-blue-100 border-blue-300 border ">
-                <span className="text-gray-500">answered </span>
-                <span className="text-gray-500">
-                  {moment(answer.createdAt).fromNow()}
-                </span>
-                <div className="text-s">{answer.author.name}</div>
+              <div className=" px-2 pr-4 m-1 rounded bg-blue-100 border-blue-300 border flex flex-col">
+                <div className="pb-1">
+                  <span className="text-gray-500">answered </span>
+                  <span className="text-gray-500">
+                    {moment(answer.createdAt).fromNow()}
+                  </span>
+                </div>
+                <div className="flex flex-row pb-1">
+                  <img
+                    alt="img"
+                    className="w-8 h-8 border border-gray-300"
+                    src={`https://avatars.dicebear.com/api/jdenticon/${answer.author.name}.svg`}
+                  ></img>
+                  <Link
+                    to={`/users/${answer.author._id}`}
+                    className="text-right pl-1 text-blue-600 hover:text-blue-400"
+                  >
+                    {answer.author.name}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

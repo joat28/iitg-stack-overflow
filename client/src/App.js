@@ -15,6 +15,7 @@ import NotFoundScreen from "./screens/NotFoundScreen"
 import AllQuestionsScreen from "./screens/AllQuestions/AllQuestionsScreen";
 import UsersScreen from "./screens/Users/UsersScreen";
 import UserProfileScreen from "./screens/UserProfile/UserProfileScreen"
+import SearchBarScreen from "./screens/SearchBar/SearchBarScreen";
 
 //HOOKS
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -23,6 +24,7 @@ import { useEffect } from "react";
 
 //FUNCTIONS | ACTIONS | 
 import { loadUser } from "./redux/auth/auth.actions";
+import TeamScreen from "./screens/TeamScreen/TeamScreen";
 // import { getQuestions } from "./api/index";
 // import { getQuestionAction } from "./redux/questions/questions.actions";
 // import {
@@ -48,13 +50,13 @@ const App = () => {
         <Route path="/" exact component={HomeScreen} />
         <Route path="/questions" exact component={AllQuestionsScreen} />
         <Route path="/question/ask" exact component={PostQuestionScreen} />
-        {/* <Route path="/question/edit/:id" exact component={PostQuestionScreen} /> */}
         <Route path="/question/:id" exact component={ViewQuestionScreen}/>
         <Route path="/users" exact component={UsersScreen} />
         <Route path="/users/:user_id" exact component={UserProfileScreen} />
+        <Route path="/search/:search_id" exact component={SearchBarScreen} />
+        <Route path="/team" exact component={TeamScreen} />
         <Route path="*" component={NotFoundScreen}></Route>
         </Switch>
-        {/* <Route path="/questions" exact component={QuestionsScreen} /> */}
         <Footer />
       </BrowserRouter>
     </div>

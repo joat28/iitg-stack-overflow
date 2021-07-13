@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAlert } from "../../redux/alert/alert.actions";
 
 const PostQuestion = () => {
+  window.scrollTo(0,0);
 
   const history = useHistory();
   const dispatch = useDispatch();

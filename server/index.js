@@ -4,7 +4,6 @@ const db = require("./database.js");
 const User = require("./models/Users.js");
 const cors = require('cors')
 
-
 const app = express();
 const route = require("./routes/index");
 

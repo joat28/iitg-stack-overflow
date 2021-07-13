@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner/Spinner";
 
 const RegisterScreen = () => {
+  window.scrollTo(0, 0);
   const history = useHistory();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loading = useSelector(state => state.loading.loading)

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const UserCard = (props) => {
   const user = props.user;
+  
   return (
       <div className="flex flex-row m-2 w-52 ml-5 mb-4">
         <img
