@@ -5,6 +5,10 @@ import moment from "moment";
 const QuestionItem = (props) => {
   const question = props.data;
   const loading = props.loading;
+  let idx = 1000;
+  if(!loading && question && question.description) {
+    idx = question.description.indexOf("~~~js")
+  }
   return (
     <>
       {!loading && (
@@ -52,14 +56,14 @@ const QuestionItem = (props) => {
                 <span>
                   {question.description.substring(
                     0,
-                    Math.min(question.description.length, 400)
+                    Math.min(idx,Math.min(question.description.length, 400))
                   )}...
                 </span>
               ) : (
                 <span>
                   {question.description.substring(
                     0,
-                    Math.min(question.description.length, 400)
+                    Math.min(idx,Math.min(question.description.length, 400))
                   )}
                 </span>
               )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, NavLink, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUser } from "../../api/index";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
@@ -18,16 +18,16 @@ const UserProfileScreen = () => {
   const [radio, setRadio] = useState(true);
   const [editClick, setEditClick] = useState(false);
   useEffect(() => {
-    console.log(location.pathname.split("/")[2]);
+    
     getUser(location.pathname.split("/")[2])
       .then((res) => {
         setUser(res.data.data);
       })
       .catch((error) => {
         // console.log(error);
-        history.push('/xyz');
+        history.push('/notfound');
       });
-  }, [location.pathname]);
+  }, [location.pathname, history]);
 
   const radioChangeHandler = (type) => {
     if (type === "question" && radio) return;
@@ -48,7 +48,7 @@ const UserProfileScreen = () => {
           <div className="flex w-full">
             <div className="flex flex-col items-center">
               <div
-                className="flex flex-col px-6 p-6 pb-2 h-64 relative border border-gray-300 rounded w-52"
+                className="flex flex-col px-6 p-6 pb-2 h-68  relative border border-gray-300 rounded w-52"
                 style={{ boxShadow: "inset 0 8.5em 0 #eff0f1" }}
               >
                 <img
@@ -83,7 +83,7 @@ const UserProfileScreen = () => {
                 </button>
               )}
             </div>
-            {editClick && <EditProfileCard user={user} editClickHandler={editClickHandler}/>}
+            {editClick && <EditProfileCard user={(user._id===currentUser._id)?currentUser:user} editClickHandler={editClickHandler}/>}
             {!editClick && (
               <div className="flex ml-2 pl-2 flex-col w-full ">
                 <div className="flex flex-row w-full justify-between pb-1.5 border-b border-gray-300">

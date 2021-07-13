@@ -8,7 +8,7 @@ module.exports.signup = async (req, res) => {
    
     user = await User.create({ name, email, password });
     const payload = { email };
-    const token = jwt.sign(payload, "secret");
+    const token = jwt.sign(payload, process.env.JWT_SECRET_TOKEN);
 
     //RETURN TOKEN
     return res.status(200).json({
@@ -49,7 +49,7 @@ module.exports.login = async (req, res) => {
         } else {
           //CREATE TOKEN
           const payload = { email };
-          const token = jwt.sign(payload, "secret");
+          const token = jwt.sign(payload, process.env.JWT_SECRET_TOKEN);
           //RETURN TOKEN
           return res.status(200).json({
             message: "Successfully logged in",

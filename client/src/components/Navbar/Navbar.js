@@ -34,7 +34,7 @@ const Navbar = () => {
   }
 
    const onChangeHandler = (event) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value.toLowerCase());
   }
   
   return (

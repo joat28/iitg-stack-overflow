@@ -3,9 +3,9 @@ import Pencil from "../../assets/svg/Pencil";
 import Npm from "../../assets/svg/Npm";
 import { Link } from "react-router-dom";
 
-const SideBarWidget = () => {
+const SideBarWidget = (props) => {
   return (
-    <div className="bg-yellow-50 h-64 rounded mt-6 border border-yellow-200 shadow-md">
+    <div className={`bg-yellow-50 h-64 rounded mt-6 border border-yellow-200 shadow-md`}>
       <div className="h-11 pl-4 text-gray-600 text-sm font-semibold bg-yellow-100 rounded-t-md border border-yellow-200 flex items-center">
         About IITG Stackoverflow
       </div>
@@ -16,6 +16,7 @@ const SideBarWidget = () => {
             target="_blank"
             href="https://github.com/joat28/iitg-stack-overflow"
             className="text-sm inline-block text-left font-semibold"
+            rel="noreferrer"
           >
             Source Code
           </a>
@@ -39,8 +40,10 @@ const SideBarWidget = () => {
           <div>
             <a
               target="_blank"
-              href="https://www.npmjs.com/package/react-markdown"
+              href="
+              https://commonmark.org/help/"
               className="text-sm inline-block text-left font-semibold"
+              rel="noreferrer"
             >
               Using Markdown in React
             </a>

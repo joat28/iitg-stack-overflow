@@ -1,5 +1,5 @@
 import React from "react";
-
+import {NavLink} from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 // FOOTER color : #242729
@@ -12,8 +12,19 @@ const Footer = () => {
       }`}
     >
       <div className="flex flex-col text-lg">
-        <span>IITG Stackoverflow</span>
-        <span>Coding Club, IIT Guwahati</span>
+        <span className = "text-xl py-1">IITG Stackoverflow</span>
+        <span className = "text-xl pb-1">Coding Club, IIT Guwahati</span>
+        <div>
+        <NavLink to = "/" className="px-3 py-1 hover:text-gray-100">
+          Home
+        </NavLink>
+        <NavLink to = "/questions" className="px-3 py-1 hover:text-gray-100">
+          Questions
+        </NavLink>
+        <NavLink to = "/users" className="px-3 py-1 hover:text-gray-100">
+          Users
+        </NavLink>
+          </div>
       </div>
     </div>
   );
